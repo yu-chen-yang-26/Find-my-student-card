@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { usePage } from "./hooks/useContext";
+import Pic from "../Pic/NTU.jpg";
 import { useState } from "react";
 const Wrapper = styled.div`
   top:150px;
@@ -17,6 +18,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-image: url(${Pic})
 }`
 const Login=()=> {
   return (

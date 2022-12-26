@@ -22,7 +22,7 @@ const onChange = (value) => {
   console.log(value);
 };
 const search = () => <>
-<Space style={{marginLeft:"25px",marginTop:"20px"}}>
+<Space style={{right:"110px",top:"120px",position:"absolute"}}>
 
     <Input allowClear placeholder="Enter the Student ID"></Input>
     <Cascader options={options} onChange={onChange} placeholder="Please select" />

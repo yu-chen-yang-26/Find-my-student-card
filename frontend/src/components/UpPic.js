@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   background-color: #F5F5F5;
   
 `;
-const UploadPic = () => {
+const UploadPic = ({component}) => {
   const [fileList, setFileList] = useState([
     {
       uid: '-1',
@@ -36,7 +36,7 @@ const UploadPic = () => {
     imgWindow?.document.write(image.outerHTML);
   };
   return (
-    <Wrapper>
+    <Wrapper  style={{position:"relative"}}>
         <ImgCrop rotate aspect={2/1}>
             <Upload
                 style={{width:'100px'}}
@@ -49,6 +49,7 @@ const UploadPic = () => {
                 {fileList.length < 5 && '+ Upload '}
             </Upload>
         </ImgCrop>
+        {component}
     </Wrapper>
     
   );

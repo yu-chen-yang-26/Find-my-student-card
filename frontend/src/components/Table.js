@@ -108,5 +108,5 @@ const table = () => <ConfigProvider
 theme={{token: {
   colorPrimary: "#faad14",
 },
-}}><Table style={{width:"500px", height:'400px'}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
+}}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
 export default table;

@@ -5,7 +5,7 @@ const Map= styled.div`
   width: 700px;
   margin: 0 30px 0 20px;
   background-color: gray;
-  border: 2px solid palevioletred;
+  border: 4px solid rgb(237,166,87);
   background-image: url(${props => props.img});
 `;  
 const map =()=> (

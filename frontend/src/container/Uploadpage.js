@@ -1,7 +1,7 @@
 import StepsBar from "../components/Step";
 import UploadPic from "../components/UpPic";
 import InfoForm from "../components/Form";
-import styled from "styled-components"
+import styled from "styled-components";
 import { Layout } from 'antd';
 import { usePage } from "./hooks/useContext";
 const { Header, Footer, Sider, Content } = Layout;
@@ -51,11 +51,13 @@ const Upload =() => {
         <Header style={{ minHeight: '100px',backgroundColor:"white" }}><StepsBar></StepsBar></Header>
         <Content style={{ backgroundColor:"white" }}>
           <Wrapper>
-            <UploadPic/>
+            <UploadPic component={<>
+                  <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={ToHome}>Done</Button>
+                  <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={ToHome}>Skip</Button></>}/>
             <Middle><InfoForm/></Middle>    
           </Wrapper>
           <Button style={{margin:'20px'}} onClick={ToHome}>回到主頁</Button>
-          <Button style={{margin:'20px'}} onClick={ToInfo}>上傳完成</Button>
+          <Button style={{margin:'20px', right:"20px"}} onClick={ToInfo}>上傳完成</Button>
         </Content>
             
       </Layout>

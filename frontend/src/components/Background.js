@@ -5,6 +5,14 @@ import Search from "./Searchbar";
 import { Layout } from 'antd';
 import Pic from "../Pic/bear.jpg";
 import { usePage } from "../container/hooks/useContext";
+import {
+  HomeOutlined,
+  LoadingOutlined,
+  SettingFilled,
+  SmileOutlined,
+  GithubOutlined,
+  InstagramOutlined,
+} from '@ant-design/icons';
 const {  Footer, Sider, Content } = Layout;
 const Wrapper = styled.div`
   display: flex;
@@ -17,10 +25,11 @@ const Wrapper = styled.div`
 
 const Right = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   border-radius: 3px;
-  border: 2px solid palevioletred;
-  
+  border: 2px solid #c8b6ff;
+  background-color: rgb(235,224,211);
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -28,33 +37,37 @@ const Right = styled.div`
   
   h1 {
     text-align: center;
-    font-size: 2em;
+    text-shadow: 4px 3px 0px rgba(0,0,0,0.2);
+    font-size: 3em;
     margin: 10px ;
-    color: palevioletred;
-    border: 2px solid palevioletred;
+    padding: 10px;
+    color: white;
+    border: 5px solid rgb(237,166,87);
+    border-radius: 20px;
     width: 100%;
+    background-color: #B22222;
  }
 `;
 const Left = styled.div`
-  width: 105px;
+  width: 130px;
   min-height: 95vh;
   margin: 10px;
-  border: 3px solid grey;
+  border: 5px solid #D8BFD8;
   text-align: center;
 `;    
 const Button = styled.button`
   width: 100px;
   height: 50px;
-  background: transparent;
+  background: rgb(150,74,96);
   border-radius: 3px;
-  border: 2px solid palevioletred;
-  color: palevioletred;
+  border: 3px solid #BEA5AA;
+  color: #BEA5AA;
   margin: 1em 0 0 0;
 //   padding: 0.25em 1em;
-  font-size: 1em;
+  font-size: 1.1em;
 
   &:hover {
-    background: palevioletred;
+    background: #EF5D8D;
     color: white;
     cursor: pointer;
   }
@@ -90,21 +103,24 @@ const Background=({component})=> {
         //     </Right>
         // </Wrapper>
         <Layout style={{ minHeight: '100vh' }}>
-          <Sider width={125} >
+          <Sider style={{ backgroundColor: '#564146' }} width={150} >
             <Left>
-                <Avatar shape="square" size={100} src={Pic}></Avatar>
+                <Avatar shape="square" size={120} src={Pic}></Avatar>
                 <Button onClick={ToHome}> 主頁</Button>
                 <Button onClick={ToUpload}> 拾獲學生證</Button>
             </Left>
           </Sider>
           <Layout>
             <Content>       
-              <Right>
+              <Right style={{position:"relative"}}>
                 <h1>Find my student card</h1>
                   {component}
               </Right>        
             </Content>
-            <Footer>Footer</Footer>
+            <Footer>
+              <InstagramOutlined style={{ fontSize: '26px', color: 'purple' }}/>
+              <GithubOutlined style={{ fontSize: '26px', color: 'purple' }}/>
+            </Footer>
           </Layout>
         </Layout>
     )

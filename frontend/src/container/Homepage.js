@@ -12,7 +12,6 @@ const Homepage = ()=>{
                     <Map/>
                     <Table/>
                 </Space>
-                
                 <Search/>
             </>
         }/>
