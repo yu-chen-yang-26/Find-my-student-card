@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { useState } from "react";
+import { usePage } from "../container/hooks/useContext";
 const Button = styled.button`
   width: 200px;
   height: 50px;
@@ -26,12 +27,13 @@ const Container = styled.div`
   align-items: center;
 `
 
-const BigButton =({mode, setHome, setUpload })=>{
+const BigButton =({mode})=>{
+  const {setHome, setUpload} = usePage();
   const ToHome = () => {
-    setHome(true)
+    setHome(true);
   }
   const ToUpload = () => {
-    setUpload(true)
+    setUpload(true);
   }
     return (
         <Container>

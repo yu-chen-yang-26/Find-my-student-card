@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import Title from "../components/Title";
 import Button from "../components/Button";
+import { usePage } from "./hooks/useContext";
 import { useState } from "react";
 const Wrapper = styled.div`
   top:150px;
@@ -17,13 +18,12 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
 }`
-const Login=({setHome})=> {
-  
+const Login=()=> {
   return (
     <Container>
       <Wrapper>
         <Title />
-        <Button setHome={setHome}/>
+        <Button/>
       </Wrapper>
     </Container>
 

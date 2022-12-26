@@ -7,19 +7,17 @@ import Upload from './container/Uploadpage';
 import BG from './components/BGpic';
 import Login from './container/Login';
 import { useState } from 'react';
-
+import { usePage } from './container/hooks/useContext';
 
 function App() {
-  const [home,setHome] = useState(false)
-  const [info,setInfo] = useState(false)
-  const [upload, setUpload] = useState(false)
+  const {info, home, upload} = usePage();
   return (
   <>
     {/* <Upload/> */}
     { 
-      info?<Detail setInfo={setInfo}/>:
-      home?<Homepage setUpload={setUpload} setHome={setHome}/>:
-      upload?<Upload setInfo={setInfo} setHome={setHome}/>:<Login setHome = {setHome}/>
+      info?<Detail/>:
+      home?<Homepage/>:
+      upload?<Upload/>:<Login/>
     }
     
   </> 

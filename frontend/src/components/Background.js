@@ -4,6 +4,7 @@ import Table from "./Table";
 import Search from "./Searchbar";
 import { Layout } from 'antd';
 import Pic from "../Pic/bear.jpg";
+import { usePage } from "../container/hooks/useContext";
 const {  Footer, Sider, Content } = Layout;
 const Wrapper = styled.div`
   display: flex;
@@ -66,7 +67,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 `
-const background=({component, setUpload, setHome, setInfo})=> {
+const Background=({component})=> {
+  const {setUpload, setHome, setInfo} = usePage();
   const ToUpload = () => {
     setUpload(true)
     setHome(false)
@@ -108,4 +110,4 @@ const background=({component, setUpload, setHome, setInfo})=> {
     )
 }
 
-export default background
+export default Background

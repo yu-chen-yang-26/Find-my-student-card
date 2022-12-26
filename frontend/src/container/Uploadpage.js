@@ -3,7 +3,7 @@ import UploadPic from "../components/UpPic";
 import InfoForm from "../components/Form";
 import styled from "styled-components"
 import { Layout } from 'antd';
-
+import { usePage } from "./hooks/useContext";
 const { Header, Footer, Sider, Content } = Layout;
 const Button = styled.button`
   width: 100px;
@@ -37,7 +37,8 @@ const Middle = styled.div`
   padding: 20px;
   background-color: #F8F8FF;
 `;
-const Upload =({setHome, setInfo}) => {
+const Upload =() => {
+    const {setHome, setInfo} = usePage();
     const ToHome = () => {
       setHome(true)
       }

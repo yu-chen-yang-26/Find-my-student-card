@@ -1,8 +1,8 @@
 import Card from "../components/Card";
 import Background from "../components/Background";
-const Detail =({setInfo}) => {
+const Detail =() => {
     return (
-        <Background component = {<Card/>}setInfo={setInfo}/>
+        <Background component = {<Card/>}/>
     )
 }
 

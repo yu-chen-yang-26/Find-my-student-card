@@ -4,7 +4,7 @@ import Table from '../components/Table'
 import Search from "../components/Searchbar"
 import Background from "../components/Background";
 import { Space,  } from 'antd';
-const Homepage = ({setUpload,setHome})=>{
+const Homepage = ()=>{
     return(
         <Background  component = {
             <>
@@ -15,9 +15,7 @@ const Homepage = ({setUpload,setHome})=>{
                 
                 <Search/>
             </>
-        }
-        setUpload={setUpload}
-        setHome={setHome}/>
+        }/>
     )
     
 }
