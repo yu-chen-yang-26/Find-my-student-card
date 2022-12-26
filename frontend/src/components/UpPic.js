@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import styled from "styled-components";
@@ -11,12 +11,12 @@ const Wrapper = styled.div`
 `;
 const UploadPic = () => {
   const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
+    // {
+    //   uid: '-1',
+    //   name: 'image.png',
+    //   status: 'done',
+    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    // },
   ]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -37,7 +37,7 @@ const UploadPic = () => {
   };
   return (
     <Wrapper>
-        <ImgCrop rotate aspect={2/1}>
+        <ImgCrop rotate aspect={1.6/1}>
             <Upload
                 style={{width:'100px'}}
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -46,7 +46,7 @@ const UploadPic = () => {
                 onChange={onChange}
                 onPreview={onPreview}
             >
-                {fileList.length < 5 && '+ Upload '}
+                + Upload 
             </Upload>
         </ImgCrop>
     </Wrapper>
