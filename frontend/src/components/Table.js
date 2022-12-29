@@ -2,8 +2,8 @@ import React from 'react';
 import { Table, ConfigProvider } from 'antd';
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
+    title: 'ID',
+    dataIndex: 'ID',
     filters: [
       {
         text: 'Joe',
@@ -35,14 +35,14 @@ const columns = [
     sortDirections: ['descend'],
   },
   {
-    title: 'Time',
+    title: 'time',
     dataIndex: 'time',
     defaultSortOrder: 'descend',
     sorter: (a, b) => a.time - b.time,
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'location',
+    dataIndex: 'location',
     filters: [
       {
         text: '圖書館',
@@ -56,8 +56,8 @@ const columns = [
     onFilter: (value, record) => record.address.indexOf(value) === 0,
   },
   {
-    title: 'Find',
-    dataIndex: 'find',
+    title: 'founded',
+    dataIndex: 'founded',
     filters: [
         {
           text: 'found',
@@ -71,42 +71,17 @@ const columns = [
       onFilter: (value, record) => record.find.indexOf(value) === 0,
   },
 ];
-const data = [
-  {
-    key: '1',
-    name: 'Jim Green',
-    time: '2022/12/10',
-    address: '圖書館',
-    find: 'found'
-  },
-  {
-    key: '2',
-    name: 'John Brown',
-    time: '2022/12/9',
-    address: '圖書館',
-    find: 'Not yet'
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    time: '2022/12/10',
-    address: '圖書館',
-    find: 'found'
-  },
-  {
-    key: '4',
-    name: 'R********',
-    time: '2022/12/11',
-    address: '社科院',
-    find: 'found'
-  },
-];
+
 const onChange = (pagination, filters, sorter, extra) => {
   console.log('params', pagination, filters, sorter, extra);
 };
-const table = () => <ConfigProvider 
+const table = (data) => {
+return(<ConfigProvider 
 theme={{token: {
   colorPrimary: "#faad14",
 },
-}}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
+// }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
+}}><Table style={{ height:'400px',top:"100px"}} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}/></ConfigProvider>
+)
+}
 export default table;
