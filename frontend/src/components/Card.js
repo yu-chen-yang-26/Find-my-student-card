@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Carousel } from 'antd';
-import long from "../Pic/長.png";
-import Bear from "../Pic/bear.jpg";
 import styled from "styled-components"
 import Card2 from "./Card2";
 import { Card } from 'antd';

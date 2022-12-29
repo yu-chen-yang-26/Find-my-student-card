@@ -4,7 +4,6 @@ import Table from "./Table";
 import Search from "./Searchbar";
 import { Layout } from 'antd';
 import Pic from "../Pic/bear.jpg";
-import { usePage } from "../container/hooks/useContext";
 import {
   HomeOutlined,
   LoadingOutlined,
@@ -13,6 +12,8 @@ import {
   GithubOutlined,
   InstagramOutlined,
 } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom'
+
 const {  Footer, Sider, Content } = Layout;
 const Wrapper = styled.div`
   display: flex;
@@ -81,14 +82,12 @@ const Container = styled.div`
   align-items: center;
 `
 const Background=({component})=> {
-  const {setUpload, setHome, setInfo} = usePage();
+  const navigate = useNavigate();
   const ToUpload = () => {
-    setUpload(true)
-    setHome(false)
+    navigate('/upload');
   }
   const ToHome = () => {
-    setHome(true)
-    setInfo(false)
+    navigate('/home');
     }
     return(
         // <Wrapper>

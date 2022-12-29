@@ -7,20 +7,19 @@ import Upload from './container/Uploadpage';
 import BG from './components/BGpic';
 import Login from './container/Login';
 import { useState } from 'react';
-import { usePage } from './container/hooks/useContext';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  const {info, home, upload} = usePage();
   return (
-  <>
+  <Router>
+    <Routes>
     {/* <Upload/> */}
-    { 
-      info?<Detail/>:
-      home?<Homepage/>:
-      upload?<Upload/>:<Login/>
-    }
-    
-  </> 
+      <Route path="/detail" element={<Detail/>} />
+      <Route path="/home" element={<Homepage/>} />
+      <Route path="/upload" element={<Upload/>} />
+      <Route path="/" element={<Login/>} />
+    </Routes>
+  </Router> 
 
   );
 }

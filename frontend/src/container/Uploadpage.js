@@ -3,7 +3,8 @@ import UploadPic from "../components/UpPic";
 import InfoForm from "../components/Form";
 import styled from "styled-components";
 import { Layout } from 'antd';
-import { usePage } from "./hooks/useContext";
+import { useNavigate } from 'react-router-dom'
+
 const { Header, Footer, Sider, Content } = Layout;
 const Button = styled.button`
   width: 100px;
@@ -38,13 +39,12 @@ const Middle = styled.div`
   background-color: #F8F8FF;
 `;
 const Upload =() => {
-    const {setHome, setInfo} = usePage();
+    const navigate = useNavigate();
     const ToHome = () => {
-      setHome(true)
+      navigate('/home');
       }
     const ToInfo = () => {
-      setInfo(true)
-      setHome(false)
+      navigate('/detail');
       }
     return (
       <Layout>
