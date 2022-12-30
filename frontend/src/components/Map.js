@@ -1,16 +1,70 @@
 import styled from "styled-components"
-import Pic from "../Pic/東區.png";
-const Map= styled.div`
+import React, { useEffect, useMemo, useState } from "react";
+import { GoogleMap, InfoWindow, Marker,InfoWindowF } from "@react-google-maps/api";
+
+const MapStyle = styled.div`
   height: 400px;
+  width: 700px;
   margin: 0 30px 0 20px;
   background-color: gray;
-  // border: 4px solid rgb(237,166,87);
-  border-radius: 10px;
-  box-shadow:0 0 20px 1px Gray;
+  border: 2px solid palevioletred;
   background-image: url(${props => props.img});
-`;  
-const map =()=> (
-  <Map img={Pic}/>
+`;
+function Map(props) {
+  const [activeMarker, setActiveMarker] = useState('');
+  const NTUcenter = {
+    lat: 25.017622284161067,
+    lng: 121.5378841549027
+  };
+  const handleActiveMarker = (props) => {
+    // console.log("activeMarker=", activeMarker)
+    console.log("id=",props.id,"name=",props.name)
+    // if (marker === activeMarker) {
+    //   return;
+    // }
+    setActiveMarker(props.id);
+  };
+  useEffect(()=>{
+    console.log("activeMarker=",activeMarker)
+    }, [activeMarker]
 )
+  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  console.log("props.positions=",props.positions)
+  return (
+    <MapStyle>
+      <GoogleMap
+        zoom={15}
+        center={mycenter}
+        mapContainerClassName="map-container"
+        // onLoad={handleOnLoad}
+        onClick={() => setActiveMarker(null)}
+        mapContainerStyle={{ width: "100%", height: "100%" }}
+      // zoom={10}
+      >
+        <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
+        {props.positions.map(( {id, name, position }) => {
+          console.log("id=",id,"name=",name,"position=",position);
+          return(
+          <Marker
+            key={id}
+            position={position}
+            onClick={() => handleActiveMarker({id,name})}
+            // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
+          >
+            {activeMarker == id ? (
+              <InfoWindowF onCloseClick={() => setActiveMarker('')}>
+                <>
+                  <div>{name}</div>
+                  <div>{id}</div>
+                </>
+              </InfoWindowF>
+            ) : null}
+          </Marker>
+        )
+        })}
+      </GoogleMap>
+    </MapStyle>
+  );
+}
 
-export default map
+export default Map;
