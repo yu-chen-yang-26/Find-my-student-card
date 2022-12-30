@@ -1,60 +1,38 @@
 import { useState } from "react";
-import { Carousel } from 'antd';
+import { Carousel  } from 'antd';
+import { CaretRightOutlined, CaretLeftOutlined} from '@ant-design/icons';
 import long from "../Pic/長.png";
 import Bear from "../Pic/bear.jpg";
-import styled from "styled-components"
+import NTU from "../Pic/NTU.jpg";
+import galaxy from "../Pic/Galaxy.jpg";
+import styled from "styled-components";
 import Card2 from "./Card2";
-import { Card } from 'antd';
-const Table = styled.table`
-  width: 500px;
-  border-collapse: collapse;
-  font-size: 1.5em;
- tr{
-  border-bottom: solid 2px white;
-}
+import { Card,Col } from 'antd';
 
- tr:last-child{
-  border-bottom: none;
-}
 
- th{
-  position: relative;
-  width: 30%;
-  background-color: #7d7d7d;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-}
+const Pic = styled.div`
+  height: 250px;
+  width: 350px;
+  // margin: 0 30px 0 0px;
+  background-size: contain;
+  border-radius: 10px 0px 0px 10px;
+  box-shadow:0 0 20px 0px Gray;
+  background-image: url(${props => props.img});
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 
-th:after{
-  display: block;
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  top:calc(50% - 10px);
-  right:-10px;
-  border-left: 10px solid #7d7d7d;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-}
-
- td{
-  text-align: left;
-  width: 70%;
-  text-align: center;
-  background-color: #eee;
-  padding: 10px 0;
-}
-
- main {
-  margin: 20px auto;
-  item-align: center;
-  width: 80%;
-}
+  button{
+    cursor:pointer;
+    height: 40px;
+    width: 40px;
+    border-color: transparent;
+    background-color: transparent;
+  }
 `
 const Table2 = (
-  <div className="site-card-border-less-wrapper">
+  <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
     <Card
       title="拾獲資訊"
       bordered={false}
@@ -82,53 +60,34 @@ const Table2 = (
 )
 
 const MixCard = () => {
-  const [bannerList, setBannerList] = useState([]);
-  const Info = (
-    <Table>
-      <table>
-        <thead>拾獲資訊</thead>
-        <tbody>
-          <tr>
-            <th>學號</th>
-            <td>R********</td>
-          </tr>
-          <tr>
-            <th>拾獲地點</th>
-            <td>土木系</td>
-          </tr>
-          <tr>
-            <th>備註</th>
-            <td>大門口右邊樹上</td>
-          </tr>
-        </tbody>
-      </table>
-    </Table>
-  )
+  const bannerList = [long,Bear,NTU,galaxy]
+  const [listNum, setListNum] = useState(0);
+  const Next = () => {
+    var num = listNum
+    if (num === bannerList.length-1){
+      setListNum(0)
+    }
+    else{setListNum(num+1)}
+  }
+  const Last = () => {
+    var num = listNum
+    if (num === 0){
+      setListNum(bannerList.length-1)
+    }
+    else{setListNum(num-1)}
+  }
+  
   return (
     <>
-    {/* <Carousel autoplay>
-      {bannerList.map((item, index)=>{
-        return (
-          
-          <img
-            src={item}
-            alt=''
-            style={{border: '2px solid palevioletred',
-            width:'500px'}}
-            />
-        )
-      })}
-    </Carousel> */}
-    
-    {/* <div style={{border: '2px solid palevioletred',
-      width:'200px',height:'160px',margin:'50px',padding:'50px'}}>
-      拾獲資訊<br/>
-      學號:R********<br/>
-      拾獲地點:土木系<br/>
-      備註:大門口右邊樹上 
-    </div> */}
-    
-    <Card2 children={Table2}></Card2>
+      <div style={{display:"flex", flexDirection: "row" }}>
+        <Col  xs={{ span: 0}}  md={{ span:3, offset:0}} lg={{ span:8, offset:0}} xl={{ span:13, offset:0}}>
+          <Pic img={bannerList[listNum]} >
+            <button onClick={Next}><CaretLeftOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
+            <button onClick={Last}><CaretRightOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
+          </Pic>
+        </Col>
+        {Table2}
+      </div>
     </>
   )
 }

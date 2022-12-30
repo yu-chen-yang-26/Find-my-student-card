@@ -3,10 +3,10 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     border: 5px solid palevioletred;
-    margin: 15px;
-    margin-bottom: 50px;
+    margin: 30px;
+    margin-bottom: 20px;
     h1 {
-    font-size: 1.5em;
+    font-size: 2em;
     margin: 10px ;
     color: palevioletred;
  }`;

@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Steps, ConfigProvider } from 'antd';
+
 // const description = 'This is a description.';
-const StepsBar = () => (
+
+const StepsBar = (currentStep) => {
+  useEffect(()=> {
+    <Steps/>
+    console.log("<Steps/>",currentStep)
+
+    },[currentStep])
+
+  return (
   <ConfigProvider
     theme={{
       token: {
-        colorPrimary: '#00b96b',
+        colorPrimary: 'palevioletred',
       },
     }}
   >
   <Steps
     style={{margin:'30px',width:'95%',position:'center'}}
-    current={1}
+    current={currentStep}
     items={[
       {
         title: 'Finished',
@@ -28,5 +37,5 @@ const StepsBar = () => (
       },
     ]}
   /></ConfigProvider>
-);
+)}
 export default StepsBar;

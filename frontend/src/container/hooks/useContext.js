@@ -4,24 +4,29 @@ const PageContext = createContext({
     home: false,
     info: false,
     upload: false, 
+    currentStep: "",
     setHome: () => {},
     setInfo: () => {},
-    setUpload: () => {}
+    setUpload: () => {},
+    setStep: () => {}
 });
 
 const PageProvider = (props) => {
     const [home, setHome] = useState(false);
     const [info, setInfo] = useState(false);
     const [upload, setUpload] = useState(false);
+    const [currentStep,setStep]= useState(0);
     return (
         <PageContext.Provider
             value={{
                 home,
                 info,
                 upload,
+                currentStep,
                 setHome,
                 setInfo,
-                setUpload
+                setUpload,
+                setStep
             }}
             {...props}
         />

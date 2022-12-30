@@ -43,8 +43,8 @@ const BigButton =({mode})=>{
           <Button onClick={ToUpload}>拾獲學生證</Button>
         </>
         :<>
-        <Button onClick={ToHome}>訪客登入</Button>
-        <Button>學號登入</Button>
+        <Button style={{fontSize: "1.5em"}} onClick={ToHome}>訪客登入</Button>
+        <Button style={{fontSize: "1.5em"}}>學號登入</Button>
         </>}
       </Container>
     )

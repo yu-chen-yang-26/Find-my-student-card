@@ -2,6 +2,7 @@ import Card from "../components/Card";
 import Background from "../components/Background";
 import styled from "styled-components";
 import Map from "../components/Map";
+import {Col} from 'antd';
 const Button = styled.button`
   width: 160px;
   height: 80px;
@@ -24,9 +25,9 @@ const Detail = ({ setInfo }) => {
         <Background component={
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Map></Map>
+              <Col  md={0} lg={7}  ><Map/></Col>
               <Card />
-              <Button style={{ margin: '20px',position:"absolute", right:"30%", bottom:"10px"}} >物歸原主</Button>
+              <Button style={{position:"absolute", right:"20%", bottom:"10%"}} >物歸原主</Button>
             </>} 
         setInfo={setInfo} />
     )

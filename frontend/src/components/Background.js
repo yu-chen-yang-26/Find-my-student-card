@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { Avatar } from 'antd';
 import Table from "./Table";
 import Search from "./Searchbar";
-import { Layout } from 'antd';
+import { Layout, Row } from 'antd';
 import Pic from "../Pic/bear.jpg";
 import { usePage } from "../container/hooks/useContext";
 import {
@@ -27,8 +27,8 @@ const Right = styled.div`
   width: 100%;
   height: 90vh;
   border-radius: 3px;
-  border: 2px solid #c8b6ff;
-  background-color: rgb(235,224,211);
+  border: 2px solid palevioletred;
+  background-color: white;
 
   display: flex;
   flex-direction: row;
@@ -42,21 +42,21 @@ const Right = styled.div`
     margin: 10px ;
     padding: 10px;
     color: white;
-    border: 5px solid rgb(237,166,87);
+    border: 5px solid white;
     border-radius: 20px;
     width: 100%;
-    background-color: #B22222;
+    background-color: palevioletred;
  }
 `;
 const Left = styled.div`
   width: 130px;
   min-height: 95vh;
   margin: 10px;
-  border: 5px solid #D8BFD8;
+  border: 2px solid palevioletred;
   text-align: center;
 `;    
 const Button = styled.button`
-  width: 100px;
+  width: 110px;
   height: 50px;
   background: rgb(150,74,96);
   border-radius: 3px;
@@ -103,7 +103,7 @@ const Background=({component})=> {
         //     </Right>
         // </Wrapper>
         <Layout style={{ minHeight: '100vh' }}>
-          <Sider style={{ backgroundColor: '#564146' }} width={150} >
+          <Sider style={{ backgroundColor: '#DBC8CE',borderBlockColor: '#DBC8CE' }} width={150} >
             <Left>
                 <Avatar shape="square" size={120} src={Pic}></Avatar>
                 <Button onClick={ToHome}> 主頁</Button>
@@ -111,11 +111,13 @@ const Background=({component})=> {
             </Left>
           </Sider>
           <Layout>
-            <Content>       
-              <Right style={{position:"relative"}}>
+            <Content>  
+            <Row>     
+              <Right style={{position:"relative"}}>  
                 <h1>Find my student card</h1>
                   {component}
-              </Right>        
+              </Right> 
+            </Row>       
             </Content>
             <Footer>
               <InstagramOutlined style={{ fontSize: '26px', color: 'purple' }}/>

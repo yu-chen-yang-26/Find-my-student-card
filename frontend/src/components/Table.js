@@ -1,5 +1,18 @@
 import React from 'react';
 import { Table, ConfigProvider } from 'antd';
+import styled from 'styled-components'
+const StyledElement = styled(Table)`
+  .ant-table-wrapper {
+    width: 98%;
+    height: 100%;
+    position: relative;
+    top: 30px;
+  }
+  .ant-table {
+    background-color: rgb(9,100,100);
+    color: white;
+  }
+`
 const columns = [
   {
     title: 'ID',
@@ -81,7 +94,8 @@ theme={{token: {
   colorPrimary: "#faad14",
 },
 // }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
-}}><Table style={{ height:'400px',top:"100px"}} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}/></ConfigProvider>
+}}><Table style={{ height:'400px',top:"100px"}} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
+          scroll={{y:'calc(100vh - 400px)'}}/></ConfigProvider>
 )
 }
 export default table;
