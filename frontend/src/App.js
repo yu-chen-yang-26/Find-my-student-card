@@ -9,22 +9,19 @@ import Login from './container/Login';
 import { useState } from 'react';
 import { usePage } from './container/hooks/useContext';
 import { ThemeProvider } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-  const {info, home, upload} = usePage();
   return (
-  <>
-  <ThemeProvider
-    breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-    minBreakpoint="xxs">
+  <Router>
+    <Routes>
     {/* <Upload/> */}
-    { 
-      info?<Detail/>:
-      home?<Homepage/>:
-      upload?<Upload/>:<Login/>
-    }
-  </ThemeProvider>  
-  </> 
+      <Route path="/detail" element={<Detail/>} />
+      <Route path="/home" element={<Homepage/>} />
+      <Route path="/upload" element={<Upload/>} />
+      <Route path="/" element={<Login/>} />
+    </Routes>
+  </Router> 
 
   );
 }

@@ -4,8 +4,10 @@ import InfoForm from "../components/Form";
 import styled from "styled-components";
 import Icon, { HomeOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
+import { usePage } from '../container/hooks/useContext'
 import { Layout } from 'antd';
-import { usePage } from "./hooks/useContext";
+import { useNavigate } from 'react-router-dom'
+
 const { Header, Footer, Sider, Content } = Layout;
 const Button = styled.button`
   width: 100px;
@@ -66,12 +68,12 @@ const Upload =() => {
       var Num = currentStep
       setStep(currentStep-1)
     }
+    const navigate = useNavigate();
     const ToHome = () => {
-      setHome(true)
+      navigate('/home');
       }
     const ToInfo = () => {
-      setInfo(true)
-      setHome(false)
+      navigate('/detail');
       }
     const Steps = () => {
      return (

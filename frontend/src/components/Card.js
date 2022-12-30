@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Carousel  } from 'antd';
+import { Carousel,Card,Col  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined} from '@ant-design/icons';
 import long from "../Pic/長.png";
 import Bear from "../Pic/bear.jpg";
@@ -7,7 +7,7 @@ import NTU from "../Pic/NTU.jpg";
 import galaxy from "../Pic/Galaxy.jpg";
 import styled from "styled-components";
 import Card2 from "./Card2";
-import { Card,Col } from 'antd';
+
 
 
 const Pic = styled.div`

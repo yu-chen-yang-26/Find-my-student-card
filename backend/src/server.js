@@ -20,31 +20,31 @@ db.once('open', async () => {
         {ID: '1',
         location: '圖書館',
         info: 'test',
-        time: '2022/12/10',
+        time: '2022-12-10',
         founded: 'found',}).save();
     await new Card(
         {ID: '2',
         location: '圖書館',
         info: 'test',
-        time: '2022/12/9',
+        time: '2022-12-9',
         founded: 'Not yet',}).save();
     await new Card(
         {ID: '3',
         location: '社科院',
         info: 'test',
-        time: '2022/12/11',
+        time: '2022-12-11',
         founded: 'found',}).save();
     await new Card(
         {ID: '4',
         location: '圖書館',
         info: 'test',
-        time: '2022/12/24',
+        time: '2022-12-24',
         founded: 'Not yet',}).save();
     await new Card(
         {ID: '5',
         location: '社科院',
         info: 'test',
-        time: '2022/12/25',
+        time: '2022-12-25',
         founded: 'found',}).save();
 })
 

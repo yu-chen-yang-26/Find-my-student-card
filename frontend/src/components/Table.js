@@ -17,41 +17,12 @@ const columns = [
   {
     title: 'ID',
     dataIndex: 'ID',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'Jim',
-        value: 'Jim',
-      },
-      {
-        text: 'Submenu',
-        value: 'Submenu',
-        children: [
-          {
-            text: 'Green',
-            value: 'Green',
-          },
-          {
-            text: 'Black',
-            value: 'Black',
-          },
-        ],
-      },
-    ],
-    // specify the condition of filtering result
-    // here is that finding the name started with `value`
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-    sorter: (a, b) => a.name.length - b.name.length,
-    sortDirections: ['descend'],
+    sorter: (a, b) => a.ID > b.ID,
   },
   {
     title: 'time',
     dataIndex: 'time',
-    defaultSortOrder: 'descend',
-    sorter: (a, b) => a.time - b.time,
+    sorter: (a, b) => Date.parse(a.time) - Date.parse(b.time),
   },
   {
     title: 'location',
@@ -66,7 +37,7 @@ const columns = [
         value: '社科院',
       },
     ],
-    onFilter: (value, record) => record.address.indexOf(value) === 0,
+    onFilter: (value, record) => record.location.indexOf(value) === 0,
   },
   {
     title: 'founded',
@@ -81,7 +52,7 @@ const columns = [
           value: 'Not yet',
         },
       ],
-      onFilter: (value, record) => record.find.indexOf(value) === 0,
+      onFilter: (value, record) => record.founded.indexOf(value) === 0,
   },
 ];
 

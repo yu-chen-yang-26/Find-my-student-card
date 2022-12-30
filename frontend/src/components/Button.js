@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useState } from "react";
-import { usePage } from "../container/hooks/useContext";
+import { useNavigate } from 'react-router-dom'
+
 const Button = styled.button`
   width: 200px;
   height: 50px;
@@ -28,12 +29,12 @@ const Container = styled.div`
 `
 
 const BigButton =({mode})=>{
-  const {setHome, setUpload} = usePage();
+  const navigate = useNavigate();
   const ToHome = () => {
-    setHome(true);
+    navigate('/home');
   }
   const ToUpload = () => {
-    setUpload(true);
+    navigate('/upload');
   }
     return (
         <Container>

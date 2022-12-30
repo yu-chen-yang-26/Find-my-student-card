@@ -4,7 +4,7 @@ const PageContext = createContext({
     home: false,
     info: false,
     upload: false, 
-    currentStep: "",
+    currentStep: 0,
     setHome: () => {},
     setInfo: () => {},
     setUpload: () => {},
