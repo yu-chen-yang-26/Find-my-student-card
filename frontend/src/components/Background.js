@@ -107,6 +107,7 @@ const Background=({component})=> {
                 <Avatar shape="square" size={120} src={Pic}></Avatar>
                 <Button onClick={ToHome}> 主頁</Button>
                 <Button onClick={ToUpload}> 拾獲學生證</Button>
+                <Button onClick={ToUpload}> 遺失熱區</Button>
             </Left>
           </Sider>
           <Layout>

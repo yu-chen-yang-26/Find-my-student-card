@@ -2,10 +2,12 @@ import StepsBar from "../components/Step";
 import UploadPic from "../components/UpPic";
 import InfoForm from "../components/Form";
 import styled from "styled-components";
+import UpMap from "../components/UpMap";
 import Icon, { HomeOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom'
+import { useLoadScript } from "@react-google-maps/api";
 
 const { Header, Footer, Sider, Content } = Layout;
 const Button = styled.button`
@@ -57,38 +59,43 @@ const Middle = styled.div`
   padding: 50px;
   background-color: #F8F8FF;
 `;
-const Upload =() => {
-    const navigate = useNavigate();
-    const {currentStep} = useParams();
-    const ToHome = () => {
-      navigate('/home');
-      }
-    const ToInfo = () => {
-      navigate('/detail');
-      }
-    const NextPage = () => {
-      const nextStep = parseInt(currentStep) + 1;
-      navigate('/upload/' + nextStep);
-    }
-    return (
-      <Layout>
-        <Header style={{ minHeight: '100px',backgroundColor:"white" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
-        <Content style={{ backgroundColor:"white" }}>
-          <Wrapper>
-            {currentStep==="0"?
+const Upload = () => {
+  const navigate = useNavigate();
+  const { currentStep } = useParams();
+  const ToHome = () => {
+    navigate('/home');
+  }
+  const ToInfo = () => {
+    navigate('/detail');
+  }
+  const NextPage = () => {
+    const nextStep = parseInt(currentStep) + 1;
+    navigate('/upload/' + nextStep);
+  }
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+  });
+  return (
+    <Layout>
+      <Header style={{ minHeight: '100px', backgroundColor: "white" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
+      <Content style={{ backgroundColor: "white" }}>
+        <Wrapper>
+          {currentStep === "0" ?
             <UploadPic component={<>
-                  <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={NextPage}>Done</Button>
-                  <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button></>}/>
-            :currentStep==="1"?<Middle><InfoForm/></Middle>:""}    
-          </Wrapper>
-          {/* <Button style={{margin:'20px'}} onClick={ToHome}>回到主頁</Button> */}
-          <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
-          {/* {currentStep==!0?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""} */}
-          <HomeBT style={{margin:'20px', right:"20px", backgroundColor: "#FFD700"}} onClick={ToInfo}>Finished</HomeBT>
-        </Content>
-            
-      </Layout>
-    )
+              <Button style={{ margin: '20px', position: "absolute", right: "0", bottom: '0' }} onClick={NextPage}>Done</Button>
+              <Button style={{ margin: '20px', position: "absolute", right: "120px", bottom: '0' }} onClick={NextPage}>Skip</Button></>} />
+            : currentStep === "1" ? <Middle><InfoForm /></Middle>
+              : currentStep === "2" && isLoaded == true ? <Middle><UpMap component={<>
+                <Button onClick={NextPage}>Done</Button></>} /></Middle> : ""}
+        </Wrapper>
+        {/* <Button style={{margin:'20px'}} onClick={ToHome}>回到主頁</Button> */}
+        <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome} /></HomeBT>
+        {/* {currentStep==!0?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""} */}
+        <HomeBT style={{ margin: '20px', right: "20px", backgroundColor: "#FFD700" }} onClick={ToInfo}>Finished</HomeBT>
+      </Content>
+
+    </Layout>
+  )
 }
 
 export default Upload
