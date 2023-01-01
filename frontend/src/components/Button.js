@@ -34,7 +34,7 @@ const BigButton =({mode})=>{
     navigate('/home');
   }
   const ToUpload = () => {
-    navigate('/upload');
+    navigate('/upload/0');
   }
     return (
         <Container>

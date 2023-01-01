@@ -4,9 +4,8 @@ import InfoForm from "../components/Form";
 import styled from "styled-components";
 import Icon, { HomeOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { usePage } from '../container/hooks/useContext'
 import { Layout } from 'antd';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const { Header, Footer, Sider, Content } = Layout;
 const Button = styled.button`
@@ -59,44 +58,32 @@ const Middle = styled.div`
   background-color: #F8F8FF;
 `;
 const Upload =() => {
-    const {setHome, setInfo, setStep, currentStep} = usePage();
-    const NextPage = () => {
-      var Num = currentStep
-      setStep(currentStep+1)
-    }
-    const LastPage = () => {
-      var Num = currentStep
-      setStep(currentStep-1)
-    }
     const navigate = useNavigate();
+    const {currentStep} = useParams();
     const ToHome = () => {
       navigate('/home');
       }
     const ToInfo = () => {
       navigate('/detail');
       }
-    const Steps = () => {
-     return (
-        <StepsBar currentStep={currentStep}></StepsBar>
-     ) 
+    const NextPage = () => {
+      const nextStep = parseInt(currentStep) + 1;
+      navigate('/upload/' + nextStep);
     }
-    useEffect(()=> {
-      <StepsBar/>
-      },[setStep,currentStep])
     return (
       <Layout>
-        <Header style={{ minHeight: '100px',backgroundColor:"white" }}><StepsBar currentStep={currentStep}></StepsBar></Header>
+        <Header style={{ minHeight: '100px',backgroundColor:"white" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
         <Content style={{ backgroundColor:"white" }}>
           <Wrapper>
-            {currentStep===0?
+            {currentStep==="0"?
             <UploadPic component={<>
-                  <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={() => NextPage()}>Done</Button>
+                  <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={NextPage}>Done</Button>
                   <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button></>}/>
-            :currentStep===1?<Middle><InfoForm/></Middle>:""}    
+            :currentStep==="1"?<Middle><InfoForm/></Middle>:""}    
           </Wrapper>
           {/* <Button style={{margin:'20px'}} onClick={ToHome}>回到主頁</Button> */}
           <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
-          {currentStep==!0?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
+          {/* {currentStep==!0?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""} */}
           <HomeBT style={{margin:'20px', right:"20px", backgroundColor: "#FFD700"}} onClick={ToInfo}>Finished</HomeBT>
         </Content>
             

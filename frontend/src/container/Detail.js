@@ -25,7 +25,7 @@ const Detail = ({ setInfo }) => {
         <Background component={
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Col  md={0} lg={7}  ><Map/></Col>
+              <Col  md={0} lg={7}  ><Map positions={[]}/></Col>
               <Card />
               <Button style={{position:"absolute", right:"20%", bottom:"10%"}} >物歸原主</Button>
             </>} 

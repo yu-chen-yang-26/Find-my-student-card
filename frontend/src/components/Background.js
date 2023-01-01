@@ -84,7 +84,7 @@ const Container = styled.div`
 const Background=({component})=> {
   const navigate = useNavigate();
   const ToUpload = () => {
-    navigate('/upload');
+    navigate('/upload/0');
   }
   const ToHome = () => {
     navigate('/home');

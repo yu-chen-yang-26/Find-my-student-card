@@ -7,7 +7,6 @@ import Upload from './container/Uploadpage';
 import BG from './components/BGpic';
 import Login from './container/Login';
 import { useState } from 'react';
-import { usePage } from './container/hooks/useContext';
 import { ThemeProvider } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -18,7 +17,7 @@ function App() {
     {/* <Upload/> */}
       <Route path="/detail" element={<Detail/>} />
       <Route path="/home" element={<Homepage/>} />
-      <Route path="/upload" element={<Upload/>} />
+      <Route path="/upload/:currentStep" element={<Upload/>} />
       <Route path="/" element={<Login/>} />
     </Routes>
   </Router> 

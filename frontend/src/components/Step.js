@@ -3,13 +3,7 @@ import { Steps, ConfigProvider } from 'antd';
 
 // const description = 'This is a description.';
 
-const StepsBar = (currentStep) => {
-  useEffect(()=> {
-    <Steps/>
-    console.log("<Steps/>",currentStep)
-
-    },[currentStep])
-
+const StepsBar = ({currentStep}) => {
   return (
   <ConfigProvider
     theme={{

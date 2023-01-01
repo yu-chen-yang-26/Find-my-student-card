@@ -18,18 +18,18 @@ function Map(props) {
   };
   const handleActiveMarker = (props) => {
     // console.log("activeMarker=", activeMarker)
-    console.log("id=",props.id,"name=",props.name)
+    // console.log("id=",props.ID)
     // if (marker === activeMarker) {
     //   return;
     // }
-    setActiveMarker(props.id);
+    setActiveMarker(props.ID);
   };
-  useEffect(()=>{
-    console.log("activeMarker=",activeMarker)
-    }, [activeMarker]
-)
+  // useEffect(()=>{
+  //   console.log("activeMarker=",activeMarker)
+  //   }, [activeMarker]
+  // )
   const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
-  console.log("props.positions=",props.positions)
+  // console.log("props.positions=",props.positions)
   return (
     <MapStyle>
       <GoogleMap
@@ -42,20 +42,20 @@ function Map(props) {
       // zoom={10}
       >
         <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
-        {props.positions.map(( {id, name, position }) => {
-          console.log("id=",id,"name=",name,"position=",position);
+        {props.positions.map(( {ID, time, position }) => {
+          // console.log("id=",ID,"position=",position);
           return(
           <Marker
-            key={id}
+            key={ID}
             position={position}
-            onClick={() => handleActiveMarker({id,name})}
+            onClick={() => handleActiveMarker({ID,time})}
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
           >
-            {activeMarker == id ? (
+            {activeMarker == ID ? (
               <InfoWindowF onCloseClick={() => setActiveMarker('')}>
                 <>
-                  <div>{name}</div>
-                  <div>{id}</div>
+                  <div>{ID}</div>
+                  <div>{time}</div>
                 </>
               </InfoWindowF>
             ) : null}
