@@ -18,16 +18,16 @@ const StepsBar = ({currentStep}) => {
     items={[
       {
         title: 'Finished',
-        description: "上傳學生證",
+        description: "上傳學生證及相關照片",
       },
       {
         title: 'In Progress',
-        description: "填寫表單",
-        subTitle: 'Left 00:00:08',
+        description: "地圖定位",
+        // subTitle: 'Left 00:00:08',
       },
       {
         title: 'Waiting',
-        description: "確認",
+        description: "填寫表單",
       },
     ]}
   /></ConfigProvider>

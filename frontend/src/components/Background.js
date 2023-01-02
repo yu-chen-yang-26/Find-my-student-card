@@ -1,9 +1,8 @@
 import styled from "styled-components"
 import { Avatar } from 'antd';
-import Table from "./Table";
-import Search from "./Searchbar";
 import { Layout, Row } from 'antd';
 import Pic from "../Pic/bear.jpg";
+
 import {
   HomeOutlined,
   LoadingOutlined,
@@ -13,6 +12,7 @@ import {
   InstagramOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'
+// import Sider from "./Sider";
 
 const {  Footer, Sider, Content } = Layout;
 const Wrapper = styled.div`
@@ -101,17 +101,7 @@ const Background=({component})=> {
     navigate('/home');
     }
     return(
-        // <Wrapper>
-        //     <Left>
-        //         <Avatar shape="square" size={100} src={Pic}></Avatar>
-        //         <Button onClick={ToHome}> 主頁</Button>
-        //         <Button onClick={ToUpload}> 拾獲學生證</Button>
-        //     </Left>
-        //     <Right>
-        //         <h1>Find my student card</h1>
-        //         {component}
-        //     </Right>
-        // </Wrapper>
+
         <Layout style={{ minHeight: '100vh' }}>
           <Sider style={{ backgroundImage: "linear-gradient(to bottom right, #9796f0, #fbc7d4)" ,borderBlockColor: '#DBC8CE',boxShadow: "5px 0px 5px 2px rgba(0, 0, 0, 0.2)" }} width={150} >
             <Left>

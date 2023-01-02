@@ -1,16 +1,38 @@
 import React from 'react';
 import { Table, ConfigProvider } from 'antd';
 import styled from 'styled-components'
+import { useNavigate, useParams } from 'react-router-dom'
 const StyledElement = styled(Table)`
-  .ant-table-wrapper {
-    width: 98%;
-    height: 100%;
-    position: relative;
-    top: 30px;
+  // .ant-table-wrapper {
+  //   width: 98%;
+  //   height: 100%;
+  //   position: relative;
+  //   top: 30px;
+  // }
+  .ant-table-cell {
+    background-color: #C9D6FF;
+    // color: white;
+    &:hover{
+      background-color: #CC95C0;
+    }
   }
-  .ant-table {
-    background-color: rgb(9,100,100);
-    color: white;
+  .ant-table-column-has-sorters{
+    &:hover{
+      background-color: #CC95C0;
+    }
+  }
+  .ant-table-row {
+    &:nth-child(even){
+      background-color: gray;
+    }
+   
+  }
+  .ant-table-cell-row{
+      background-color: #faaca8;
+      &:hover{
+        background-color: #faaca8;
+      }
+    }
   }
 `
 const columns = [
@@ -42,31 +64,46 @@ const columns = [
   {
     title: 'founded',
     dataIndex: 'founded',
+    fixed: 'right',
     filters: [
-        {
-          text: 'found',
-          value: 'found',
-        },
-        {
-          text: 'Not yet',
-          value: 'Not yet',
-        },
-      ],
-      onFilter: (value, record) => record.founded.indexOf(value) === 0,
+      {
+        text: 'found',
+        value: 'found',
+      },
+      {
+        text: 'Not yet',
+        value: 'Not yet',
+      },
+    ],
+    onFilter: (value, record) => record.founded.indexOf(value) === 0,
   },
 ];
 
 const onChange = (pagination, filters, sorter, extra) => {
   console.log('params', pagination, filters, sorter, extra);
 };
-const table = (data) => {
-return(<ConfigProvider 
-theme={{token: {
-  colorPrimary: "#faad14",
-},
-// }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
-}}><Table style={{ height:'400px',top:"100px",margin:"20px"}} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
-          scroll={{y:'calc(100vh - 400px)'}}/></ConfigProvider>
-)
+const SearchTable = (data) => {
+  const navigate = useNavigate();
+  const toDetail = (record) => {
+    const id = record.ID
+    console.log(id)
+    navigate('/Detail/' );
+        }
+  return (<ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: "#faad14",
+      },
+      // }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
+    }}><StyledElement style={{ height: '400px', top: "100px", margin: "20px" }} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
+      scroll={{ x: "450px", y: 'calc(100vh - 400px)' }}
+      onRow={record => {
+        return {
+          onClick: event => { toDetail(record) }
+        }}}
+        // rowClassName = {this.setClassName}
+       /></ConfigProvider>
+       
+  )
 }
-export default table;
+export default SearchTable; 

@@ -9,6 +9,7 @@ const MapStyle = styled.div`
   background-color: gray;
   border: 2px solid palevioletred;
   background-image: url(${props => props.img});
+  box-shadow:0 0 20px 0px Gray;
 `;
 function Map(props) {
   const [activeMarker, setActiveMarker] = useState('');

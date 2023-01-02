@@ -100,7 +100,7 @@ const InfoForm = ({NextPage}) => {
       },
     }}>
       <Form.Item {...buttonItemLayout}>
-        <Button type="primary" onClick={() =>NextPage()}>Submit</Button>
+        {/* <Button type="primary" onClick={() =>NextPage()}>Submit</Button> */}
       </Form.Item></ConfigProvider>
     </Form>
   );
