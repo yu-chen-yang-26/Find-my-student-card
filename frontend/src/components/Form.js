@@ -60,7 +60,7 @@ const InfoForm = ({NextPage}) => {
         ]}>
         <Input />
       </Form.Item>
-      <Form.Item name="Location Zone" label="Location Zone" {...config}>
+      <Form.Item name="Location Found" label="Location Found" {...config}>
         <Select>
           <Select.Option value="社科院">社科院</Select.Option>
           <Select.Option value="圖書館">圖書館</Select.Option>
@@ -82,13 +82,13 @@ const InfoForm = ({NextPage}) => {
           ]}
         />
       </Form.Item> */}
-      <Form.Item name="DatePicker" label="DatePicker" {...config}>
+      <Form.Item name="Date-Found" label="Date-Time Found" {...config}>
         <DatePicker />
       </Form.Item>
-      <Form.Item name="time-picker" label="TimePicker" {...config}>
+      <Form.Item name="Time Found" label="Time Found" {...config}>
         <TimePicker />
       </Form.Item>
-      <Form.Item label="備註">
+      <Form.Item label="Remark">
         <Input />
       </Form.Item>
       {/* <Form.Item label="InputNumber">

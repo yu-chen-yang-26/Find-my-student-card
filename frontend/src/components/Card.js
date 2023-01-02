@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Carousel,Card,Col  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined} from '@ant-design/icons';
-import long from "../Pic/長.png";
+import long from "../Pic/長.PNG";
 import Bear from "../Pic/bear.jpg";
 import NTU from "../Pic/NTU.jpg";
 import galaxy from "../Pic/Galaxy.jpg";

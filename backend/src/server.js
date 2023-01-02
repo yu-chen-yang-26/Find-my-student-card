@@ -16,7 +16,6 @@ app.use('/', router);
 
 db.once('open', async () => {
     console.log('MongoDB connected!');
-<<<<<<< Updated upstream
     await new Card(
         {ID: 'r10521314',
         location: '圖書館',
@@ -38,7 +37,6 @@ db.once('open', async () => {
         position: { lat: 25.0175809726526, lng: 121.54213047243042 },
         time: '2022-12-21',
         founded: 'found',}).save();
-=======
     // await new Card(
     //     {ID: '1',
     //     location: '圖書館',
@@ -69,7 +67,6 @@ db.once('open', async () => {
     //     info: 'test',
     //     time: '2022-12-25',
     //     founded: 'found',}).save();
->>>>>>> Stashed changes
 })
 
 const PORT = process.env.PORT || 4000;
