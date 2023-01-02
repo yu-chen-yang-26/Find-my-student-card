@@ -11,12 +11,12 @@ const Wrapper = styled.div`
 `;
 const UploadPic = ({component}) => {
   const [fileList, setFileList] = useState([
-    // {
-    //   uid: '-1',
-    //   name: 'image.png',
-    //   status: 'done',
-    //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // },
+    {
+      uid: '-1',
+      name: 'image.png',
+      status: 'done',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    },
   ]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -39,7 +39,7 @@ const UploadPic = ({component}) => {
     <Wrapper style={{position:"relative"}}>
         <ImgCrop rotate aspect={1.6/1}>
             <Upload
-                style={{width:'100px'}}
+                style={{ width: 300 }}
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
                 fileList={fileList}

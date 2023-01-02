@@ -22,13 +22,12 @@ const onChange = (value) => {
   console.log(value);
 };
 const search = () => <>
-<Space style={{right:"110px",top:"120px",position:"absolute"}}>
+<Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
     <Input allowClear placeholder="Enter the Student ID"></Input>
     <Col xs={6}><Cascader options={options} onChange={onChange} placeholder="Please select" /></Col>
     <Tooltip title="search">
         <Button shape="circle" icon={<SearchOutlined />} />
     </Tooltip>
-  
 </Space>
 </>
 export default search;

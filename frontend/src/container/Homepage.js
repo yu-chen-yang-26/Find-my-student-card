@@ -23,10 +23,11 @@ const Homepage = () => {
         <Background component={
             <>
                 {/* <Space size={"large"}> */}
-                <Col xs={0} md={13} lg={13} xl={11}>
-                    {isLoaded ? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={data} /> : null}
+
+                <Col xs={0} md={13} lg={12} >
+                    {isLoaded ? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={[]} /> : null}
                 </Col>
-                <Col xs={{ span: 20, offset: 1 }} md={{ span: 9, offset: 0 }} lg={{ span: 9, offset: 0 }} xl={{ span: 11, offset: 0 }}><Table data={data} /></Col>
+                <Col xs={{ span: 24, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 12, offset: 0 }} ><Table data={data} /></Col>
                 {/* </Space> */}
                 <Search />
             </>

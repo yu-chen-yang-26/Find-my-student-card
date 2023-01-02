@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     font-size: 2em;
     margin: 10px ;
     color: palevioletred;
+
  }`;
 const Title = () => (
     <Wrapper><h1>Find my student card</h1></Wrapper>

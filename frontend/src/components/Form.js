@@ -12,7 +12,7 @@ import {
   Switch,
   TreeSelect,
 } from 'antd';
-const InfoForm = () => {
+const InfoForm = ({NextPage}) => {
     const [componentSize, setComponentSize] = useState('default');
     const onFormLayoutChange = ({ size }) => {
         setComponentSize(size);}
@@ -100,7 +100,7 @@ const InfoForm = () => {
       },
     }}>
       <Form.Item {...buttonItemLayout}>
-        <Button type="primary">Submit</Button>
+        <Button type="primary" onClick={() =>NextPage()}>Submit</Button>
       </Form.Item></ConfigProvider>
     </Form>
   );

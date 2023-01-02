@@ -65,7 +65,7 @@ theme={{token: {
   colorPrimary: "#faad14",
 },
 // }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
-}}><Table style={{ height:'400px',top:"100px"}} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
+}}><Table style={{ height:'400px',top:"100px",margin:"20px"}} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
           scroll={{y:'calc(100vh - 400px)'}}/></ConfigProvider>
 )
 }

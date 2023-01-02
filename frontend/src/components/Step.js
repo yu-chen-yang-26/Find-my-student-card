@@ -8,7 +8,7 @@ const StepsBar = ({currentStep}) => {
   <ConfigProvider
     theme={{
       token: {
-        colorPrimary: 'palevioletred',
+        colorPrimary: "#ba5370",
       },
     }}
   >

@@ -4,8 +4,8 @@ import { GoogleMap, InfoWindow, Marker,InfoWindowF } from "@react-google-maps/ap
 
 const MapStyle = styled.div`
   height: 400px;
-  width: 700px;
-  margin: 0 30px 0 20px;
+  // width: 700px;
+  margin: 20px 30px 0 20px;
   background-color: gray;
   border: 2px solid palevioletred;
   background-image: url(${props => props.img});

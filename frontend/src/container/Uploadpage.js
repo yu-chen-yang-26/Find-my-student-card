@@ -72,6 +72,10 @@ const Upload = () => {
     const nextStep = parseInt(currentStep) + 1;
     navigate('/upload/' + nextStep);
   }
+  const LastPage = () => {
+    const lastStep = parseInt(currentStep) - 1;
+    navigate('/upload/' + lastStep);
+        }
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
@@ -81,21 +85,63 @@ const Upload = () => {
       <Content style={{ backgroundColor: "white" }}>
         <Wrapper>
           {currentStep === "0" ?
-            <UploadPic component={<>
-              <Button style={{ margin: '20px', position: "absolute", right: "0", bottom: '0' }} onClick={NextPage}>Done</Button>
-              <Button style={{ margin: '20px', position: "absolute", right: "120px", bottom: '0' }} onClick={NextPage}>Skip</Button></>} />
-            : currentStep === "1" ? <Middle><InfoForm /></Middle>
+           <UploadPic component={<>
+            <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={() => NextPage()}>Done</Button>
+            <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button></>}/>
+            : currentStep === "1" ? <Middle><InfoForm NextPage={() =>NextPage()}/></Middle>
               : currentStep === "2" && isLoaded == true ? <Middle><UpMap component={<>
                 <Button onClick={NextPage}>Done</Button></>} /></Middle> : ""}
         </Wrapper>
-        {/* <Button style={{margin:'20px'}} onClick={ToHome}>回到主頁</Button> */}
-        <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome} /></HomeBT>
-        {/* {currentStep==!0?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""} */}
-        <HomeBT style={{ margin: '20px', right: "20px", backgroundColor: "#FFD700" }} onClick={ToInfo}>Finished</HomeBT>
+        <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
+        {currentStep!=="0"?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
+        <HomeBT style={{margin:'20px', right:"20px", backgroundColor: "#FFD700"}} onClick={ToInfo}>Finished</HomeBT>
       </Content>
-
     </Layout>
   )
+// const Upload =() => {
+//     const {setHome, setInfo} = usePage();
+//     const [currentStep,setStep]= useState(0);
+//     const NextPage = () => {
+//       var Num = currentStep
+//       setStep(currentStep+1)
+//     }
+//     const LastPage = () => {
+//       var Num = currentStep
+//       setStep(currentStep-1)
+//     }
+//     const navigate = useNavigate();
+//     const ToHome = () => {
+//       navigate('/home');
+//       }
+//     const ToInfo = () => {
+//       navigate('/detail');
+//       }
+//     const Steps = () => {
+//      return (
+//         <StepsBar currentStep={currentStep}></StepsBar>
+//      ) 
+//     }
+//     useEffect(()=> {
+//       <StepsBar/>
+//       },[setStep,currentStep])
+//     return (
+//       <Layout>
+//         <Header style={{ minHeight: '100px',backgroundColor:"white" }}><StepsBar currentStep={currentStep}></StepsBar></Header>
+//         <Content style={{ backgroundColor:"white" }}>
+//           <Wrapper>
+//           {/* {currentStep==0? */}
+//           {currentStep==0?<UploadPic component={<>
+//                   <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={() => NextPage()}>Done</Button>
+//                   <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button></>}/>
+//             :currentStep==1?<Middle><InfoForm NextPage={() =>NextPage()}/></Middle>:"Map" }
+//           </Wrapper>
+//           {/* <Button style={{margin:'20px'}} onClick={ToHome}>回到主頁</Button> */}
+//           <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
+//           {currentStep!=0?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
+//           <HomeBT style={{margin:'20px', right:"20px", backgroundColor: "#FFD700"}} onClick={ToInfo}>Finished</HomeBT>
+//         </Content>
+//       </Layout>
+//     )
 }
 
 export default Upload
