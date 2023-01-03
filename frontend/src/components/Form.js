@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { ConfigProvider } from 'antd';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import axios from '../api';
+import styled from "styled-components";
 import {
   Button,
+  message,
   Cascader,
   DatePicker,
   Form,
@@ -13,29 +16,77 @@ import {
   Switch,
   TreeSelect,
 } from 'antd';
-const InfoForm = () => {
-  const navigate = useNavigate();
-  const nextPage = () => {
-    navigate('/upload/2');
+const HomeBT = styled.button`
+  position: absolute;
+  bottom: 0;
+  margin: 15px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  border: transparent;
+  box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  background: palevioletred;
+  &:hover {
+    margin: 15px;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    font-size: 1.2em;
   }
-    const [componentSize, setComponentSize] = useState('default');
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);}
-    const buttonItemLayout = 
+`
+const InfoForm = ({setImageList, setLocation}) => {
+  const { state } = useLocation();
+  const [form] = Form.useForm();
+  const ID = Form.useWatch('Student ID', form);
+  const location = Form.useWatch('Location Zone', form);
+  const date = Form.useWatch('Date-Found', form);
+  const time = Form.useWatch('Time Found', form);
+  const info = Form.useWatch('Remark', form);
+
+  const navigate = useNavigate();
+  const handleSubmit = async () => {
+    if (ID && location && date && time) {
+      var a = new Date(date).toLocaleDateString();
+      var b = new Date(time).toLocaleTimeString();
+      const { data: { message } } 
+      = await axios.post('/submit',
+      {params: {
+        ID: ID,
+        location: location,
+        time: a + ' ' + b,
+        info: info? info: '',
+        image: state.imageList,
+        position: state.location,
+      }});
+      if (message === 'success') {
+        setImageList([]);
+        setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
+        navigate('/upload/3');
+      }
+    }else{
+      message.error('Please fill the form correctly.')
+    }
+  };
+  const [componentSize, setComponentSize] = useState('default');
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size);
+  }
+  const buttonItemLayout = {
+    wrapperCol: { span: '10', offset: '8' },
+  };
+  const config = {
+    rules: [
         {
-            wrapperCol: { span: '10', offset: '8' },
-            };
-    const config = {
-        rules: [
-            {
-            type: 'object',
-            required: true,
-            message: 'Please select!',
-            },
-        ],
-        };
+        type: 'object',
+        required: true,
+        message: 'Please select!',
+        },
+    ],
+  };
   return (
+    <>
     <Form
+      form={form}
       labelCol={{
         span: 8,
       }}
@@ -69,6 +120,7 @@ const InfoForm = () => {
           {
             type: 'string',
             required: true,
+            message: 'Please select',
           },
         ]}>
         <Select>
@@ -98,7 +150,7 @@ const InfoForm = () => {
       <Form.Item name="Time Found" label="Time Found" {...config}>
         <TimePicker />
       </Form.Item>
-      <Form.Item label="Remark">
+      <Form.Item name="Remark" label="Remark">
         <Input />
       </Form.Item>
       {/* <Form.Item label="InputNumber">
@@ -109,10 +161,10 @@ const InfoForm = () => {
         colorPrimary: "#faad14",
       },
     }}>
-      <Form.Item {...buttonItemLayout}>
-        {/* <Button type="primary" onClick={() =>NextPage()}>Submit</Button> */}
-      </Form.Item></ConfigProvider>
+      </ConfigProvider>
     </Form>
+    <HomeBT onClick={handleSubmit} style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }}>Submit</HomeBT>
+    </>
   );
 };
 export default InfoForm;

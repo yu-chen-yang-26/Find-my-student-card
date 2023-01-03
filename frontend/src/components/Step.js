@@ -17,16 +17,16 @@ const StepsBar = ({currentStep}) => {
     current={currentStep}
     items={[
       {
-        title: 'Finished',
+        title: currentStep === 0? 'In Progress':'Finished',
         description: "上傳學生證及相關照片",
       },
       {
-        title: 'In Progress',
+        title: currentStep === 1? 'In Progress': currentStep === 0? 'Waiting': 'Finished',
         description: "地圖定位",
         // subTitle: 'Left 00:00:08',
       },
       {
-        title: 'Waiting',
+        title: currentStep === 2? 'In Progress': 'Waiting',
         description: "填寫表單",
       },
     ]}
