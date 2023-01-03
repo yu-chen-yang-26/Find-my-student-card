@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ConfigProvider } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   Button,
   Cascader,
@@ -12,7 +13,11 @@ import {
   Switch,
   TreeSelect,
 } from 'antd';
-const InfoForm = ({NextPage}) => {
+const InfoForm = () => {
+  const navigate = useNavigate();
+  const nextPage = () => {
+    navigate('/upload/2');
+  }
     const [componentSize, setComponentSize] = useState('default');
     const onFormLayoutChange = ({ size }) => {
         setComponentSize(size);}
@@ -60,7 +65,12 @@ const InfoForm = ({NextPage}) => {
         ]}>
         <Input />
       </Form.Item>
-      <Form.Item name="Location Zone" label="Location Zone" {...config}>
+      <Form.Item name="Location Zone" label="Location Zone" rules={[
+          {
+            type: 'string',
+            required: true,
+          },
+        ]}>
         <Select>
           <Select.Option value="社科院">社科院</Select.Option>
           <Select.Option value="圖書館">圖書館</Select.Option>
@@ -100,7 +110,7 @@ const InfoForm = ({NextPage}) => {
       },
     }}>
       <Form.Item {...buttonItemLayout}>
-        <Button type="primary" onClick={() =>NextPage()}>Submit</Button>
+        <Button type="primary" onClick={nextPage}>Submit</Button>
       </Form.Item></ConfigProvider>
     </Form>
   );
