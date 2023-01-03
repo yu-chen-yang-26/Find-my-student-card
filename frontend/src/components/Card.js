@@ -55,8 +55,8 @@ const Button = styled.button`
     font-weight:bold;
   }
 `;
-const Table2 = (
-  <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
+const Table2 = (data) => {
+  return (<div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
     <Card
       title="拾獲資訊"
       bordered={true}
@@ -67,26 +67,31 @@ const Table2 = (
         fontSize: 20,
       }}
     >
+      <tbody>
       <tr>
-        <th>學號</th>
-        <td>R********</td>
+        <th>學號:</th>
+        <td>{data.ID}</td>
       </tr>
       <tr>
-        <th>地點</th>
-        <td>土木系</td>
+        <th>地點:</th>
+        <td>{data.location}</td>
       </tr>
       <tr>
-        <th>備註</th>
-        <td>大門口右邊樹上</td>
+        <th>備註:</th>
+        <td>{data.info}</td>
       </tr>
+      </tbody>
       <Button >物歸原主</Button>
 
     </Card>
-  </div>
-)
+  </div>)
+}
 
-const MixCard = () => {
-  const bannerList = [long,Bear,NTU,galaxy]
+const MixCard = ({data, image}) => {
+  // const bannerList = [image.map(element => 
+  //   "data:image/"+element.img.contentType+";base64,"+element.img.data.toString('base64')
+  // )]
+  const bannerList = [long, Bear, NTU, galaxy]
   const [listNum, setListNum] = useState(0);
   const Next = () => {
     var num = listNum
@@ -112,7 +117,7 @@ const MixCard = () => {
             <button onClick={Last}><CaretRightOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
           </Pic>
         {/* </Col> */}
-        {Table2}
+        {Table2(data)}
       </div>
     </>
   )

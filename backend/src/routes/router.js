@@ -47,4 +47,21 @@ router.post('/sendMail', async (req, res) => {
     await new Mail({...req.body.params}).save();
     res.json({message: 'success'});
 });
+
+router.get('/detail', async (req, res) => {
+    await Card.findOne({ID: req.query.ID, time: req.query.time})
+    .exec(async function(err, data){
+        if (err) {
+            res.status(403).send({dataList: [], imageList: [] });
+        }else{
+            let imageList = [];  
+            for (let index = 0; index < data.image.length; index++) {
+                const element = data.image[index];
+                const temp = await Image.findOne({element});
+                imageList = [...imageList, temp];
+            }          
+            res.status(200).send({dataList: data, imageList: imageList });
+        }
+    });
+});
 export default router;

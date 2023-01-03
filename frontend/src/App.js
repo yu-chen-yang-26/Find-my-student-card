@@ -16,7 +16,7 @@ function App() {
   <Router>
     <Routes>
     {/* <Upload/> */}
-      <Route path="/detail" element={<Detail/>} />
+      <Route path="/detail/:id/:time" element={<Detail/>} />
       <Route path="/home" element={<Homepage/>} />
       <Route path="/upload/:currentStep" element={<Upload/>} />
       <Route path="/" element={<Login/>} />

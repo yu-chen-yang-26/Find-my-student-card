@@ -49,7 +49,7 @@ const InfoForm = ({setImageList, setLocation}) => {
   const handleSubmit = async () => {
     if (ID && location && date && time) {
       const a = new Date(date).toLocaleDateString();
-      const b = new Date(time).toLocaleTimeString();
+      const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
       const { data: { message, SendPermition} } 
       = await axios.post('/submit',
       {params: {

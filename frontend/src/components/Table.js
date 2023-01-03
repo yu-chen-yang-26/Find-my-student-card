@@ -83,10 +83,8 @@ const onChange = (pagination, filters, sorter, extra) => {
 const SearchTable = (data) => {
   const navigate = useNavigate();
   const toDetail = (record) => {
-    const id = record.ID
-    console.log(id)
-    navigate('/Detail/' );
-        }
+    navigate('/Detail/'+record.ID+'/'+Date.parse(record.time));
+  }
   return (<ConfigProvider
     theme={{
       token: {
@@ -96,6 +94,7 @@ const SearchTable = (data) => {
     }}><StyledElement style={{  top: "100px", margin: "25px" }} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
       scroll={{ x: "450px", y: 'calc(100vh - 410px)' }}
       onRow={record => {
+        // console.log(record)
         return {
           onClick: event => { toDetail(record) }
         }}}
