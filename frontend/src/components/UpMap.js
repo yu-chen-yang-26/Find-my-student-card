@@ -19,20 +19,18 @@ const MapStyle = styled.div`
   background-image: url(${props => props.img});
 `;
 const Button = styled.button`
-  width: 100px;
-  height: 50px;
-  background: transparent;
-  border-radius: 3px;
-  border: 2px solid palevioletred;
-  color: palevioletred;
-  margin: 1em 0 0 0;
-//   padding: 0.25em 1em;
-  font-size: 1em;
-
+  margin: 1em 0 0 1em;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  border: transparent;
+  box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  background: palevioletred;
   &:hover {
-    background: palevioletred;
-    color: white;
+    width: 80px;
+    height: 80px;
     cursor: pointer;
+    font-size: 1.2em;
   }
 `;
 

@@ -3,14 +3,15 @@ import UploadPic from "../components/UpPic";
 import InfoForm from "../components/Form";
 import styled from "styled-components";
 import UpMap from "../components/UpMap";
+import Drag from "../components/Drag";
 import Icon, { HomeOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { Layout } from 'antd';
+import { Layout, Result } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLoadScript } from "@react-google-maps/api";
 import Background from "../components/Background";
 
-const { Header, Footer,  Content } = Layout;
+const { Header, Footer, Content } = Layout;
 const Button = styled.button`
   width: 100px;
   height: 50px;
@@ -29,7 +30,9 @@ const Button = styled.button`
   }
 `;
 const HomeBT = styled.button`
-  margin: 1em 0 0 1em;
+  position: absolute;
+  bottom: 0;
+  margin: 15px;
   width: 60px;
   height: 60px;
   border-radius: 50px;
@@ -37,6 +40,7 @@ const HomeBT = styled.button`
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
   background: palevioletred;
   &:hover {
+    margin: 15px;
     width: 80px;
     height: 80px;
     cursor: pointer;
@@ -44,7 +48,7 @@ const HomeBT = styled.button`
   }
 `
 const Wrapper = styled.div`
-  
+  position: relative;
   border-radius: 3px;
   border: 2px solid palevioletred;
   margin: 10px;
@@ -77,7 +81,7 @@ const Upload = () => {
   const LastPage = () => {
     const lastStep = parseInt(currentStep) - 1;
     navigate('/upload/' + lastStep);
-        }
+  }
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
@@ -101,26 +105,28 @@ const Upload = () => {
     // </Layout>
     <Background component={
       <Layout style={{ backgroundColor: "transparent" }}>
-      <Header style={{ minHeight: '100px', backgroundColor: "transparent" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
-      <Content style={{ backgroundColor: "transparent" }}>
-        <Wrapper>
-          {currentStep === "0" ?
-           <UploadPic component={<>
-            {/* <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={() => NextPage()}>Done</Button>
-            <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button> */}
-            </>}
-            />
-            : currentStep === "1" && isLoaded == true ? <Middle><UpMap/></Middle> 
-            : currentStep === "2" ? <Middle><InfoForm NextPage={() =>NextPage()}/></Middle>: ""}
+        <Header style={{ minHeight: '100px', backgroundColor: "transparent" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
+        <Content style={{ backgroundColor: "transparent" }}>
+          <Wrapper>
+            {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "15%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
+            
+            {currentStep === "0" ?<Drag/>
+              : currentStep === "1" && isLoaded == true ? <Middle><UpMap /></Middle>
+                : currentStep === "2" ? <Middle><InfoForm NextPage={() => NextPage()} /></Middle>
+                  : currentStep === "3" ? <Result
+                    status="success"
+                    title="Successfully Purchased Cloud Server ECS!"
+                    subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+                  /> : ""}
 
-          <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
-          {currentStep!=="0"?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
-          <HomeBT style={{margin:'15px', right:"20px", backgroundColor: "#FFD700"}} onClick={currentStep!=="2"?NextPage:ToInfo}>Done</HomeBT>
-        </Wrapper>
-      </Content>
-    </Layout>
-      }></Background>
-      
+            {/* <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome} /></HomeBT> */}
+            
+            <HomeBT style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Done</HomeBT>
+          </Wrapper>
+        </Content>
+      </Layout>
+    }></Background>
+
   )
 }
 export default Upload

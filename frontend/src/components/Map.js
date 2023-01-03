@@ -5,9 +5,9 @@ import { GoogleMap, InfoWindow, Marker,InfoWindowF } from "@react-google-maps/ap
 const MapStyle = styled.div`
   height: 400px;
   // width: 700px;
-  margin: 20px 30px 0 20px;
+  margin: 20px 30px 0 25px;
   background-color: gray;
-  border: 2px solid palevioletred;
+  border: 4px outset palevioletred;
   background-image: url(${props => props.img});
   box-shadow:0 0 20px 0px Gray;
 `;
