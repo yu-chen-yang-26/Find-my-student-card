@@ -119,7 +119,7 @@ const Background = ({ component }) => {
       <Sider style={{ backgroundImage: "linear-gradient(to bottom right, #9796f0, #fbc7d4)", borderBlockColor: '#DBC8CE', boxShadow: "5px 0px 5px 2px rgba(0, 0, 0, 0.2)" }} width={150} >
         <Left>
           <Avatar shape="square" size={120} src={Pic}></Avatar>
-          <Button onClick={ToHome}> 主頁</Button>
+          <Button onClick={ToHome}> <HomeOutlined style={{ fontSize: '22px' }} onClick={ToHome} /> 主頁</Button>
           <Button onClick={ToUpload}> 拾獲學生證</Button>
           <Button onClick={ToHeatMap}> 遺失熱區</Button>
         </Left>

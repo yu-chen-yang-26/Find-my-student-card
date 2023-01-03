@@ -20,7 +20,7 @@ const Homepage = () => {
         fetchData();
     }, [isLoaded])
     return (
-        <Background component={
+        <Background  component={
             <>
                 {/* <Space size={"large"}> */}
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Carousel,Card,Col  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined} from '@ant-design/icons';
-import long from "../Pic/長.PNG";
+import long from "../Pic/長.png";
 import Bear from "../Pic/bear.jpg";
 import NTU from "../Pic/NTU.jpg";
 import galaxy from "../Pic/Galaxy.jpg";
@@ -59,12 +59,12 @@ const Table2 = (
   <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
     <Card
       title="拾獲資訊"
-      bordered={false}
+      bordered={true}
       style={{
         borderRadius: "0",
         width: 300,
         height: 250,
-        fontSize: 20
+        fontSize: 20,
       }}
     >
       <tr>

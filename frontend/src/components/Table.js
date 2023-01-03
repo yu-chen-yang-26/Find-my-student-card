@@ -3,12 +3,10 @@ import { Table, ConfigProvider } from 'antd';
 import styled from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 const StyledElement = styled(Table)`
-  // .ant-table-wrapper {
-  //   width: 98%;
-  //   height: 100%;
-  //   position: relative;
-  //   top: 30px;
-  // }
+  .ant-spin-container {
+    // background-color: #C9D6FF;
+    box-shadow: 5px -5px 5px Gray;
+  }
   .ant-table-cell {
     background-color: #C9D6FF;
     // color: white;
@@ -22,8 +20,8 @@ const StyledElement = styled(Table)`
     }
   }
   .ant-table-row {
-    &:nth-child(even){
-      background-color: gray;
+    // &:nth-child(even){
+    //   background-color: gray;
     }
    
   }
@@ -95,8 +93,8 @@ const SearchTable = (data) => {
         colorPrimary: "#faad14",
       },
       // }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
-    }}><StyledElement style={{ height: '400px', top: "100px", margin: "20px" }} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
-      scroll={{ x: "450px", y: 'calc(100vh - 400px)' }}
+    }}><StyledElement style={{  top: "100px", margin: "25px" }} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
+      scroll={{ x: "450px", y: 'calc(100vh - 410px)' }}
       onRow={record => {
         return {
           onClick: event => { toDetail(record) }
