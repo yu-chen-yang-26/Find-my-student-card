@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 // import Sider from "./Sider";
 
-const {  Footer, Sider, Content } = Layout;
+const { Footer, Sider, Content } = Layout;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -65,7 +65,7 @@ const Left = styled.div`
   margin: 10px;
   border: 2px solid palevioletred;
   text-align: center;
-`;    
+`;
 const Button = styled.button`
   width: 110px;
   height: 50px;
@@ -92,41 +92,55 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 `
-const Background=({component})=> {
+const Background = ({ component }) => {
   const navigate = useNavigate();
   const ToUpload = () => {
     navigate('/upload/0');
   }
   const ToHome = () => {
     navigate('/home');
-    }
-    return(
-
-        <Layout style={{ minHeight: '100vh' }}>
-          <Sider style={{ backgroundImage: "linear-gradient(to bottom right, #9796f0, #fbc7d4)" ,borderBlockColor: '#DBC8CE',boxShadow: "5px 0px 5px 2px rgba(0, 0, 0, 0.2)" }} width={150} >
-            <Left>
-                <Avatar shape="square" size={120} src={Pic}></Avatar>
-                <Button onClick={ToHome}> 主頁</Button>
-                <Button onClick={ToUpload}> 拾獲學生證</Button>
-                <Button onClick={ToUpload}> 遺失熱區</Button>
-            </Left>
-          </Sider>
-          <Layout>
-            <Content>  
-            <Row justify="space-around" >     
-              <Right style={{position:"relative"}}>  
-                <h1>Find my student card</h1>
-                  {component}
-              </Right> 
-            </Row>       
-            </Content>
-            <Footer style={{ backgroundColor: '#D3CCE3',height:'70px' }}>
-              <InstagramOutlined style={{ fontSize: '26px', color: 'purple',margin:"10px",cursor:"pointer" }}/>
-              <GithubOutlined style={{ fontSize: '26px', color: 'purple',cursor:"pointer" }}/>
-            </Footer>
-          </Layout>
-        </Layout>
-    )
+  }
+  const ToHeatMap = () => {
+    navigate('/HeatMap');
+  }
+  return (
+    // <Wrapper>
+    //     <Left>
+    //         <Avatar shape="square" size={100} src={Pic}></Avatar>
+    //         <Button onClick={ToHome}> 主頁</Button>
+    //         <Button onClick={ToUpload}> 拾獲學生證</Button>
+    //     </Left>
+    //     <Right>
+    //         <h1>Find my student card</h1>
+    //         {component}
+    //     </Right>
+    // </Wrapper>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider style={{ backgroundImage: "linear-gradient(to bottom right, #9796f0, #fbc7d4)", borderBlockColor: '#DBC8CE', boxShadow: "5px 0px 5px 2px rgba(0, 0, 0, 0.2)" }} width={150} >
+        <Left>
+          <Avatar shape="square" size={120} src={Pic}></Avatar>
+          <Button onClick={ToHome}> 主頁</Button>
+          <Button onClick={ToUpload}> 拾獲學生證</Button>
+          <Button onClick={ToHeatMap}> 遺失熱區</Button>
+        </Left>
+      </Sider>
+      <Layout>
+        <Content>
+          <Row justify="space-around" >
+            <Right style={{ position: "relative" }}>
+              <h1>Find my student card</h1>
+              {component}
+            </Right>
+          </Row>
+        </Content>
+        <Footer style={{ backgroundColor: '#D3CCE3', height: '70px' }}>
+          <InstagramOutlined style={{ fontSize: '26px', color: 'purple', cursor: "pointer" }} />
+          <GithubOutlined style={{ fontSize: '26px', color: 'purple', margin: "10px", cursor: "pointer" }} />
+          聯絡我們 最新資訊
+        </Footer>
+      </Layout>
+    </Layout>
+  )
 }
 
 export default Background
