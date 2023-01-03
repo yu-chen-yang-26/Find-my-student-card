@@ -48,9 +48,9 @@ const InfoForm = ({setImageList, setLocation}) => {
   const navigate = useNavigate();
   const handleSubmit = async () => {
     if (ID && location && date && time) {
-      var a = new Date(date).toLocaleDateString();
-      var b = new Date(time).toLocaleTimeString();
-      const { data: { message,SendPermition} } 
+      const a = new Date(date).toLocaleDateString();
+      const b = new Date(time).toLocaleTimeString();
+      const { data: { message, SendPermition} } 
       = await axios.post('/submit',
       {params: {
         ID: ID,
@@ -64,13 +64,9 @@ const InfoForm = ({setImageList, setLocation}) => {
         setImageList([]);
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
-        let Email_Time = a + ' ' + b;
-        console.log("SendPermition=",SendPermition)
         if(SendPermition){
-          console.log("要寄信")
-          sendemail(message,ID,location,Email_Time)
+          sendemail(ID,location,a + ' ' + b);
         }
-        
       }
     }else{
       message.error('Please fill the form correctly.')

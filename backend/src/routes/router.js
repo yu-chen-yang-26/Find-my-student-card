@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {Card, Image} from '../models/schema';
+import {Card, Image, Mail} from '../models/schema';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -34,24 +34,17 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             contentType: req.file.mimetype
         }
     }).save();
-    res.json({
-      id: id._id
-    })
+    res.json({id: id._id});
 });
-const SendOrNot = (req, res) => {
-    let check = 1;//這邊檢查
-    if(check===1){
-        res.json({message: 'success',SendPermition : true});
-    }else{
-        res.json({message: 'success',SendPermition : false});
-    }
-}
+
 router.post('/submit', async (req, res) => {
-    console.log({...req.body.params,
-        founded: 'Not yet'});
-    const data = await new Card({...req.body.params,
+    await new Card({...req.body.params,
         founded: 'Not yet'}).save();
-    SendOrNot(req, res)
-    // res.send({message: 'success'});
+    res.json({message: 'success',SendPermition : true});
+});
+
+router.post('/sendMail', async (req, res) => {
+    await new Mail({...req.body.params}).save();
+    res.json({message: 'success'});
 });
 export default router;
