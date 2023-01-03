@@ -43,7 +43,7 @@ function Map(props) {
       >
         <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
         {props.positions.map(( {ID, time, position }) => {
-          // console.log("id=",ID,"position=",position);
+          console.log("id=",ID,"position=",position);
           return(
           <Marker
             key={ID}

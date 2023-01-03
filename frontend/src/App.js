@@ -3,6 +3,7 @@ import './App.css';
 import styled from "styled-components"
 import Homepage from './container/Homepage';
 import Detail from './container/Detail';
+import Heatmap from './container/Heatmap';
 import Upload from './container/Uploadpage';
 import BG from './components/BGpic';
 import Login from './container/Login';
@@ -19,6 +20,7 @@ function App() {
       <Route path="/home" element={<Homepage/>} />
       <Route path="/upload/:currentStep" element={<Upload/>} />
       <Route path="/" element={<Login/>} />
+      <Route path="/HeatMap" element={<Heatmap/>} />
     </Routes>
   </Router> 
 

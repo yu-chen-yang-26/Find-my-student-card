@@ -92,13 +92,13 @@ const InfoForm = () => {
           ]}
         />
       </Form.Item> */}
-      <Form.Item name="DatePicker" label="DatePicker" {...config}>
+      <Form.Item name="Date-Found" label="Date-Time Found" {...config}>
         <DatePicker />
       </Form.Item>
-      <Form.Item name="time-picker" label="TimePicker" {...config}>
+      <Form.Item name="Time Found" label="Time Found" {...config}>
         <TimePicker />
       </Form.Item>
-      <Form.Item label="備註">
+      <Form.Item label="Remark">
         <Input />
       </Form.Item>
       {/* <Form.Item label="InputNumber">
