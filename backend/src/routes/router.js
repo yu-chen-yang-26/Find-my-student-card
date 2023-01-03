@@ -38,11 +38,20 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       id: id._id
     })
 });
+const SendOrNot = (req, res) => {
+    let check = 1;//這邊檢查
+    if(check===1){
+        res.json({message: 'success',SendPermition : true});
+    }else{
+        res.json({message: 'success',SendPermition : false});
+    }
+}
 router.post('/submit', async (req, res) => {
     console.log({...req.body.params,
         founded: 'Not yet'});
     const data = await new Card({...req.body.params,
         founded: 'Not yet'}).save();
-    res.send({message: 'success'}); 
+    SendOrNot(req, res)
+    // res.send({message: 'success'});
 });
 export default router;

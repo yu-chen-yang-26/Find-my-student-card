@@ -3,6 +3,7 @@ import { ConfigProvider } from 'antd';
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import axios from '../api';
 import styled from "styled-components";
+import sendemail from './Mail';
 import {
   Button,
   message,
@@ -34,6 +35,7 @@ const HomeBT = styled.button`
     font-size: 1.2em;
   }
 `
+
 const InfoForm = ({setImageList, setLocation}) => {
   const { state } = useLocation();
   const [form] = Form.useForm();
@@ -48,7 +50,7 @@ const InfoForm = ({setImageList, setLocation}) => {
     if (ID && location && date && time) {
       var a = new Date(date).toLocaleDateString();
       var b = new Date(time).toLocaleTimeString();
-      const { data: { message } } 
+      const { data: { message,SendPermition} } 
       = await axios.post('/submit',
       {params: {
         ID: ID,
@@ -62,6 +64,13 @@ const InfoForm = ({setImageList, setLocation}) => {
         setImageList([]);
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
+        let Email_Time = a + ' ' + b;
+        console.log("SendPermition=",SendPermition)
+        if(SendPermition){
+          console.log("要寄信")
+          sendemail(message,ID,location,Email_Time)
+        }
+        
       }
     }else{
       message.error('Please fill the form correctly.')
