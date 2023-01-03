@@ -31,21 +31,19 @@ const StyledElement = styled(Upload)`
   //   width:200px;
   // }
 `
-const UploadPic = ({component}) => {
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-  ]);
-  const onChange = ({ fileList: newFileList }) => {
+
+const UploadPic = ({component, imageList, setImageList}) => {
+  const [fileList, setFileList] = useState([]);
+  const onChange = ({ file, fileList: newFileList }) => {
+     const { status, response } = file;
+    if (status === 'done') {
+      const { id: id } = response;
+      setImageList([...imageList, id]);
+    }
     setFileList(newFileList);
-    console.log(fileList);
   };
   const onPreview = async (file) => {
-    let src = file.thumbUrl;
+    let src = file.thumbUrl? file.thumbUrl: file.url;
     if (!src) {
       src = await new Promise((resolve) => {
         const reader = new FileReader();
@@ -65,11 +63,7 @@ const UploadPic = ({component}) => {
                 style={{ width: 300 }}
                 action={"http://localhost:4000/upload"}
                 listType="picture-card"
-                accept=".jpg, .png, .jpeg"
-                // beforeUpload={(file)=>{
-                //   console.log(file);
-                //   // return false;
-                // }}
+                accept="image/jpeg,image/png,image/jpg"
                 fileList={fileList}
                 onChange={onChange}
                 onPreview={onPreview}
@@ -80,7 +74,6 @@ const UploadPic = ({component}) => {
         </ImgCrop>
         {component}
     </Wrapper>
-    
   );
 };
 export default UploadPic;

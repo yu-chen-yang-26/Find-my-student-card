@@ -9,8 +9,8 @@ const CardSchema = new Schema({
                lng: {type: Number, required: true}},
     founded: {type: String, required: true},
     image: [{
-        data: Buffer,
-        contentType: String
+        type: mongoose.Types.ObjectId,
+        ref: 'image'
     }]},
     {timestamps: { createdAt: 'created_at'}}
 )
@@ -25,4 +25,14 @@ const MailSchema = new Schema({
     {timestamps: { createdAt: 'created_at'}}
 )
 const Mail = mongoose.model('mail', MailSchema);
-export {Card, Mail};
+
+const ImageSchema = new Schema({
+    img:
+    {
+        data: Buffer,
+        contentType: String
+    }
+});
+const Image = mongoose.model('image', ImageSchema);
+
+export {Card, Mail, Image};

@@ -58,7 +58,7 @@ class Map2 extends React.Component {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk",
+  apiKey: "", // AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   libraries: ["visualization"]
 })(Map2);
 

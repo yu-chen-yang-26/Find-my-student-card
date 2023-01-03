@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { ConfigProvider } from 'antd';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import axios from '../api';
 import {
   Button,
+  message,
   Cascader,
   DatePicker,
   Form,
@@ -14,28 +16,52 @@ import {
   TreeSelect,
 } from 'antd';
 const InfoForm = () => {
+  const { state } = useLocation();
+  const [form] = Form.useForm();
+  const ID = Form.useWatch('Student ID', form);
+  const location = Form.useWatch('Location Zone', form);
+  const date = Form.useWatch('Date-Found', form);
+  const time = Form.useWatch('Time Found', form);
+  const info = Form.useWatch('Remark', form);
+
   const navigate = useNavigate();
-  const nextPage = () => {
-    navigate('/upload/2');
+  const handleSubmit = async () => {
+    if (ID && location && date && time) {
+      const { data: { message } } 
+      = await axios.post('/submit',
+      {params: {
+        ID: ID,
+        location: location,
+        time: date + ' ' + time,
+        info: info? info: '',
+        imageList: state.imageList,
+        position: state.location,
+      }});
+      console.log(message);
+    }else{
+      message.error('Please fill the form correctly.')
+    }
+    
+  };
+  const [componentSize, setComponentSize] = useState('default');
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size);
   }
-    const [componentSize, setComponentSize] = useState('default');
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);}
-    const buttonItemLayout = 
+  const buttonItemLayout = {
+    wrapperCol: { span: '10', offset: '8' },
+  };
+  const config = {
+    rules: [
         {
-            wrapperCol: { span: '10', offset: '8' },
-            };
-    const config = {
-        rules: [
-            {
-            type: 'object',
-            required: true,
-            message: 'Please select!',
-            },
-        ],
-        };
+        type: 'object',
+        required: true,
+        message: 'Please select!',
+        },
+    ],
+  };
   return (
     <Form
+      form={form}
       labelCol={{
         span: 8,
       }}
@@ -69,6 +95,7 @@ const InfoForm = () => {
           {
             type: 'string',
             required: true,
+            message: 'Please select',
           },
         ]}>
         <Select>
@@ -110,7 +137,7 @@ const InfoForm = () => {
       },
     }}>
       <Form.Item {...buttonItemLayout}>
-        {/* <Button type="primary" onClick={() =>NextPage()}>Submit</Button> */}
+        <Button type="primary" onClick={handleSubmit}>Submit</Button>
       </Form.Item></ConfigProvider>
     </Form>
   );

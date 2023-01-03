@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useCallback , useRef,} from 'react
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import styled from "styled-components";
+import { useLocation } from 'react-router-dom';
 import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
 const Wrapper = styled.div`
   width: 500px;
@@ -36,17 +37,16 @@ const Button = styled.button`
   }
 `;
 
-const UpMap = ({ component }) => {
+const UpMap = ({ component, location, setLocation }) => {
   const [activeMarker, setActiveMarker] = useState('');
-  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   const [pin,setpin] =useState(false);
-  const [draggable, setDraggable] = useState(false)
+  const [draggable, setDraggable] = useState(false);
+  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   // const 
   const toggleDraggable = useCallback(() => {
     // setDraggable((d) => !d)
-    setDraggable(true)
+    setDraggable(true);
   }, [])
-  const [location, setLocation] = useState(mycenter);
   const markerRef = useRef(null);
 
   function onDragEnd(...args) {
@@ -88,7 +88,6 @@ const UpMap = ({ component }) => {
         <Button onClick={toggleDraggable}>Locate</Button>
         {component}
         <br></br>
-        <p>到時候要send的  lat:{location.lat}  lng.{location.lng}</p>
       {/* </MapStyle> */}
     </>
   );

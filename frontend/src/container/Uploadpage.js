@@ -4,7 +4,7 @@ import InfoForm from "../components/Form";
 import styled from "styled-components";
 import UpMap from "../components/UpMap";
 import Icon, { HomeOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Layout } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLoadScript } from "@react-google-maps/api";
@@ -64,6 +64,10 @@ const Middle = styled.div`
 const Upload = () => {
   const navigate = useNavigate();
   const { currentStep } = useParams();
+  const [imageList, setImageList] = useState([]);
+  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  const [location, setLocation] = useState(mycenter);
+
   const ToHome = () => {
     navigate('/home');
   }
@@ -72,12 +76,17 @@ const Upload = () => {
   }
   const NextPage = () => {
     const nextStep = parseInt(currentStep) + 1;
-    navigate('/upload/' + nextStep);
+    console.log(imageList);
+    navigate('/upload/' + nextStep, {
+      state: {
+        imageList: imageList,
+        location: location}
+    });
   }
   const LastPage = () => {
     const lastStep = parseInt(currentStep) - 1;
     navigate('/upload/' + lastStep);
-        }
+  }
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
@@ -105,18 +114,19 @@ const Upload = () => {
       <Content style={{ backgroundColor: "transparent" }}>
         <Wrapper>
           {currentStep === "0" ?
-           <UploadPic component={<>
+           <UploadPic imageList={imageList} setImageList={setImageList} component={<>
             {/* <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={() => NextPage()}>Done</Button>
             <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button> */}
             </>}
             />
-            : currentStep === "1" && isLoaded == true ? <Middle><UpMap/></Middle> 
+            : currentStep === "1" && isLoaded == true ? <Middle><UpMap location={location} setLocation={setLocation}/></Middle> 
             : currentStep === "2" ? <Middle><InfoForm NextPage={() =>NextPage()}/></Middle>: ""}
 
-          <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
-          {currentStep!=="0"?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
-          <HomeBT style={{margin:'15px', right:"20px", backgroundColor: "#FFD700"}} onClick={currentStep!=="2"?NextPage:ToInfo}>Done</HomeBT>
         </Wrapper>
+          {/* <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT> */}
+          {currentStep!=="0"?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
+          <HomeBT style={{margin:'15px', right:"20px", backgroundColor: "#FFD700"}} onClick={currentStep!=="2"?NextPage:ToInfo}>Next page</HomeBT>
+
       </Content>
     </Layout>
       }></Background>

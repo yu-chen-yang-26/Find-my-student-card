@@ -5,9 +5,15 @@ import cors from 'cors';
 import mongo from './mongo';
 import router from './routes/router.js';
 import {Card, Mail} from './models/schema.js';
-mongo.connect();
 
+mongo.connect();
 const app = express();
+app.options('*', (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+    next()
+})
 const server = http.createServer(app);
 const db = mongoose.connection;
 app.use(cors());
