@@ -4,6 +4,7 @@ import { InboxOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
 const { Dragger } = Upload;
 const props = {
+  maxCount: 3,
   name: 'file',
   accept: "image/png, image/jpeg, image/jpg,",
   multiple: true,
@@ -45,14 +46,13 @@ const props = {
 };
 const Drag = () => (
     <ImgCrop rotate aspect={1.6/1}>
-        <Dragger {...props}>
+        <Dragger {...props} style={{height:"110px"}}>
             <p className="ant-upload-drag-icon">
             <InboxOutlined />
             </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-text">Click or drag picture to this area to upload</p>
             <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-            band files
+            The following file types can be uploaded: JPG, JPEG, PNG. Three pictures is the upper limit.
             </p>
         </Dragger>
     </ImgCrop>

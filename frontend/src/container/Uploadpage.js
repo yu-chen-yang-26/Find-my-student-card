@@ -4,7 +4,6 @@ import InfoForm from "../components/Form";
 import styled from "styled-components";
 import UpMap from "../components/UpMap";
 import Drag from "../components/Drag";
-import Icon, { HomeOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Layout, Result } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom'
@@ -32,37 +31,44 @@ const Button = styled.button`
 const HomeBT = styled.button`
   position: absolute;
   bottom: 0;
-  margin: 15px;
+  
   width: 60px;
-  height: 60px;
+  height: 55px;
   border-radius: 50px;
   border: transparent;
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
   background: palevioletred;
   &:hover {
-    margin: 15px;
-    width: 80px;
-    height: 80px;
+    
+    width: 70px;
+    height: 70px;
     cursor: pointer;
     font-size: 1.2em;
   }
 `
 const Wrapper = styled.div`
+  width: 95%;
   position: relative;
   border-radius: 3px;
   border: 2px solid palevioletred;
-  margin: 10px;
-  height: 380px;
+  // margin: 10px;
+  height: 400px;
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   background-color:transparent;
+  overflow-y : auto;
+  @media (max-width: 100px) {
+    border:2px solid black;
+  }
+  
 `;
 const Middle = styled.div`
   width: 700px;
-  height: 350px;
-  padding: 50px;
+  height: 300px;
+  padding: 20px;
   background-color: #F8F8FF;
 `;
 const Upload = () => {
@@ -104,13 +110,12 @@ const Upload = () => {
     //   </Content>
     // </Layout>
     <Background component={
-      <Layout style={{ backgroundColor: "transparent" }}>
-        <Header style={{ minHeight: '100px', backgroundColor: "transparent" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
-        <Content style={{ backgroundColor: "transparent" }}>
+      <div style={{display:"flex", flexWrap: "wrap", width:"100%",justifyContent: "center"}}>
+        <StepsBar currentStep={parseInt(currentStep)}></StepsBar>
           <Wrapper>
-            {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "15%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
             
-            {currentStep === "0" ?<Drag/>
+            
+            {currentStep === "0" ? <><Drag/></>
               : currentStep === "1" && isLoaded == true ? <Middle><UpMap /></Middle>
                 : currentStep === "2" ? <Middle><InfoForm NextPage={() => NextPage()} /></Middle>
                   : currentStep === "3" ? <Result
@@ -118,13 +123,12 @@ const Upload = () => {
                     title="Successfully Purchased Cloud Server ECS!"
                     subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
                   /> : ""}
-
             {/* <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome} /></HomeBT> */}
             
-            <HomeBT style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Done</HomeBT>
           </Wrapper>
-        </Content>
-      </Layout>
+          {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "6%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
+          <HomeBT style={{ right: "6%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Next page</HomeBT>
+      </div>
     }></Background>
 
   )

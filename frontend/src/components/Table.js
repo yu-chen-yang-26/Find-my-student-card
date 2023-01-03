@@ -8,7 +8,7 @@ const StyledElement = styled(Table)`
     box-shadow: 5px -5px 5px Gray;
   }
   .ant-table-cell {
-    background-color: #C9D6FF;
+    background-color: #C4E0E5;
     // color: white;
     &:hover{
       background-color: #CC95C0;

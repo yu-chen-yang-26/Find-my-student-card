@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useCallback , useRef,} from 'react
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import styled from "styled-components";
+import Icon, { HomeOutlined, EnvironmentOutlined  } from '@ant-design/icons';
 import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
 const Wrapper = styled.div`
   width: 500px;
@@ -20,17 +21,17 @@ const MapStyle = styled.div`
 `;
 const Button = styled.button`
   margin: 1em 0 0 1em;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 40px;
   border-radius: 50px;
   border: transparent;
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
   background: palevioletred;
   &:hover {
-    width: 80px;
-    height: 80px;
+    width: 85px;
+    height: 45px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 `;
 
@@ -83,10 +84,10 @@ const UpMap = ({ component }) => {
         >
           {draggable?<Marker onDragEnd={onDragEnd} onLoad={onMarkerLoad} position={location} animation={2} draggable={draggable} title={'Drag Me'}  />:""}        
         </GoogleMap>
-        <Button onClick={toggleDraggable}>Locate</Button>
+        <Button onClick={toggleDraggable}><EnvironmentOutlined />Locate</Button>
         {component}
         <br></br>
-        <p>到時候要send的  lat:{location.lat}  lng.{location.lng}</p>
+        {/* <p>到時候要send的  lat:{location.lat}  lng.{location.lng}</p> */}
       {/* </MapStyle> */}
     </>
   );
