@@ -7,4 +7,7 @@ router.get("/", async (req, res) => {
     res.send({dataList: data});   
 });
 
+router.post("/upload", async (req, res) => {
+    res.send('');
+});
 export default router;

@@ -42,9 +42,10 @@ const UploadPic = ({component}) => {
   ]);
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+    console.log(fileList);
   };
   const onPreview = async (file) => {
-    let src = file.url;
+    let src = file.thumbUrl;
     if (!src) {
       src = await new Promise((resolve) => {
         const reader = new FileReader();
@@ -61,9 +62,14 @@ const UploadPic = ({component}) => {
     <Wrapper style={{position:"relative"}}>
         <ImgCrop rotate aspect={1.6/1}>
             <StyledElement
-                // style={{ width: 300 }}
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                style={{ width: 300 }}
+                action={"http://localhost:4000/upload"}
                 listType="picture-card"
+                accept=".jpg, .png, .jpeg"
+                // beforeUpload={(file)=>{
+                //   console.log(file);
+                //   // return false;
+                // }}
                 fileList={fileList}
                 onChange={onChange}
                 onPreview={onPreview}

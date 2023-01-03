@@ -88,7 +88,7 @@ const UpMap = ({ component }) => {
         <Button onClick={toggleDraggable}>Locate</Button>
         {component}
         <br></br>
-        <h>到時候要send的  lat:{location.lat}  lng.{location.lng}</h>
+        <p>到時候要send的  lat:{location.lat}  lng.{location.lng}</p>
       {/* </MapStyle> */}
     </>
   );
