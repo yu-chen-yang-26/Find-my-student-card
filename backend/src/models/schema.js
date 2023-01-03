@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const CardSchema = new Schema({
     ID: {type: String, required: true},
     location: {type: String, required: true},
-    info: {type: String, required: true},
+    info: {type: String},
     time: {type: String, required: true},
     position: {lat: {type: Number, required: true}, 
                lng: {type: Number, required: true}},

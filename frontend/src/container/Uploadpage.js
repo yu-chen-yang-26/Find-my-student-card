@@ -69,8 +69,7 @@ const Upload = () => {
   const navigate = useNavigate();
   const { currentStep } = useParams();
   const [imageList, setImageList] = useState([]);
-  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
-  const [location, setLocation] = useState(mycenter);
+  const [location, setLocation] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
 
   const ToHome = () => {
     navigate('/home');
@@ -80,7 +79,6 @@ const Upload = () => {
   }
   const NextPage = () => {
     const nextStep = parseInt(currentStep) + 1;
-    console.log(imageList);
     navigate('/upload/' + nextStep, {
       state: {
         imageList: imageList,
@@ -95,23 +93,6 @@ const Upload = () => {
     googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
   return (
-    // <Layout>
-    //   <Header style={{ minHeight: '100px', backgroundColor: "white" }}><StepsBar currentStep={parseInt(currentStep)}></StepsBar></Header>
-    //   <Content style={{ backgroundColor: "white" }}>
-    //     <Wrapper>
-    //       {currentStep === "0" ?
-    //        <UploadPic component={<>
-    //         <Button style={{margin:'20px',position:"absolute",right:"0",bottom:'0'}} onClick={() => NextPage()}>Done</Button>
-    //         <Button style={{margin:'20px',position:"absolute",right:"120px",bottom:'0'}} onClick={NextPage}>Skip</Button></>}/>
-    //         : currentStep === "1" ? <Middle><InfoForm NextPage={() =>NextPage()}/></Middle>
-    //           : currentStep === "2" && isLoaded == true ? <Middle><UpMap component={<>
-    //             <Button onClick={NextPage}>Done</Button></>} /></Middle> : ""}
-    //     </Wrapper>
-    //     <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome}/></HomeBT>
-    //     {currentStep!=="0"?<HomeBT style={{ color: 'grey',backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT>:""}
-    //     <HomeBT style={{margin:'15px', right:"20px", backgroundColor: "#FFD700"}} onClick={ToInfo}>Finished</HomeBT>
-    //   </Content>
-    // </Layout>
     <Background component={
       <Layout style={{ backgroundColor: "transparent" }}>
 
@@ -120,18 +101,17 @@ const Upload = () => {
           <Wrapper>
             {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "15%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
             
-            {currentStep === "0" ?<Drag/>
+            {currentStep === "0" ?<Drag imageList={imageList} setImageList={setImageList}/>
               : currentStep === "1" && isLoaded == true ? <Middle><UpMap location={location} setLocation={setLocation}/></Middle>
-                : currentStep === "2" ? <Middle><InfoForm NextPage={() => NextPage()} /></Middle>
+                : currentStep === "2" ? <Middle><InfoForm setImageList={setImageList} setLocation={setLocation}/></Middle>
                   : currentStep === "3" ? <Result
                     status="success"
-                    title="Successfully Purchased Cloud Server ECS!"
-                    subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+                    title="Successfully upload!"
                   /> : ""}
 
             {/* <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome} /></HomeBT> */}
             
-            <HomeBT style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Done</HomeBT>
+            {currentStep !== "2"? <HomeBT style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Next page</HomeBT>:""}
           </Wrapper>
         </Content>
       </Layout>

@@ -48,11 +48,11 @@ const UpMap = ({ component, location, setLocation }) => {
   const markerRef = useRef(null);
 
   function onDragEnd(...args) {
-    console.log("onDragEnd args: ", args);
-    console.log(
-      markerRef.current.position.lat(),
-      markerRef.current.position.lng()
-    );
+    // console.log("onDragEnd args: ", args);
+    // console.log(
+    //   markerRef.current.position.lat(),
+    //   markerRef.current.position.lng()
+    // );
     setLocation({
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng()
@@ -64,7 +64,7 @@ const UpMap = ({ component, location, setLocation }) => {
     marker => {
       markerRef.current = marker;
       // const path = marker.getPath();
-      console.log(marker);
+      // console.log(marker);
     },
     [onDragEnd]
   );

@@ -18,8 +18,13 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/', async (req, res) => {
-    const data = await Card.find({});
-    res.send({dataList: data});   
+    await Card.find({}).exec(function(err, data){
+        if (err) {
+            res.status(403).send({dataList: [] });
+        }else{
+            res.status(200).send({dataList: data });
+        }
+    });
 });
 
 router.post('/upload', upload.single('file'), async (req, res) => {
@@ -34,7 +39,10 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     })
 });
 router.post('/submit', async (req, res) => {
-    console.log(req.body.params);
-    res.send({message: 'hi'});   
+    console.log({...req.body.params,
+        founded: 'Not yet'});
+    const data = await new Card({...req.body.params,
+        founded: 'Not yet'}).save();
+    res.send({message: 'success'}); 
 });
 export default router;

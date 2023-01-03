@@ -9,17 +9,6 @@ const props = {
   multiple: true,
   action: 'http://localhost:4000/upload',
   listType: "picture-card",
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
   onDrop(e) {
     console.log('Dropped files', e.dataTransfer.files);
   },
@@ -43,9 +32,23 @@ const props = {
     showRemoveIcon: true,
   },
 };
-const Drag = () => (
+const Drag = ({imageList, setImageList}) => {
+  const onChange = (info) => {
+    const { status, response } = info.file;
+    if (status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully.`);
+      const { id: id } = response;
+      setImageList([...imageList, id]);
+    } else if (status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  }
+  return(
     <ImgCrop rotate aspect={1.6/1}>
-        <Dragger {...props}>
+        <Dragger {...props} onChange={onChange}>
             <p className="ant-upload-drag-icon">
             <InboxOutlined />
             </p>
@@ -56,5 +59,5 @@ const Drag = () => (
             </p>
         </Dragger>
     </ImgCrop>
-);
+)};
 export default Drag;
