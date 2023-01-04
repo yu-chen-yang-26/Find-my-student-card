@@ -3,7 +3,6 @@ import Title from "../components/Title";
 import Button from "../components/Button";
 import Pic from "../Pic/NTU.jpg";
 
-import { useState } from "react";
 const Wrapper = styled.div`
   top:100px;
   margin: 100px;

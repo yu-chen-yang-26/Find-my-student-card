@@ -1,34 +1,14 @@
 import StepsBar from "../components/Step";
-import UploadPic from "../components/UpPic";
-import {InfoForm,handleSubmit} from "../components/Form";
+import {InfoForm} from "../components/Form";
 import styled from "styled-components";
 import UpMap from "../components/UpMap";
 import Drag from "../components/Drag";
-import Icon, { HomeOutlined } from '@ant-design/icons';
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Layout, Result } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLoadScript } from "@react-google-maps/api";
 import Background from "../components/Background";
 
-const { Header, Footer, Content } = Layout;
-const Button = styled.button`
-  width: 100px;
-  height: 50px;
-  background: transparent;
-  border-radius: 3px;
-  border: 2px solid palevioletred;
-  color: palevioletred;
-  margin: 1em 0 0 0;
-//   padding: 0.25em 1em;
-  font-size: 1em;
-
-  &:hover {
-    background: palevioletred;
-    color: white;
-    cursor: pointer;
-  }
-`;
 const HomeBT = styled.button`
   position: absolute;
   bottom: 45%;

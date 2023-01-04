@@ -2,28 +2,14 @@ import styled from "styled-components"
 import { Avatar } from 'antd';
 import { Layout, Row } from 'antd';
 import Pic from "../Pic/bear.jpg";
-
 import {
   HomeOutlined,
-  LoadingOutlined,
-  SettingFilled,
-  SmileOutlined,
+  FacebookOutlined,
   GithubOutlined,
-  InstagramOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom'
-// import Sider from "./Sider";
 
 const { Footer, Sider, Content } = Layout;
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: top;
-  margin: 10px ;
-  height: 600px;
-  border: 2px solid palevioletred;
-  
-`;
 
 const Right = styled.div`
   width: 100%;
@@ -98,10 +84,9 @@ const InButton = styled.button`
   font-size: 1.1em;
 `;
 
-const Background = ({ para,component }) => {
+const Background = ({ component }) => {
   const location = useLocation()
   const upload = location.pathname.split('/')[1]
-  // console.log(location.pathname.split('/')[1])
   const navigate = useNavigate();
   const ToUpload = () => {
     navigate('/upload/0');
@@ -111,6 +96,12 @@ const Background = ({ para,component }) => {
   }
   const ToHeatMap = () => {
     navigate('/HeatMap');
+  }
+  const redirectToGoogle = () => {
+    window.location.href = "https://github.com/Yixiu1121/FindMyStudentCard";
+  };
+  const ToFB = () => {
+    window.location.href = "https://www.facebook.com/profile.php?id=100000501483169";
   }
   return (
 
@@ -132,10 +123,13 @@ const Background = ({ para,component }) => {
             </Right>
           </Row>
         </Content>
-        <Footer style={{ backgroundColor: '#D3CCE3', height: '70px' }}>
-          <InstagramOutlined style={{ fontSize: '26px', color: 'purple', cursor: "pointer" }} />
-          <GithubOutlined style={{ fontSize: '26px', color: 'purple', margin: "10px", cursor: "pointer" }} />
-          聯絡我們 最新資訊
+        <Footer style={{ backgroundColor: '#D3CCE3', height: '60px',position:"relative" }}>
+          <div style={{ fontSize: '19px',bottom:"10px",position:"absolute" }}>
+          聯絡我們 &nbsp;
+          <FacebookOutlined  style={{ fontSize: '26px', color: 'purple', cursor: "pointer", marginRight: "5px" }} onClick={ToFB}/>
+          <GithubOutlined style={{ fontSize: '26px', color: 'purple', margin: "5px", cursor: "pointer" }} onClick={redirectToGoogle}/>
+          
+          </div>
         </Footer>
       </Layout>
     </Layout>

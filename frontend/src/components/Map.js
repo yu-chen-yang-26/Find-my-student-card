@@ -8,7 +8,6 @@ const MapStyle = styled.div`
   margin: 20px 30px 0 25px;
   background-color: gray;
   border: 4px outset palevioletred;
-  background-image: url(${props => props.img});
   box-shadow:0 0 20px 0px Gray;
 `;
 function Map(props) {
@@ -18,7 +17,6 @@ function Map(props) {
     lat: 25.017622284161067,
     lng: 121.5378841549027
   };
-
   const exampleMapStyles = [
     {
       "elementType": "geometry",
@@ -290,7 +288,7 @@ function Map(props) {
   // const mycenter = { lat: 25.017622284161067, lng: 121.5378841549027 };
   // console.log("props.positions=",props.positions)
   return (
-    <MapStyle>
+      <MapStyle>
       <GoogleMap
         zoom={15}
         center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
@@ -316,7 +314,7 @@ function Map(props) {
             // onClick={() => map.setCenter(position)}
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
             >
-              {/* {activeMarker == ID + time ? (
+              {activeMarker == ID + time ? (
                 <InfoWindowF onCloseClick={() => setActiveMarker('')}>
                   <>
                     <div>{ID}</div>
@@ -324,7 +322,7 @@ function Map(props) {
                     <a href={'http://localhost:3000/detail/'+ID+'/'+Date.parse(time)}>link</a>
                   </>
                 </InfoWindowF>
-              ) : null} */}
+              ) : null}
             </Marker>
           )
         })}

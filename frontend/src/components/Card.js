@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Carousel,Card,Col, Modal,Input, Tabs,message  } from 'antd';
+import { Card, Modal,Input, Tabs,message  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined, RocketOutlined} from '@ant-design/icons';
 import styled from "styled-components";
 import axios from '../api';
-//ant-card-head-title
+
 const StyledCard = styled(Card)`
   .ant-card-head-title{
     font-size: 1.3em;
@@ -108,7 +108,6 @@ const Tab = ({data, image}) =>{
     setIsModalOpen(false);
   };
   const Table2 =(
-      // <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
         <StyledCard
           title={<>拾獲資訊 <RocketOutlined /></>}
           bordered={true}
@@ -142,7 +141,6 @@ const Tab = ({data, image}) =>{
           {data.founded === 'True'? "" :checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
       <Modal title="請輸入四位數確認碼" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
         <Input.Password 
-            // style={{width:"300px"}}
             placeholder="input password"
             visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
             value={password}
@@ -151,7 +149,6 @@ const Tab = ({data, image}) =>{
       </Modal>
   
         </StyledCard>
-      // </div>
     )  
   const bannerList = image;
   const [listNum, setListNum] = useState(0);
@@ -174,13 +171,10 @@ const Tab = ({data, image}) =>{
   const MixCard = (
     <>
       <div style={{display:"flex", flexDirection: "row" ,marginRight:"20px"}}>
-        {/* <Col  xs={{ span: 0}}  md={{ span:3, offset:0}} lg={{ span:8, offset:0}} xl={{ span:13, offset:0}}> */}
           <Pic img={bannerList[listNum]} key={bannerList[listNum]}>
             <button onClick={Next}><CaretLeftOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
             <button onClick={Last}><CaretRightOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
           </Pic>
-        {/* </Col> */}
-        {/* {Table2(data)} */}
       </div>
     </>
   )

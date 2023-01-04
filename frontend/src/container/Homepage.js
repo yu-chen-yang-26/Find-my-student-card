@@ -1,12 +1,11 @@
-import styled from "styled-components"
 import Map from '../components/Map'
 import Table from '../components/Table'
 import Search from "../components/Searchbar"
 import Background from "../components/Background";
 import { Space, Col, Row } from 'antd';
 import { useEffect, useState } from "react";
-import axios from '../api';
 import { useLoadScript } from "@react-google-maps/api";
+import axios from '../api';
 const Homepage = () => {
     const [data, setData] = useState([]);
     const { isLoaded } = useLoadScript({
@@ -17,7 +16,7 @@ const Homepage = () => {
     useEffect(() => {
         const fetchData = async () => {
             const { data: { dataList } } = await axios.get('/');
-            console.log("dataList.length",dataList.length)
+            // console.log("dataList.length",dataList.length)
             setData(dataList);
             // setnewmarkers(dataList.positions);
         }
@@ -25,7 +24,7 @@ const Homepage = () => {
     }, [])
     useEffect(() => {
         if (isLoaded){
-            console.log("data123",data.length)
+            // console.log("data123",data.length)
             if(data.length>0){
                 setnewmarkers(data);
             }

@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Steps, ConfigProvider } from 'antd';
 
 // const description = 'This is a description.';
