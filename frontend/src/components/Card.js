@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Carousel,Card,Col  } from 'antd';
-import { CaretRightOutlined, CaretLeftOutlined} from '@ant-design/icons';
+import { CaretRightOutlined, CaretLeftOutlined, RocketOutlined} from '@ant-design/icons';
 import long from "../Pic/長.png";
 import Bear from "../Pic/bear.jpg";
 import NTU from "../Pic/NTU.jpg";
@@ -8,7 +8,31 @@ import galaxy from "../Pic/Galaxy.jpg";
 import styled from "styled-components";
 import Card2 from "./Card2";
 
-
+//ant-card-head-title
+const StyledCard = styled(Card)`
+  .ant-card-head-title{
+    font-size: 1.3em;
+    
+  }
+  th{
+    // background-color:#009879;
+    color:black;
+    width:8vw;
+    // height:75px;
+  }
+  td{
+    background-color:#ffffff;
+    width:150px;
+    // height:50px;
+    text-align:center;
+  }
+  tr:nth-of-type(odd) td{
+    background-color:#ddd6f3;
+  }
+  tr:nth-of-type(odd) th{
+    background-color:#ddd6f3;
+  }
+`
 const Pic = styled.div`
   height: 250px;
   width: 350px;
@@ -57,31 +81,35 @@ const Button = styled.button`
 `;
 const Table2 = (
   <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
-    <Card
-      title="拾獲資訊"
+    <StyledCard
+      title={<>拾獲資訊 <RocketOutlined /></>}
       bordered={true}
       style={{
         borderRadius: "0",
         width: 300,
         height: 250,
-        fontSize: 20,
+        fontSize: 16,
       }}
     >
       <tr>
-        <th>學號</th>
-        <td>R********</td>
+        <th>學號 </th>
+        <td> R00000000</td>
+      </tr>
+      <tr>
+        <th>時間</th>
+        <td> 2023 1/1</td>
       </tr>
       <tr>
         <th>地點</th>
-        <td>土木系</td>
+        <td> 土木系</td>
       </tr>
       <tr>
         <th>備註</th>
-        <td>大門口右邊樹上</td>
+        <td> 大門口右邊樹上</td>
       </tr>
       <Button >物歸原主</Button>
 
-    </Card>
+    </StyledCard>
   </div>
 )
 

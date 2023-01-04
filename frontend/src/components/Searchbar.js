@@ -7,6 +7,7 @@ const Container= styled.div`
   margin: 0 0 0 20px;
   display: flex;
   justify-content: space-around;
+  flex-wrap : wrap;
 `;  
 const options = [
   {
@@ -22,12 +23,14 @@ const onChange = (value) => {
   console.log(value);
 };
 const search = () => <>
-<Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
-    <Input allowClear placeholder="Enter the Student ID"></Input>
+ 
+<Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px", flexWrap:"wrap"}}>
+    <Input allowClear placeholder="Enter the Student ID" ></Input>
     <Col xs={6}><Cascader options={options} onChange={onChange} placeholder="Please select" /></Col>
     <Tooltip title="search">
         <Button shape="circle" icon={<SearchOutlined />} />
     </Tooltip>
 </Space>
+                   
 </>
 export default search;

@@ -49,11 +49,13 @@ const HomeBT = styled.button`
 `
 const Wrapper = styled.div`
   width: 95%;
-  position: relative;
+  position: absolute;
+  top: 300px; //-45px;
   border-radius: 3px;
-  border: 2px solid palevioletred;
+  border: 2px solid white;
   // margin: 10px;
-  height: 400px;
+  height: 65%;
+  min-height: 200px;
   display: flex;
   // flex-direction: row;
   flex-wrap: wrap;
@@ -61,8 +63,11 @@ const Wrapper = styled.div`
   align-items: center;
   background-color:transparent;
   overflow-y : auto;
-  @media (max-width: 100px) {
-    border:2px solid black;
+  @media (min-width: 570px) {
+    top: 190px;
+    border: 2px solid palevioletred;
+    min-height: 300px;
+    // background-color: white;
   }
   
 `;
@@ -101,7 +106,7 @@ const Upload = () => {
   });
   return (
     <Background component={
-      <div style={{display:"flex", flexWrap: "wrap", width:"100%",justifyContent: "center"}}>
+      <div style={{display:"flex", flexWrap: "wrap", width:"100%",justifyContent: "center",height:"90%"}}>
         <StepsBar currentStep={parseInt(currentStep)}></StepsBar>
           <Wrapper>
             
@@ -116,7 +121,7 @@ const Upload = () => {
             
           </Wrapper>
           {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "6%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
-          <HomeBT style={{ right: "6%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Next page</HomeBT>
+          {currentStep?<HomeBT style={{ right: "6%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Next page</HomeBT>:""}
       </div>
     }></Background>
 

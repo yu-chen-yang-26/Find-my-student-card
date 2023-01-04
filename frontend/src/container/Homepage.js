@@ -22,13 +22,10 @@ const Homepage = () => {
     return (
         <Background  component={
             <>
-                {/* <Space size={"large"}> */}
-
                 <Col xs={0} md={13} lg={12} >
                     {isLoaded ? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={data} /> : null}
                 </Col>
                 <Col xs={{ span: 24, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 12, offset: 0 }} ><Table data={data} /></Col>
-                {/* </Space> */}
                 <Search />
             </>
         } />

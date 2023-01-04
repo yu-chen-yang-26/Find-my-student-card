@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   margin: 10px ;
   height: 600px;
   border: 2px solid palevioletred;
+  
 `;
 
 const Right = styled.div`
@@ -30,7 +31,7 @@ const Right = styled.div`
   border-radius: 3px;
   // border: 2px solid palevioletred;
   background-color: transparent;
-
+  overflow-y : hidden;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -54,7 +55,7 @@ const Right = styled.div`
     @media (max-width: 600px) {
       font-size: 2em;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 550px) {
       font-size: 1.6em;
     }
  }
