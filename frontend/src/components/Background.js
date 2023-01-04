@@ -98,10 +98,9 @@ const InButton = styled.button`
   font-size: 1.1em;
 `;
 
-const Background = ({ para,component }) => {
+const Background = ({ component }) => {
   const location = useLocation()
   const upload = location.pathname.split('/')[1]
-  // console.log(location.pathname.split('/')[1])
   const navigate = useNavigate();
   const ToUpload = () => {
     navigate('/upload/0');

@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import React, { useEffect, useMemo, useState } from "react";
 import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
+import { useLoadScript } from "@react-google-maps/api";
 
 const MapStyle = styled.div`
   height: 400px;
@@ -18,7 +19,9 @@ function Map(props) {
     lat: 25.017622284161067,
     lng: 121.5378841549027
   };
-
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+  });
   const exampleMapStyles = [
     {
       "elementType": "geometry",
@@ -270,7 +273,7 @@ function Map(props) {
   ];
   // const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
-  const [map, setMap] = useState('')
+  const [map, setMap] = useState(null)
   useEffect(()=>{
     if(map){
       map.setCenter(newcenter)
@@ -290,7 +293,8 @@ function Map(props) {
   // const mycenter = { lat: 25.017622284161067, lng: 121.5378841549027 };
   // console.log("props.positions=",props.positions)
   return (
-    <MapStyle>
+    isLoaded? 
+      (<MapStyle>
       <GoogleMap
         zoom={15}
         center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
@@ -329,7 +333,7 @@ function Map(props) {
           )
         })}
       </GoogleMap>
-    </MapStyle>
+    </MapStyle>):""
   );
 }
 

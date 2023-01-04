@@ -16,21 +16,15 @@ const Heatmap = ({ setInfo }) => {
     useEffect(() => {
         const fetchData = async () => {
             const { data: { dataList } } = await axios.get('/');
-            setData(dataList);
-            console.log("dataList=",dataList.positions)
+            setData(dataList.map(item => Object.values(item)[0]));
         }
         fetchData();
-        const ExtractLocation = data.map(item => Object.values(item)[0])
-        setmarkers(ExtractLocation);
     }, [])
-    useEffect(() => {
-        settempstore(markers);
-    }, [isLoaded])
     return (
         <Background component={
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Col  xs={0} md={13} lg={12}  >{isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={tempstore} />:""}</Col>
+              <Col  xs={0} md={13} lg={12}  >{isLoaded && data !== [] ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={data} />:""}</Col>
             </>} 
         setInfo={setInfo} />
     )
