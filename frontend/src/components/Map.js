@@ -269,7 +269,6 @@ function Map(props) {
     }
   ];
   const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
-  const DYNAMICcenter = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
   useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   const [map, setMap] = useState('')
   useEffect(()=>{
