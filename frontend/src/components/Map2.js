@@ -92,6 +92,7 @@ const exampleMapStyles = [
 ];
 class Map2 extends React.Component {
   render() {
+    console.log(this.props.positions)
     return (
       <MapStyle className="map-container" style={{ height: '400px' }}>
         <Map
