@@ -293,37 +293,40 @@ function Map(props) {
     <MapStyle>
       <GoogleMap
         zoom={15}
-        center={mycenter}
-        // center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
+        center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
         mapContainerClassName="map-container"
         onLoad={(map) => setMap(map)}
         onClick={() => setActiveMarker(null)}
         mapContainerStyle={{ width: "100%", height: "100%" }}
-        options={{styles:exampleMapStyles}}
+        options={{ styles: exampleMapStyles }}
       // zoom={10}
       >
-        {/* <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} /> */}
-        {props.positions.map(( {ID, time, position }) => {
-          // console.log("id=",ID,"position=",position);
-          return(
-          <Marker
-            key={ID+time}
-            position={position}
-            onClick={() => handleActiveMarker({ID,time})}
-            
+        <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
+        {props.positions.map(({ ID, date, time, position }) => {
+          // console.log("id=",ID,"position=",position,"props.positions=",props.positions);
+          const a = new Date(date).toLocaleDateString();
+          const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
+          const timess = a + ' ' + b
+          const mylink = '/detail/' + ID + '/' + timess
+          return (
+            <Marker
+              key={ID + time}
+              position={position}
+              onClick={() => {handleActiveMarker({ ID, time, position })}}
+            // onClick={() => map.setCenter(position)}
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
-          >
-            {activeMarker == ID+time ? (
-              <InfoWindowF onCloseClick={() => setActiveMarker('')}>
-                <>
-                  <div>{ID}</div>
-                  <div>{time}</div>
-                  <a href={mylink}>link</a>
-                </>
-              </InfoWindowF>
-            ) : null}
-          </Marker>
-        )
+            >
+              {activeMarker == ID + time ? (
+                <InfoWindowF onCloseClick={() => setActiveMarker('')}>
+                  <>
+                    <div>{ID}</div>
+                    <div>{time}</div>
+                    <a href={'http://localhost:3000/detail/'+ID+'/'+Date.parse(time)}>link</a>
+                  </>
+                </InfoWindowF>
+              ) : null}
+            </Marker>
+          )
         })}
       </GoogleMap>
     </MapStyle>
