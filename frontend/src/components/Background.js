@@ -11,7 +11,7 @@ import {
   GithubOutlined,
   InstagramOutlined,
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 // import Sider from "./Sider";
 
 const { Footer, Sider, Content } = Layout;
@@ -85,15 +85,23 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
+const InButton = styled.button`
+  width: 110px;
+  height: 50px;
+  background: #EF5D8D;
+  color: white;
+  border-radius: 20px;
+  border: 3px solid #BEA5AA;
+  margin: 1em 0 0 0;
+  box-shadow: 3px 5px 5px 2px rgba(0, 0, 0, 0.2);
+//   padding: 0.25em 1em;
+  font-size: 1.1em;
+`;
 
-const Container = styled.div`
-  
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-const Background = ({ component }) => {
+const Background = ({ para,component }) => {
+  const location = useLocation()
+  const upload = location.pathname.split('/')[1]
+  console.log(location.pathname.split('/')[1])
   const navigate = useNavigate();
   const ToUpload = () => {
     navigate('/upload/0');
@@ -110,9 +118,9 @@ const Background = ({ component }) => {
       <Sider style={{ backgroundImage: "linear-gradient(to bottom right, #9796f0, #fbc7d4)", borderBlockColor: '#DBC8CE', boxShadow: "5px 0px 5px 2px rgba(0, 0, 0, 0.2)" }} width={150} >
         <Left>
           <Avatar shape="square" size={120} src={Pic}></Avatar>
-          <Button onClick={ToHome}> <HomeOutlined style={{ fontSize: '22px' }} onClick={ToHome} /> 主頁</Button>
-          <Button onClick={ToUpload}> 拾獲學生證</Button>
-          <Button onClick={ToHeatMap}> 遺失熱區</Button>
+          {location.pathname==='/home'?<InButton onClick={ToHome}> <HomeOutlined style={{ fontSize: '22px' }} onClick={ToHome} /> 主頁</InButton>:<Button onClick={ToHome}> <HomeOutlined style={{ fontSize: '22px' }} onClick={ToHome} /> 主頁</Button>}
+          {upload==='upload'?<InButton onClick={ToUpload}> 拾獲學生證</InButton>:<Button onClick={ToUpload}> 拾獲學生證</Button>}
+          {location.pathname==='/HeatMap'?<InButton onClick={ToHeatMap}> 遺失熱區</InButton>:<Button onClick={ToHeatMap}> 遺失熱區</Button>}
         </Left>
       </Sider>
       <Layout>

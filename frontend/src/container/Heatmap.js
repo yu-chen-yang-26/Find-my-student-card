@@ -27,7 +27,6 @@ const Heatmap = ({ setInfo }) => {
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
               <Col  xs={0} md={13} lg={12}  >{isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={markers} />:""}</Col>
-              
             </>} 
         setInfo={setInfo} />
     )

@@ -29,7 +29,6 @@ const props = {
   },
   showUploadList: {
     showDownloadIcon: true,
-    downloadIcon: 'Download',
     showRemoveIcon: true,
   },
 };

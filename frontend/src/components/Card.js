@@ -196,12 +196,12 @@ const Tab = ({data, image}) =>{
       type="card"
       items={[
         {
-          label: 'Info',
+          label: 'Card Info',
           key: '1',
           children: <>{Table2}</>,
         },
         {
-          label: 'Pic',
+          label: 'Pictures',
           key: '2',
           children: <>{MixCard}</>,
         }]}
