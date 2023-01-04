@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Carousel,Card,Col, Modal,Input, message  } from 'antd';
+import { Carousel,Card,Col, Modal,Input, Tabs,message  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined, RocketOutlined} from '@ant-design/icons';
 import styled from "styled-components";
 import axios from '../api';
@@ -17,7 +17,7 @@ const StyledCard = styled(Card)`
   }
   td{
     background-color:#ffffff;
-    width:150px;
+    width:250px;
     // height:50px;
     text-align:center;
   }
@@ -29,20 +29,19 @@ const StyledCard = styled(Card)`
   }
 `
 const Pic = styled.div`
-  height: 250px;
-  width: 350px;
+  height: 300px;
+  width: 400px;
   // margin: 0 30px 0 0px;
   background-size: contain;
   border-radius: 10px 0px 0px 10px;
+  background-repeat: no-repeat;
   box-shadow:0 0 20px 0px Gray;
   background-image: url(${props => props.img});
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  @media (max-width: 1000px) {
-    display:none;
-  }
+
   button{
     cursor:pointer;
     height: 40px;
@@ -53,7 +52,7 @@ const Pic = styled.div`
 `
 
 const Button = styled.button`
-  width: 100px;
+  width: 150px;
   height: 45px;
   background: #f5af19;
   border-radius: 15px;
@@ -66,7 +65,7 @@ const Button = styled.button`
 
   &:hover {
     font-size: 1.2em;
-    width: 120px;
+    width: 200px;
     height: 50px;
     background: #FFD700;
     color: white;
@@ -74,8 +73,8 @@ const Button = styled.button`
     font-weight:bold;
   }
 `;
+const Tab = ({data, image}) =>{
 
-const Table2 = (data) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [password, setPassword] = useState(null);
@@ -104,39 +103,39 @@ const Table2 = (data) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  return (
-  <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
-    <StyledCard
-      title={<>拾獲資訊 <RocketOutlined /></>}
-      bordered={true}
-      style={{
-        borderRadius: "0",
-        width: 300,
-        height: 250,
-        fontSize: 16,
-      }}
-    >
-      <table>
-      <tbody>
-      <tr>
-        <th>學號:</th>
-        <td>{data.ID}</td>
-      </tr>
-      <tr>
-        <th>時間</th>
-        <td> {data.time}</td>
-      </tr>
-      <tr>
-        <th>地點:</th>
-        <td>{data.location}</td>
-      </tr>
-      <tr>
-        <th>備註:</th>
-        <td>{data.info}</td>
-      </tr>
-      </tbody>
-      </table>
-      {checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
+  const Table2 =(
+      // <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
+        <StyledCard
+          title={<>拾獲資訊 <RocketOutlined /></>}
+          bordered={true}
+          style={{
+            borderRadius: "0",
+            width: 400,
+            minWidth: 250,
+            height: 300,
+            fontSize: 16,
+            boxShadow:"0 0 20px 0px Gray"
+          }}
+        ><table>
+          <tbody>
+          <tr>
+            <th>學號:</th>
+            <td>{data.ID}</td>
+          </tr>
+          <tr>
+            <th>時間:</th>
+            <td> {data.time}</td>
+          </tr>
+          <tr>
+            <th>地點:</th>
+            <td>{data.location}</td>
+          </tr>
+          <tr>
+            <th>備註:</th>
+            <td>{data.info}</td>
+          </tr>
+          </tbody></table>
+          {checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
       <Modal title="請輸入四位數確認碼" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
         <Input.Password 
             // style={{width:"300px"}}
@@ -146,12 +145,10 @@ const Table2 = (data) => {
             onChange={e => {setPassword(e.target.value)}}
           />
       </Modal>
-
-    </StyledCard>
-  </div>
-)}
-
-const MixCard = ({data, image}) => {
+  
+        </StyledCard>
+      // </div>
+    )  
   const bannerList = image;
   const [listNum, setListNum] = useState(0);
   const Next = () => {
@@ -170,8 +167,7 @@ const MixCard = ({data, image}) => {
     }
     else{setListNum(num-1)}
   }
-  
-  return (
+  const MixCard = (
     <>
       <div style={{display:"flex", flexDirection: "row" ,marginRight:"20px",marginTop:"20px"}}>
         {/* <Col  xs={{ span: 0}}  md={{ span:3, offset:0}} lg={{ span:8, offset:0}} xl={{ span:13, offset:0}}> */}
@@ -180,11 +176,33 @@ const MixCard = ({data, image}) => {
             <button onClick={Last}><CaretRightOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
           </Pic>
         {/* </Col> */}
-        {Table2(data)}
+        {/* {Table2(data)} */}
       </div>
     </>
   )
-}
-  
 
-export default MixCard
+  const onChange = (key) => {
+    if (key==="1"){
+      return (<>{Table2}</>)
+    }
+  }
+  return(
+    <Tabs
+      onChange={onChange}
+      type="card"
+      items={[
+        {
+          label: 'Info',
+          key: '1',
+          children: <>{Table2}</>,
+        },
+        {
+          label: 'Pic',
+          key: '2',
+          children: <>{MixCard}</>,
+        }]}
+    />
+  )
+}
+
+export default Tab
