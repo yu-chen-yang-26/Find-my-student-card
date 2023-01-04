@@ -23,12 +23,10 @@ const options = [
 
 const Search = ({setData}) => {
   const [ID, setID] = useState('');
-  const [location, setLocation] = useState('');
   const handleCLick = async () => {
     const { data: { dataList } } 
     = await axios.get('/search', {params: {
-      ID: ID,
-      location: location,
+      ID: ID
     }});
     setData(dataList);
   }

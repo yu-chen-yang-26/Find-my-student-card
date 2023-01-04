@@ -10,7 +10,7 @@ import { useLoadScript } from "@react-google-maps/api";
 const Homepage = () => {
     const [data, setData] = useState([]);
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "" // Add your API key//
+        googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//
     });
     useEffect(() => {
         const fetchData = async () => {

@@ -23,7 +23,7 @@ function Map(props) {
     // if (marker === activeMarker) {
     //   return;
     // }
-    setActiveMarker(props.ID);
+    setActiveMarker(props.ID+props.time);
   };
   // useEffect(()=>{
   //   console.log("activeMarker=",activeMarker)
@@ -303,7 +303,7 @@ function Map(props) {
             
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
           >
-            {activeMarker == ID ? (
+            {activeMarker == ID+time ? (
               <InfoWindowF onCloseClick={() => setActiveMarker('')}>
                 <>
                   <div>{ID}</div>
