@@ -56,9 +56,10 @@ router.get('/detail', async (req, res) => {
         }else{
             let imageList = [];  
             for (let index = 0; index < data.image.length; index++) {
-                const element = data.image[index];
-                const temp = await Image.findOne({element});
-                imageList = [...imageList, temp];
+                let element = data.image[index];
+                let temp = await Image.findOne({_id: element});
+                imageList = [...imageList, "data:image/"+temp.img.contentType+";base64,"+
+                temp.img.data.toString('base64')];
             }          
             res.status(200).send({dataList: data, imageList: imageList });
         }

@@ -88,22 +88,21 @@ const Table2 = (data) => {
 }
 
 const MixCard = ({data, image}) => {
-  // const bannerList = [image.map(element => 
-  //   "data:image/"+element.img.contentType+";base64,"+element.img.data.toString('base64')
-  // )]
-  const bannerList = [long, Bear, NTU, galaxy]
+  const bannerList = image;
   const [listNum, setListNum] = useState(0);
   const Next = () => {
-    var num = listNum
+    console.log('next')
+    var num = listNum;
     if (num === bannerList.length-1){
-      setListNum(0)
+      setListNum(0);
     }
     else{setListNum(num+1)}
   }
   const Last = () => {
-    var num = listNum
+    console.log('last')
+    var num = listNum;
     if (num === 0){
-      setListNum(bannerList.length-1)
+      setListNum(bannerList.length-1);
     }
     else{setListNum(num-1)}
   }
@@ -112,7 +111,7 @@ const MixCard = ({data, image}) => {
     <>
       <div style={{display:"flex", flexDirection: "row" ,marginRight:"20px",marginTop:"20px"}}>
         {/* <Col  xs={{ span: 0}}  md={{ span:3, offset:0}} lg={{ span:8, offset:0}} xl={{ span:13, offset:0}}> */}
-          <Pic img={bannerList[listNum]} >
+          <Pic img={bannerList[listNum]} key={bannerList[listNum]}>
             <button onClick={Next}><CaretLeftOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
             <button onClick={Last}><CaretRightOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
           </Pic>

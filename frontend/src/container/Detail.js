@@ -29,7 +29,7 @@ const Detail = () => {
             setImage(imageList);
         }
         fetchData();
-    }, [isLoaded])
+    }, [])
     return (
         <Background component={
             <>
