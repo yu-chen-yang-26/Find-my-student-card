@@ -14,6 +14,7 @@ const Heatmap = ({ setInfo }) => {
     useEffect(() => {
         const fetchData = async () => {
             const { data: { dataList } } = await axios.get('/');
+            setData(dataList.map(item => Object.values(item)[0]));
             if(dataList.length>0){
                 setData(dataList.map(item => Object.values(item)[0]));
 
@@ -39,7 +40,11 @@ const Heatmap = ({ setInfo }) => {
         <Background component={
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Col  xs={0} md={13} lg={12}  >{isLoaded? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={tempstore} />:""}</Col>
+              <Col xs={24} >
+                {isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={tempstore} />:""}
+                </Col>
+              
+              {/* <Col xs={{ span: 24, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 6, offset: 4 }} ><StatisticCard/></Col> */}
             </>} 
         setInfo={setInfo} 
         />
