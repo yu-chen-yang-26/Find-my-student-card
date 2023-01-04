@@ -268,7 +268,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       = await axios.post('/submit',
       {params: {
         ID: ID,
-        location: location,
+        location: location.join(''),
         time: a + ' ' + b,
         info: info? info: '',
         image: state.imageList,
@@ -280,7 +280,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){
-          sendemail(ID,location,a + ' ' + b,'/detail/'+ID+'/'+ time);
+          sendemail(ID,location.join(''),a + ' ' + b,'/detail/'+ID+'/'+ time);
         }
       }
     }else{
