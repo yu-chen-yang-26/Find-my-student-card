@@ -87,4 +87,24 @@ router.get('/detail', async (req, res) => {
         }
     });
 });
+
+router.post('/checkPassword', async (req, res) => {
+    await Mail.findOne({ID: req.body.params.ID, info: req.body.params.location+' '+req.body.params.time})
+    .exec(async function(err, data){
+        if (err) {
+            res.status(403).send({messages: 'error'});
+        }else{     
+            if (data.checkPassword === parseInt(req.body.params.password)) {
+                await Card.updateOne({ID: req.body.params.ID, time: req.body.params.time, location: req.body.params.location},
+                    {founded: 'True'})
+                    .then(() => res.status(200).send({messages: 'correct'}))
+                    .catch(err => {
+                        console.log(err);
+                        res.status(403).send({messages: 'error'});})
+            }else{
+                res.status(200).send({messages: 'wrong'});
+            }
+        }
+    });
+});
 export default router;

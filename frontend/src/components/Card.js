@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { Carousel,Card,Col, Modal,Input  } from 'antd';
+import { Carousel,Card,Col, Modal,Input, message  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined, RocketOutlined} from '@ant-design/icons';
-import long from "../Pic/長.png";
-import Bear from "../Pic/bear.jpg";
-import NTU from "../Pic/NTU.jpg";
-import galaxy from "../Pic/Galaxy.jpg";
 import styled from "styled-components";
-import Card2 from "./Card2";
-
+import axios from '../api';
 //ant-card-head-title
 const StyledCard = styled(Card)`
   .ant-card-head-title{
@@ -83,11 +78,27 @@ const Button = styled.button`
 const Table2 = (data) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [password, setPassword] = useState(null);
+  const [checked, setChecked] = useState(data.founded === 'True');
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
+  const handleOk = async () => {
+    const { data: {messages} } 
+    = await axios.post('/checkPassword', 
+    {params: {
+      ID: data.ID,
+      time: data.time,
+      location: data.location,
+      password: password}})
+    if (messages === 'correct') {
+      message.info('Correct password!')
+      setChecked(true);
+      setIsModalOpen(false);
+    }else{
+      message.error('Wrong password!')
+    }
+
   };
 
   const handleCancel = () => {
@@ -105,6 +116,7 @@ const Table2 = (data) => {
         fontSize: 16,
       }}
     >
+      <table>
       <tbody>
       <tr>
         <th>學號:</th>
@@ -123,12 +135,15 @@ const Table2 = (data) => {
         <td>{data.info}</td>
       </tr>
       </tbody>
-      <Button onClick={showModal}>物歸原主</Button>
-      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
+      </table>
+      {checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
+      <Modal title="請輸入四位數確認碼" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
         <Input.Password 
             // style={{width:"300px"}}
             placeholder="input password"
             visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+            value={password}
+            onChange={e => {setPassword(e.target.value)}}
           />
       </Modal>
 
