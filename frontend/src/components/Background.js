@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { Avatar } from 'antd';
 import { Layout, Row, Alert } from 'antd';
-import Marquee from 'react-fast-marquee';
 import Pic from "../Pic/bear.jpg";
 import {
   HomeOutlined,

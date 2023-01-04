@@ -4,7 +4,7 @@ import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/a
 import { Map, HeatMap, GoogleApiWrapper } from "google-maps-react";
 import googleMapStyles from "./MapStyles2";
 const MapStyle = styled.div`
-  height: 400px;
+  height: 450px;
   // width: 700px;
   margin: 20px 30px 0 25px;
   background-color: gray;
@@ -94,7 +94,7 @@ class Map2 extends React.Component {
   render() {
     console.log(this.props.positions)
     return (
-      <MapStyle className="map-container" style={{ height: '400px' }}>
+      <MapStyle className="map-container" style={{ height: '450px' }}>
         <Map
           containerStyle={containerStyle}
           google={this.props.google}
