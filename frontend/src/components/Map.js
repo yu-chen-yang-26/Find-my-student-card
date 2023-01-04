@@ -268,7 +268,7 @@ function Map(props) {
       ]
     }
   ];
-  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  // const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   const [map, setMap] = useState('')
   useEffect(()=>{
@@ -282,24 +282,29 @@ function Map(props) {
     map.setCenter(props.position)
     setnewcenter(props.position)
   };
+  // useEffect(()=>{
+  //   console.log("activeMarker=",activeMarker)
+  //   }, [activeMarker]
+  // )
+  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  // const mycenter = { lat: 25.017622284161067, lng: 121.5378841549027 };
   // console.log("props.positions=",props.positions)
   return (
     <MapStyle>
       <GoogleMap
         zoom={15}
-        center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
+        center={mycenter}
+        // center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
         mapContainerClassName="map-container"
         onLoad={(map) => setMap(map)}
         onClick={() => setActiveMarker(null)}
         mapContainerStyle={{ width: "100%", height: "100%" }}
-        options={{ styles: exampleMapStyles }}
+        options={{styles:exampleMapStyles}}
       // zoom={10}
       >
-        <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
+        {/* <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} /> */}
         {props.positions.map(( {ID, time, position }) => {
-          // console.log("id=",ID,"position=",position,"props.positions=",props.positions);
-          const mylink = '/detail/'+ID+'/'+Date.parse(time)
-          // console.log(mylink)
+          // console.log("id=",ID,"position=",position);
           return(
           <Marker
             key={ID+time}

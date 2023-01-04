@@ -30,6 +30,62 @@ const containerStyle = {
   width: '100%',
   height: '100%'
 }
+const exampleMapStyles = [
+  {
+      "featureType": "all",
+      "elementType": "all",
+      "stylers": [
+          {
+              "hue": "#008eff"
+          }
+      ]
+  },
+  {
+      "featureType": "poi",
+      "elementType": "all",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "road",
+      "elementType": "all",
+      "stylers": [
+          {
+              "saturation": "0"
+          },
+          {
+              "lightness": "0"
+          }
+      ]
+  },
+  {
+      "featureType": "transit",
+      "elementType": "all",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+  },
+  {
+      "featureType": "water",
+      "elementType": "all",
+      "stylers": [
+          {
+              "visibility": "simplified"
+          },
+          {
+              "saturation": "-60"
+          },
+          {
+              "lightness": "-20"
+          }
+      ]
+  }
+];
 class Map2 extends React.Component {
   render() {
     return (
@@ -43,6 +99,8 @@ class Map2 extends React.Component {
           initialCenter={this.props.center}
           onReady={this.handleMapReady}
           styles={googleMapStyles.styles}
+          // options={{styles: exampleMapStyles}}
+          // style={exampleMapStyles}
         >
           {/* <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.props.center}/> */}
 
@@ -52,6 +110,7 @@ class Map2 extends React.Component {
 						// positions={[{ lat: 25.018980966640957, lng: 121.5430102369873 },{ lat: 25.0175809726526, lng: 121.54213047243042 }]}
             opacity={1}
             radius={25}
+            options={{styles: exampleMapStyles}}
           />
         </Map>
 
@@ -59,8 +118,9 @@ class Map2 extends React.Component {
     );
   }
 }
+// Map2.defaultProps = googleMapStyles;
 export default GoogleApiWrapper({
-  apiKey: "", // AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+  apiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   libraries: ["visualization"]
 })(Map2);
 
