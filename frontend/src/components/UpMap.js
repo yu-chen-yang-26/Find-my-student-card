@@ -29,7 +29,7 @@ const Button = styled.button`
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
   background: palevioletred;
   &:hover {
-    width: 85px;
+    width: 120px;
     height: 45px;
     cursor: pointer;
     font-size: 1.1em;
@@ -40,12 +40,37 @@ const UpMap = ({ component, location, setLocation }) => {
   const [activeMarker, setActiveMarker] = useState('');
   const [pin,setpin] =useState(false);
   const [draggable, setDraggable] = useState(false);
-  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
-  // const 
-  const toggleDraggable = useCallback(() => {
+  const [realdraggable, setrealdraggable] = useState(false);
+  const [buttonText,setbuttonText] = useState(0);
+  let Text = ['Locate','Relocate','Done'];
+  // const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  const [mycenter,setmycenter] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
+  // const
+  const handleText = () => {
+    if(buttonText===0){
+      setDraggable(true);
+      setbuttonText(1)
+    }
+    if(buttonText===1){
+      setDraggable(false);
+      setbuttonText(2)
+    }
+    if(buttonText===2){
+      setDraggable(true);
+      setbuttonText(1)
+    }
+    setrealdraggable(true)
+  }
+  const toggleDraggable = () => {
     // setDraggable((d) => !d)
-    setDraggable(true);
-  }, [])
+    handleText();
+    
+  } 
+  // const toggleDraggable = useCallback(() => {
+  //   // setDraggable((d) => !d)
+  //   handleText();
+    
+  // }, [])
   const markerRef = useRef(null);
 
   function onDragEnd(...args) {
@@ -58,6 +83,7 @@ const UpMap = ({ component, location, setLocation }) => {
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng()
     });
+    // mycenter(location)
     // setNewLocation();
   }
 
@@ -67,6 +93,7 @@ const UpMap = ({ component, location, setLocation }) => {
       // const path = marker.getPath();
       // console.log(marker);
     },
+    
     [onDragEnd]
   );
 
@@ -77,14 +104,14 @@ const UpMap = ({ component, location, setLocation }) => {
           zoom={15}
           center={mycenter}
           mapContainerClassName="map-container"
-          // onLoad={handleOnLoad}
-          onClick={() => setActiveMarker(null)}
+          // onClick={() => setActiveMarker(null)}
           mapContainerStyle={{ width: "100%", height: "100%" }}
         // zoom={10}
         >
-          {draggable?<Marker onDragEnd={onDragEnd} onLoad={onMarkerLoad} position={location} animation={2} draggable={draggable} title={'Drag Me'}  />:""}        
+          {realdraggable?<Marker onDragEnd={onDragEnd} onLoad={onMarkerLoad} position={location} animation={(buttonText===1)?1:0} draggable={draggable} title={'Drag Me'}  />:""}        
         </GoogleMap>
-        <Button onClick={toggleDraggable} style={{position:"absolute",bottom:"50px"}}><EnvironmentOutlined />Locate</Button>
+        <Button onClick={toggleDraggable} style={{position:"absolute",bottom:"50px"}}><EnvironmentOutlined />{(buttonText===0)?'Locate':(buttonText===1)?'Done':(buttonText===2)?'Relocate':''    }</Button>
+        {/* <Button onClick={toggleDraggable} style={{position:"absolute",bottom:"50px"}}><EnvironmentOutlined />{buttonText}</Button> */}
         <br></br>
       {/* </MapStyle> */}
     </>
