@@ -82,7 +82,7 @@ const Tab = ({data, image}) =>{
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [password, setPassword] = useState(null);
-  const [checked, setChecked] = useState(data.founded === 'True');
+  const [checked, setChecked] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -96,8 +96,8 @@ const Tab = ({data, image}) =>{
       password: password}})
     if (messages === 'correct') {
       message.info('Correct password!')
-      setChecked(true);
       setIsModalOpen(false);
+      setChecked(true);
     }else{
       message.error('Wrong password!')
     }
@@ -139,7 +139,7 @@ const Tab = ({data, image}) =>{
             <td>{data.info}</td>
           </tr>
           </tbody></table>
-          {checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
+          {data.founded === 'True'? "" :checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
       <Modal title="請輸入四位數確認碼" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
         <Input.Password 
             // style={{width:"300px"}}

@@ -53,8 +53,8 @@ const columns = [
         value: '社科院',
         children: [
           {
-            text: '圖書館',
-            value: '圖書館',
+            text: '社科圖',
+            value: '社科圖',
           },
           {
             text: '經濟系',
@@ -75,12 +75,12 @@ const columns = [
             value: '土木系',
           },
           {
-            text: '近總圖',
-            value: '近總圖',
+            text: '椰林大道近總圖',
+            value: '椰林大道近總圖',
           },
           {
-            text: '近大門口',
-            value: '近大門口',
+            text: '椰林大道近大門口',
+            value: '椰林大道近大門口',
           }
         ],
         },
@@ -183,16 +183,16 @@ const columns = [
         value: '總圖書館',
         children: [
           {
-            text: '前草皮',
-            value: '前草皮',
+            text: '總圖前草皮',
+            value: '總圖前草皮',
           },
           {
-            text: '後草皮',
-            value: '後草皮',
+            text: '總圖後草皮',
+            value: '總圖後草皮',
           },
           {
-            text: '館內',
-            value: '館內',
+            text: '總圖館內',
+            value: '總圖館內',
           }
         ],
       },
@@ -209,8 +209,8 @@ const columns = [
             value: '新體',
           },
           {
-            text: '操場',
-            value: '操場',
+            text: '田徑場',
+            value: '田徑場',
           },
           {
             text: '網球場',
@@ -233,24 +233,6 @@ const columns = [
           {
             text: '小小福',
             value: '小小福',
-          }
-        ],
-      },
-      {
-        text: '社科院＆法學院',
-        value: '社科院＆法學院',
-        children: [
-          {
-            text: '社科院大樓',
-            value: '社科院大樓',
-          },
-          {
-            text: '霖澤館',
-            value: '霖澤館',
-          },
-          {
-            text: '118',
-            value: '118',
           }
         ],
       },

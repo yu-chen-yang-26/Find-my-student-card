@@ -50,8 +50,8 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       name: '社科院',
       items: [
         {
-          code: '圖書館',
-          name: '圖書館',
+          code: '社科圖',
+          name: '社科圖',
         },
         {
           code: '經濟系',
@@ -72,12 +72,12 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
           name: '土木系',
         },
         {
-          code: '近總圖',
-          name: '近總圖',
+          code: '椰林大道近總圖',
+          name: '椰林大道近總圖',
         },
         {
-          code: '近大門口',
-          name: '近大門口',
+          code: '椰林大道近大門口',
+          name: '椰林大道近大門口',
         }
       ],
       },
@@ -180,16 +180,16 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       name: '總圖書館',
       items: [
         {
-          code: '前草皮',
-          name: '前草皮',
+          code: '總圖前草皮',
+          name: '總圖前草皮',
         },
         {
-          code: '後草皮',
-          name: '後草皮',
+          code: '總圖後草皮',
+          name: '總圖後草皮',
         },
         {
-          code: '館內',
-          name: '館內',
+          code: '總圖館內',
+          name: '總圖館內',
         }
       ],
     },
@@ -206,8 +206,8 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
           name: '新體',
         },
         {
-          code: '操場',
-          name: '操場',
+          code: '田徑場',
+          name: '田徑場',
         },
         {
           code: '網球場',
@@ -234,30 +234,12 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       ],
     },
     {
-      code: '社科院＆法學院',
-      name: '社科院＆法學院',
-      items: [
-        {
-          code: '社科院大樓',
-          name: '社科院大樓',
-        },
-        {
-          code: '霖澤館',
-          name: '霖澤館',
-        },
-        {
-          code: '118',
-          name: '118',
-        }
-      ],
-    },
-    {
       code: "其他",
       name: "其他",
     }
   ];
   const onChange = (value) => {
-    console.log(value);
+    // console.log(value);
   };
   const navigate = useNavigate();
   const handleSubmit = async () => {
@@ -268,7 +250,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       = await axios.post('/submit',
       {params: {
         ID: ID,
-        location: location.join(''),
+        location: location[1],
         time: a + ' ' + b,
         info: info? info: '',
         image: state.imageList,
@@ -280,7 +262,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){
-          sendemail(ID,location.join(''),a + ' ' + b,'/detail/'+ID+'/'+ time);
+          sendemail(ID,location[1],a + ' ' + b,'/detail/'+ID+'/'+ time);
         }
       }
     }else{
