@@ -2,6 +2,7 @@ import styled from "styled-components"
 import React, { useEffect, useMemo, useState } from "react";
 import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
 import { Map, HeatMap, GoogleApiWrapper } from "google-maps-react";
+import googleMapStyles from "./MapStyles2";
 const MapStyle = styled.div`
   height: 400px;
   // width: 700px;
@@ -41,6 +42,7 @@ class Map2 extends React.Component {
           zoom={15}
           initialCenter={this.props.center}
           onReady={this.handleMapReady}
+          styles={googleMapStyles.styles}
         >
           {/* <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.props.center}/> */}
 
