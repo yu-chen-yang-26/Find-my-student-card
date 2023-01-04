@@ -36,10 +36,10 @@ const Search = ({setData}) => {
   <>
   <Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
       <Input allowClear placeholder="Enter the Student ID" value={ID} onChange={(e)=>{setID(e.target.value)}}></Input>
-      <Col xs={6}>
+      {/* <Col xs={6}>
         <Cascader options={options} placeholder="Please select" 
           value={location} onChange={(e)=>{setLocation(e[0])}}/>
-      </Col>
+      </Col> */}
       <Tooltip title="search">
           <Button shape="circle" icon={<SearchOutlined />} onClick={handleCLick}/>
       </Tooltip>

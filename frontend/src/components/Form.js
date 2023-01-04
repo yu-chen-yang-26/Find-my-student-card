@@ -19,18 +19,18 @@ import {
 } from 'antd';
 const HomeBT = styled.button`
   position: absolute;
-  bottom: 0;
-  margin: 15px;
+  bottom: 45%;
+  
   width: 60px;
-  height: 60px;
+  height: 55px;
   border-radius: 50px;
   border: transparent;
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
   background: palevioletred;
   &:hover {
-    margin: 15px;
-    width: 80px;
-    height: 80px;
+    
+    width: 70px;
+    height: 70px;
     cursor: pointer;
     font-size: 1.2em;
   }
@@ -169,8 +169,8 @@ const InfoForm = ({setImageList, setLocation, setApi}) => {
     }}>
       </ConfigProvider>
     </Form>
-    <HomeBT onClick={handleSubmit} style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }}>Submit</HomeBT>
+    {/* <HomeBT onClick={handleSubmit} style={{ margin: '15px', right: "4.5%", backgroundColor: "#FFD700" }}>Submit</HomeBT> */}
     </>
   );
 };
-export default InfoForm;
+export {InfoForm} ;
