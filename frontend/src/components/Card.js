@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Carousel,Card,Col  } from 'antd';
+import { Carousel,Card,Col, Modal,Input  } from 'antd';
 import { CaretRightOutlined, CaretLeftOutlined, RocketOutlined} from '@ant-design/icons';
 import long from "../Pic/長.png";
 import Bear from "../Pic/bear.jpg";
@@ -81,6 +81,18 @@ const Button = styled.button`
 `;
 
 const Table2 = (data) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
   <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
     <StyledCard
@@ -111,7 +123,14 @@ const Table2 = (data) => {
         <td>{data.info}</td>
       </tr>
       </tbody>
-      <Button >物歸原主</Button>
+      <Button onClick={showModal}>物歸原主</Button>
+      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
+        <Input.Password 
+            // style={{width:"300px"}}
+            placeholder="input password"
+            visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
+          />
+      </Modal>
 
     </StyledCard>
   </div>

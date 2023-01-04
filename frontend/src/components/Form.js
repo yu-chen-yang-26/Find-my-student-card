@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import axios from '../api';
@@ -19,24 +19,24 @@ import {
 } from 'antd';
 const HomeBT = styled.button`
   position: absolute;
-  bottom: 0;
-  margin: 15px;
+  bottom: 45%;
+  
   width: 60px;
-  height: 60px;
+  height: 55px;
   border-radius: 50px;
   border: transparent;
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
   background: palevioletred;
   &:hover {
-    margin: 15px;
-    width: 80px;
-    height: 80px;
+    
+    width: 70px;
+    height: 70px;
     cursor: pointer;
     font-size: 1.2em;
   }
 `
 
-const InfoForm = ({setImageList, setLocation, setApi}) => {
+const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
   const { state } = useLocation();
   const [form] = Form.useForm();
   const ID = Form.useWatch('Student ID', form);
@@ -73,6 +73,11 @@ const InfoForm = ({setImageList, setLocation, setApi}) => {
       message.error('Please fill the form correctly.')
     }
   };
+  useEffect(()=>{
+    if (submit === true) {
+      handleSubmit();
+    }
+  }, [submit])
   const [componentSize, setComponentSize] = useState('default');
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -169,8 +174,7 @@ const InfoForm = ({setImageList, setLocation, setApi}) => {
     }}>
       </ConfigProvider>
     </Form>
-    <HomeBT onClick={handleSubmit} style={{ margin: '15px', right: "15%", backgroundColor: "#FFD700" }}>Submit</HomeBT>
     </>
   );
 };
-export default InfoForm;
+export {InfoForm} ;

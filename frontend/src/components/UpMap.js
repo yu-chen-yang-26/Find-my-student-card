@@ -84,8 +84,7 @@ const UpMap = ({ component, location, setLocation }) => {
         >
           {draggable?<Marker onDragEnd={onDragEnd} onLoad={onMarkerLoad} position={location} animation={2} draggable={draggable} title={'Drag Me'}  />:""}        
         </GoogleMap>
-        <Button onClick={toggleDraggable}><EnvironmentOutlined />Locate</Button>
-        {component}
+        <Button onClick={toggleDraggable} style={{position:"absolute",bottom:"50px"}}><EnvironmentOutlined />Locate</Button>
         <br></br>
       {/* </MapStyle> */}
     </>

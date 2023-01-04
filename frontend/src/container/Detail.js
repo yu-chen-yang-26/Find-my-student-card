@@ -14,7 +14,7 @@ const Detail = () => {
     const [image, setImage] = useState([]);
     const {id, time} = useParams();
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+        googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
     });
     useEffect(() => {
         const a = new Date(parseInt(time)).toLocaleDateString();
