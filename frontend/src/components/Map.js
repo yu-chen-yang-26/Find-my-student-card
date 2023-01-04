@@ -293,8 +293,13 @@ function Map(props) {
       // zoom={10}
       >
         <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
-        {props.positions.map(( {ID, time, position }) => {
-          // console.log("id=",ID,"position=",position);
+        {props.positions.map(( {ID, date,time, position }) => {
+          console.log("id=",ID,"position=",position,"props.positions=",props.positions);
+          const a = new Date(date).toLocaleDateString();
+          const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
+          const timess = a + ' ' + b
+          const mylink = '/detail/'+ID+'/'+timess
+          console.log(mylink)
           return(
           <Marker
             key={ID+time}
@@ -308,6 +313,7 @@ function Map(props) {
                 <>
                   <div>{ID}</div>
                   <div>{time}</div>
+                  <div href={mylink}>link</div>
                 </>
               </InfoWindowF>
             ) : null}

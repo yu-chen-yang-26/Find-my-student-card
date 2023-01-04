@@ -5,7 +5,7 @@ const getRandomInt = (min, max) => {
    return min + Math.floor(Math.random() * max);
 }
 
-const sendemail = async (ID,location,Email_Time) => {
+const sendemail = async (ID,location,Email_Time,link) => {
    const checkPassword = getRandomInt(1000, 8999);
    const templateParams = {
       to_email: ID,
@@ -14,7 +14,7 @@ const sendemail = async (ID,location,Email_Time) => {
       location: location,
       checkPassword: checkPassword,
       from_name: 'Check this out!',
-      link: 'www.'
+      link: link
    };
    emailjs.send('service_tl8q7kp', 'template_1817ej1', templateParams,"PY6tsxJdjD_9qoWfO")
    .then(async function(response) {

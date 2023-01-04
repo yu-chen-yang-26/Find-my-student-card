@@ -66,7 +66,7 @@ const InfoForm = ({setImageList, setLocation, setApi}) => {
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){
-          sendemail(ID,location,a + ' ' + b);
+          sendemail(ID,location,time,'/detail/'+ID+'/'+ time);
         }
       }
     }else{
