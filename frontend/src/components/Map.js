@@ -303,7 +303,7 @@ function Map(props) {
       >
         <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
         {props.positions.map(({ ID, date, time, position }) => {
-          // console.log("id=",ID,"position=",position,"props.positions=",props.positions);
+          // console.log("id=",ID,"position=",position);
           const a = new Date(date).toLocaleDateString();
           const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
           const timess = a + ' ' + b

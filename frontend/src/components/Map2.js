@@ -110,7 +110,7 @@ class Map2 extends React.Component {
 						// positions={[{ lat: 25.018980966640957, lng: 121.5430102369873 },{ lat: 25.0175809726526, lng: 121.54213047243042 }]}
             opacity={1}
             radius={25}
-            options={{styles: exampleMapStyles}}
+            // options={{styles: exampleMapStyles}}
           />
         </Map>
 

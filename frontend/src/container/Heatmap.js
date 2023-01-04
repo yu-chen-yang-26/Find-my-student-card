@@ -9,6 +9,7 @@ import axios from '../api';
 const Heatmap = ({ setInfo }) => {
     const [data, setData] = useState([]);
     const [markers, setmarkers] = useState([]);
+    const [tempstore,settempstore] = useState([]);
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
     });
@@ -21,12 +22,15 @@ const Heatmap = ({ setInfo }) => {
         fetchData();
         const ExtractLocation = data.map(item => Object.values(item)[0])
         setmarkers(ExtractLocation);
+    }, [])
+    useEffect(() => {
+        settempstore(markers);
     }, [isLoaded])
     return (
         <Background component={
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Col  xs={0} md={13} lg={12}  >{isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={markers} />:""}</Col>
+              <Col  xs={0} md={13} lg={12}  >{isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={tempstore} />:""}</Col>
             </>} 
         setInfo={setInfo} />
     )

@@ -101,7 +101,7 @@ const InButton = styled.button`
 const Background = ({ para,component }) => {
   const location = useLocation()
   const upload = location.pathname.split('/')[1]
-  console.log(location.pathname.split('/')[1])
+  // console.log(location.pathname.split('/')[1])
   const navigate = useNavigate();
   const ToUpload = () => {
     navigate('/upload/0');
