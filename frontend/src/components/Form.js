@@ -36,7 +36,7 @@ const HomeBT = styled.button`
   }
 `
 
-const InfoForm = ({setImageList, setLocation}) => {
+const InfoForm = ({setImageList, setLocation, setApi}) => {
   const { state } = useLocation();
   const [form] = Form.useForm();
   const ID = Form.useWatch('Student ID', form);
@@ -62,6 +62,7 @@ const InfoForm = ({setImageList, setLocation}) => {
       }});
       if (message === 'success') {
         setImageList([]);
+        setApi({ID: ID, time: Date.parse(a + ' ' + b)});
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){

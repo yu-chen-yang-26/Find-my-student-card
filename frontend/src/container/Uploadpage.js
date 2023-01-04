@@ -81,13 +81,14 @@ const Upload = () => {
   const navigate = useNavigate();
   const { currentStep } = useParams();
   const [imageList, setImageList] = useState([]);
+  const [api, setApi] = useState({ID: '', time: ''});
   const [location, setLocation] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
 
   const ToHome = () => {
     navigate('/home');
   }
   const ToInfo = () => {
-    navigate('/detail');
+    navigate('/detail/' + api.ID + '/' + api.time);
   }
   const NextPage = () => {
     const nextStep = parseInt(currentStep) + 1;
@@ -112,7 +113,7 @@ const Upload = () => {
             
             {currentStep === "0" ?<Drag imageList={imageList} setImageList={setImageList}/>
               : currentStep === "1" && isLoaded == true ? <Middle><UpMap location={location} setLocation={setLocation}/></Middle>
-                : currentStep === "2" ? <Middle><InfoForm setImageList={setImageList} setLocation={setLocation}/></Middle>
+                : currentStep === "2" ? <Middle><InfoForm setImageList={setImageList} setLocation={setLocation} setApi={setApi}/></Middle>
                   : currentStep === "3" ? <Result
                     status="success"
                     title="Successfully upload!"
