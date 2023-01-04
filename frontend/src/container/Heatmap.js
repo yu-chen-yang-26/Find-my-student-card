@@ -10,7 +10,7 @@ const Heatmap = ({ setInfo }) => {
     const [data, setData] = useState([]);
     const [markers, setmarkers] = useState([]);
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk" // Add your API key
+        googleMapsApiKey: "" // Add your API key AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
     });
     useEffect(() => {
         const fetchData = async () => {

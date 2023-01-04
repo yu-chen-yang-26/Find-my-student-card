@@ -79,7 +79,9 @@ const Button = styled.button`
     font-weight:bold;
   }
 `;
-const Table2 = (
+
+const Table2 = (data) => {
+  return (
   <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
     <StyledCard
       title={<>拾獲資訊 <RocketOutlined /></>}
@@ -91,42 +93,46 @@ const Table2 = (
         fontSize: 16,
       }}
     >
+      <tbody>
       <tr>
-        <th>學號 </th>
-        <td> R00000000</td>
+        <th>學號:</th>
+        <td>{data.ID}</td>
       </tr>
       <tr>
         <th>時間</th>
-        <td> 2023 1/1</td>
+        <td> {data.time}</td>
       </tr>
       <tr>
-        <th>地點</th>
-        <td> 土木系</td>
+        <th>地點:</th>
+        <td>{data.location}</td>
       </tr>
       <tr>
-        <th>備註</th>
-        <td> 大門口右邊樹上</td>
+        <th>備註:</th>
+        <td>{data.info}</td>
       </tr>
+      </tbody>
       <Button >物歸原主</Button>
 
     </StyledCard>
   </div>
-)
+)}
 
-const MixCard = () => {
-  const bannerList = [long,Bear,NTU,galaxy]
+const MixCard = ({data, image}) => {
+  const bannerList = image;
   const [listNum, setListNum] = useState(0);
   const Next = () => {
-    var num = listNum
+    console.log('next')
+    var num = listNum;
     if (num === bannerList.length-1){
-      setListNum(0)
+      setListNum(0);
     }
     else{setListNum(num+1)}
   }
   const Last = () => {
-    var num = listNum
+    console.log('last')
+    var num = listNum;
     if (num === 0){
-      setListNum(bannerList.length-1)
+      setListNum(bannerList.length-1);
     }
     else{setListNum(num-1)}
   }
@@ -135,12 +141,12 @@ const MixCard = () => {
     <>
       <div style={{display:"flex", flexDirection: "row" ,marginRight:"20px",marginTop:"20px"}}>
         {/* <Col  xs={{ span: 0}}  md={{ span:3, offset:0}} lg={{ span:8, offset:0}} xl={{ span:13, offset:0}}> */}
-          <Pic img={bannerList[listNum]} >
+          <Pic img={bannerList[listNum]} key={bannerList[listNum]}>
             <button onClick={Next}><CaretLeftOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
             <button onClick={Last}><CaretRightOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
           </Pic>
         {/* </Col> */}
-        {Table2}
+        {Table2(data)}
       </div>
     </>
   )

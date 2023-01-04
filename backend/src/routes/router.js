@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {Card, Image} from '../models/schema';
+import {Card, Image, Mail} from '../models/schema';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -34,15 +34,35 @@ router.post('/upload', upload.single('file'), async (req, res) => {
             contentType: req.file.mimetype
         }
     }).save();
-    res.json({
-      id: id._id
-    })
+    res.json({id: id._id});
 });
+
 router.post('/submit', async (req, res) => {
-    console.log({...req.body.params,
-        founded: 'Not yet'});
-    const data = await new Card({...req.body.params,
+    await new Card({...req.body.params,
         founded: 'Not yet'}).save();
-    res.send({message: 'success'}); 
+    res.json({message: 'success',SendPermition : true});
+});
+
+router.post('/sendMail', async (req, res) => {
+    await new Mail({...req.body.params}).save();
+    res.json({message: 'success'});
+});
+
+router.get('/detail', async (req, res) => {
+    await Card.findOne({ID: req.query.ID, time: req.query.time})
+    .exec(async function(err, data){
+        if (err) {
+            res.status(403).send({dataList: [], imageList: [] });
+        }else{
+            let imageList = [];  
+            for (let index = 0; index < data.image.length; index++) {
+                let element = data.image[index];
+                let temp = await Image.findOne({_id: element});
+                imageList = [...imageList, "data:image/"+temp.img.contentType+";base64,"+
+                temp.img.data.toString('base64')];
+            }          
+            res.status(200).send({dataList: data, imageList: imageList });
+        }
+    });
 });
 export default router;
