@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import React, { useEffect, useMemo, useState } from "react";
-import { GoogleMap, InfoWindow, Marker,InfoWindowF } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
 
 const MapStyle = styled.div`
   height: 400px;
@@ -13,22 +13,12 @@ const MapStyle = styled.div`
 `;
 function Map(props) {
   const [activeMarker, setActiveMarker] = useState('');
+  const [newcenter, setnewcenter] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
   const NTUcenter = {
     lat: 25.017622284161067,
     lng: 121.5378841549027
   };
-  const handleActiveMarker = (props) => {
-    // console.log("activeMarker=", activeMarker)
-    // console.log("id=",props.ID)
-    // if (marker === activeMarker) {
-    //   return;
-    // }
-    setActiveMarker(props.ID+props.time);
-  };
-  // useEffect(()=>{
-  //   console.log("activeMarker=",activeMarker)
-  //   }, [activeMarker]
-  // )
+
   const exampleMapStyles = [
     {
       "elementType": "geometry",
@@ -279,17 +269,31 @@ function Map(props) {
     }
   ];
   const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  const DYNAMICcenter = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
+  useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
+  const [map, setMap] = useState('')
+  useEffect(()=>{
+    if(map){
+      map.setCenter(newcenter)
+    }
+
+    }, [activeMarker])
+  const handleActiveMarker = (props) => {
+    setActiveMarker(props.ID + props.time);
+    map.setCenter(props.position)
+    setnewcenter(props.position)
+  };
   // console.log("props.positions=",props.positions)
   return (
     <MapStyle>
       <GoogleMap
         zoom={15}
-        center={mycenter}
+        center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
         mapContainerClassName="map-container"
-        // onLoad={handleOnLoad}
+        onLoad={(map) => setMap(map)}
         onClick={() => setActiveMarker(null)}
         mapContainerStyle={{ width: "100%", height: "100%" }}
-        options={{styles:exampleMapStyles}}
+        options={{ styles: exampleMapStyles }}
       // zoom={10}
       >
         <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
