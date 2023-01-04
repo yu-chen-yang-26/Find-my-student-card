@@ -23,12 +23,10 @@ const options = [
 
 const Search = ({setData}) => {
   const [ID, setID] = useState('');
-  const [location, setLocation] = useState('');
   const handleCLick = async () => {
     const { data: { dataList } } 
     = await axios.get('/search', {params: {
-      ID: ID,
-      location: location,
+      ID: ID
     }});
     setData(dataList);
   }
@@ -37,8 +35,7 @@ const Search = ({setData}) => {
   <Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
       <Input allowClear placeholder="Enter the Student ID" value={ID} onChange={(e)=>{setID(e.target.value)}}></Input>
       <Col xs={6}>
-        <Cascader options={options} placeholder="Please select" 
-          value={location} onChange={(e)=>{setLocation(e[0])}}/>
+        <Cascader options={options} placeholder="Please select"/>
       </Col>
       <Tooltip title="search">
           <Button shape="circle" icon={<SearchOutlined />} onClick={handleCLick}/>

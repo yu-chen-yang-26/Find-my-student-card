@@ -82,21 +82,29 @@ const Upload = () => {
   const { currentStep } = useParams();
   const [imageList, setImageList] = useState([]);
   const [api, setApi] = useState({ID: '', time: ''});
+  const [submit, setSubmit] = useState(false);
   const [location, setLocation] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
 
   const ToHome = () => {
+    setSubmit(false);
     navigate('/home');
   }
   const ToInfo = () => {
+    setSubmit(false);
     navigate('/detail/' + api.ID + '/' + api.time);
   }
   const NextPage = () => {
     const nextStep = parseInt(currentStep) + 1;
-    navigate('/upload/' + nextStep, {
-      state: {
-        imageList: imageList,
-        location: location}
-    });
+    if (currentStep === "2") {
+      setSubmit(true);
+    }else{
+      setSubmit(false);
+      navigate('/upload/' + nextStep, {
+        state: {
+          imageList: imageList,
+          location: location}
+      });
+    }
   }
   const LastPage = () => {
     const lastStep = parseInt(currentStep) - 1;
@@ -113,7 +121,7 @@ const Upload = () => {
             
             {currentStep === "0" ?<Drag imageList={imageList} setImageList={setImageList}/>
               : currentStep === "1" && isLoaded == true ? <Middle><UpMap location={location} setLocation={setLocation}/></Middle>
-                : currentStep === "2" ? <Middle><InfoForm setImageList={setImageList} setLocation={setLocation} setApi={setApi}/></Middle>
+                : currentStep === "2" ? <Middle><InfoForm setImageList={setImageList} setLocation={setLocation} setApi={setApi} submit={submit}/></Middle>
                   : currentStep === "3" ? <Result
                     status="success"
                     title="Successfully upload!"
@@ -122,7 +130,7 @@ const Upload = () => {
             
           </Wrapper>
           {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "6%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
-          {currentStep?<HomeBT style={{ right: "6%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>Next page</HomeBT>:""}
+          {currentStep?<HomeBT style={{ right: "6%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>{currentStep === "2" ? "Submit": currentStep === "3"? "Info" : "Next page"}</HomeBT>:""}
       </div>
     }></Background>
 

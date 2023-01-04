@@ -28,13 +28,23 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-    await Card.find({$or:[{ID: req.query.ID}, {location: req.query.location}]}).exec(function(err, data){
-        if (err) {
-            res.status(403).send({dataList: [] });
-        }else{
-            res.status(200).send({dataList: data });
-        }
-    });
+    if (req.query.ID === '') {
+        await Card.find({}).exec(function(err, data){
+            if (err) {
+                res.status(403).send({dataList: [] });
+            }else{
+                res.status(200).send({dataList: data });
+            }
+        });
+    }else{
+        await Card.find({ID: req.query.ID}).exec(function(err, data){
+            if (err) {
+                res.status(403).send({dataList: [] });
+            }else{
+                res.status(200).send({dataList: data });
+            }
+        });
+    }
 });
 
 router.post('/upload', upload.single('file'), async (req, res) => {
