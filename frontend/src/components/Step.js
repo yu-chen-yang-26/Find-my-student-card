@@ -13,7 +13,7 @@ const StepsBar = ({currentStep}) => {
     }}
   >
   <Steps
-    style={{top:'110px',width:'95%',position:'absolute'}}
+    style={{top:'10px',width:'95%',position:'relative',height:"50px" }}
     current={currentStep}
     items={[
       {

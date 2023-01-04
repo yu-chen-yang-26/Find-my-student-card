@@ -22,8 +22,6 @@ const Homepage = () => {
     return (
         <Background  component={
             <>
-                {/* <Space size={"large"}> */}
-
                 <Col xs={0} md={13} lg={12} >
                     {isLoaded ? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={data} /> : null}
                 </Col>

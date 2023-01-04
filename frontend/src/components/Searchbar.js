@@ -8,6 +8,7 @@ const Container= styled.div`
   margin: 0 0 0 20px;
   display: flex;
   justify-content: space-around;
+  flex-wrap : wrap;
 `;  
 const options = [
   {

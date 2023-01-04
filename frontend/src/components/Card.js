@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Carousel,Card,Col  } from 'antd';
-import { CaretRightOutlined, CaretLeftOutlined} from '@ant-design/icons';
+import { CaretRightOutlined, CaretLeftOutlined, RocketOutlined} from '@ant-design/icons';
 import long from "../Pic/長.png";
 import Bear from "../Pic/bear.jpg";
 import NTU from "../Pic/NTU.jpg";
@@ -8,7 +8,31 @@ import galaxy from "../Pic/Galaxy.jpg";
 import styled from "styled-components";
 import Card2 from "./Card2";
 
-
+//ant-card-head-title
+const StyledCard = styled(Card)`
+  .ant-card-head-title{
+    font-size: 1.3em;
+    
+  }
+  th{
+    // background-color:#009879;
+    color:black;
+    width:8vw;
+    // height:75px;
+  }
+  td{
+    background-color:#ffffff;
+    width:150px;
+    // height:50px;
+    text-align:center;
+  }
+  tr:nth-of-type(odd) td{
+    background-color:#ddd6f3;
+  }
+  tr:nth-of-type(odd) th{
+    background-color:#ddd6f3;
+  }
+`
 const Pic = styled.div`
   height: 250px;
   width: 350px;
@@ -55,22 +79,28 @@ const Button = styled.button`
     font-weight:bold;
   }
 `;
+
 const Table2 = (data) => {
-  return (<div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
-    <Card
-      title="拾獲資訊"
+  return (
+  <div className="site-card-border-less-wrapper" style={{boxShadow:"0 0 20px 0px Gray"}}>
+    <StyledCard
+      title={<>拾獲資訊 <RocketOutlined /></>}
       bordered={true}
       style={{
         borderRadius: "0",
         width: 300,
         height: 250,
-        fontSize: 20,
+        fontSize: 16,
       }}
     >
       <tbody>
       <tr>
         <th>學號:</th>
         <td>{data.ID}</td>
+      </tr>
+      <tr>
+        <th>時間</th>
+        <td> {data.time}</td>
       </tr>
       <tr>
         <th>地點:</th>
@@ -83,9 +113,9 @@ const Table2 = (data) => {
       </tbody>
       <Button >物歸原主</Button>
 
-    </Card>
-  </div>)
-}
+    </StyledCard>
+  </div>
+)}
 
 const MixCard = ({data, image}) => {
   const bannerList = image;
