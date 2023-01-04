@@ -26,7 +26,7 @@ const StepsBar = ({currentStep}) => {
         // subTitle: 'Left 00:00:08',
       },
       {
-        title: currentStep === 2? 'In Progress': 'Waiting',
+        title: currentStep === 2? 'In Progress': currentStep === 3? 'Finished': 'Waiting',
         description: "填寫表單",
       },
     ]}

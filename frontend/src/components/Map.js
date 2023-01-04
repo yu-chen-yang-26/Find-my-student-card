@@ -297,31 +297,29 @@ function Map(props) {
       // zoom={10}
       >
         <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
-        {props.positions.map(({ ID, date, time, position }) => {
+        {props.positions.map(( {ID, time, position }) => {
           // console.log("id=",ID,"position=",position,"props.positions=",props.positions);
-          const a = new Date(date).toLocaleDateString();
-          const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
-          const timess = a + ' ' + b
-          const mylink = '/detail/' + ID + '/' + timess
-          return (
-            <Marker
-              key={ID + time}
-              position={position}
-              onClick={() => {handleActiveMarker({ ID, time, position })}}
-            // onClick={() => map.setCenter(position)}
+          const mylink = '/detail/'+ID+'/'+Date.parse(time)
+          // console.log(mylink)
+          return(
+          <Marker
+            key={ID+time}
+            position={position}
+            onClick={() => handleActiveMarker({ID,time})}
+            
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
-            >
-              {activeMarker == ID + time ? (
-                <InfoWindowF onCloseClick={() => setActiveMarker('')}>
-                  <>
-                    <div>{ID}</div>
-                    <div>{time}</div>
-                    <div href={mylink}>link</div>
-                  </>
-                </InfoWindowF>
-              ) : null}
-            </Marker>
-          )
+          >
+            {activeMarker == ID+time ? (
+              <InfoWindowF onCloseClick={() => setActiveMarker('')}>
+                <>
+                  <div>{ID}</div>
+                  <div>{time}</div>
+                  <a href={mylink}>link</a>
+                </>
+              </InfoWindowF>
+            ) : null}
+          </Marker>
+        )
         })}
       </GoogleMap>
     </MapStyle>
