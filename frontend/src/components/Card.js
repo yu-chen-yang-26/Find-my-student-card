@@ -9,15 +9,19 @@ const StyledCard = styled(Card)`
     font-size: 1.3em;
     
   }
+  .ant-card-body{
+    width:100%;
+    
+  }
   th{
     // background-color:#009879;
     color:black;
-    width:8vw;
+    min-width:8vw;
     // height:75px;
   }
   td{
     background-color:#ffffff;
-    width:250px;
+    width:100%;
     // height:50px;
     text-align:center;
   }
@@ -30,7 +34,7 @@ const StyledCard = styled(Card)`
 `
 const Pic = styled.div`
   height: 300px;
-  width: 400px;
+  width: 100%;
   // margin: 0 30px 0 0px;
   background-size: contain;
   border-radius: 10px 0px 0px 10px;
@@ -110,7 +114,7 @@ const Tab = ({data, image}) =>{
           bordered={true}
           style={{
             borderRadius: "0",
-            width: 400,
+            width: "100%",
             minWidth: 250,
             height: 300,
             fontSize: 16,
@@ -169,7 +173,7 @@ const Tab = ({data, image}) =>{
   }
   const MixCard = (
     <>
-      <div style={{display:"flex", flexDirection: "row" ,marginRight:"20px",marginTop:"20px"}}>
+      <div style={{display:"flex", flexDirection: "row" ,marginRight:"20px"}}>
         {/* <Col  xs={{ span: 0}}  md={{ span:3, offset:0}} lg={{ span:8, offset:0}} xl={{ span:13, offset:0}}> */}
           <Pic img={bannerList[listNum]} key={bannerList[listNum]}>
             <button onClick={Next}><CaretLeftOutlined style={{ fontSize: '26px', color: 'black' }}/></button>
@@ -187,7 +191,7 @@ const Tab = ({data, image}) =>{
     }
   }
   return(
-    <Tabs
+    <Tabs 
       onChange={onChange}
       type="card"
       items={[

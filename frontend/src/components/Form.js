@@ -44,7 +44,221 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
   const date = Form.useWatch('Date-Found', form);
   const time = Form.useWatch('Time Found', form);
   const info = Form.useWatch('Remark', form);
-
+  const options = [
+    {
+      code: '社科院',
+      name: '社科院',
+      items: [
+        {
+          code: '圖書館',
+          name: '圖書館',
+        },
+        {
+          code: '經濟系',
+          name: '經濟系',
+        }
+      ],
+    },
+    {
+      code: '椰林大道',
+      name: '椰林大道',
+      items: [
+        {
+          code: '森林系',
+          name: '森林系',
+        },
+        {
+          code: '土木系',
+          name: '土木系',
+        },
+        {
+          code: '近總圖',
+          name: '近總圖',
+        },
+        {
+          code: '近大門口',
+          name: '近大門口',
+        }
+      ],
+      },
+    {
+      code: '桃花心木道',
+      name: '桃花心木道',
+      items: [
+        {
+          code: '計中',
+          name: '計中',
+        },
+        {
+          code: '外教',
+          name: '外教',
+        }
+      ],
+    },
+    {
+      code: '舟山路口',
+      name: '舟山路口',
+      items: [
+        {
+          code: '公館捷運站',
+          name: '公館捷運站',
+        },
+        {
+          code: '大一女宿',
+          name: '大一女宿',
+        },
+        {
+          code: '研一',
+          name: '研一',
+        }
+      ],
+    },
+    {
+      code: '楓香道',
+      name: '楓香道',
+      items: [
+        {
+          code: '資工系館',
+          name: '資工系館',
+        },
+        {
+          code: '電機系館',
+          name: '電機系館',
+        },
+        {
+          code: '工綜',
+          name: '工綜',
+        }
+      ],
+    },
+    {
+      code: '教學大樓',
+      name: '教學大樓',
+      items: [
+        {
+          code: '共同',
+          name: '共同',
+        },
+        {
+          code: '博雅',
+          name: '博雅',
+        },
+        {
+          code: '普通',
+          name: '普通',
+        },
+        {
+          code: '綜合',
+          name: '綜合',
+        },
+        {
+          code: '新生',
+          name: '新生',
+        }
+      ],
+    },
+    {
+      code: '二活＆管理學院',
+      name: '二活＆管理學院',
+      items: [
+        {
+          code: '管一',
+          name: '管一',
+        },
+        {
+          code: '管二',
+          name: '管二',
+        },
+        {
+          code: '二活',
+          name: '二活',
+        }
+      ],
+    },
+    {
+      code: '總圖書館',
+      name: '總圖書館',
+      items: [
+        {
+          code: '前草皮',
+          name: '前草皮',
+        },
+        {
+          code: '後草皮',
+          name: '後草皮',
+        },
+        {
+          code: '館內',
+          name: '館內',
+        }
+      ],
+    },
+    {
+      code: '體育場',
+      name: '體育場',
+      items: [
+        {
+          code: '舊體周圍',
+          name: '舊體周圍',
+        },
+        {
+          code: '新體',
+          name: '新體',
+        },
+        {
+          code: '操場',
+          name: '操場',
+        },
+        {
+          code: '網球場',
+          name: '網球場',
+        }
+      ],
+    },
+    {
+      code: '學餐',
+      name: '學餐',
+      items: [
+        {
+          code: '活大',
+          name: '活大',
+        },
+        {
+          code: '小福',
+          name: '小福',
+        },
+        {
+          code: '小小福',
+          name: '小小福',
+        }
+      ],
+    },
+    {
+      code: '社科院＆法學院',
+      name: '社科院＆法學院',
+      items: [
+        {
+          code: '社科院大樓',
+          name: '社科院大樓',
+        },
+        {
+          code: '霖澤館',
+          name: '霖澤館',
+        },
+        {
+          code: '118',
+          name: '118',
+        }
+      ],
+    },
+    {
+      code: "其他",
+      name: "其他",
+    }
+  ];
+  const onChange = (value) => {
+    console.log(value);
+  };
   const navigate = useNavigate();
   const handleSubmit = async () => {
     if (ID && location && date && time) {
@@ -129,32 +343,26 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       </Form.Item>
       <Form.Item name="Location Zone" label="Location Zone" rules={[
           {
-            type: 'string',
+            type: 'array',
             required: true,
             message: 'Please select',
           },
         ]}>
-        <Select>
+        {/* <Select>
           <Select.Option value="社科院">社科院</Select.Option>
           <Select.Option value="圖書館">圖書館</Select.Option>
-        </Select>
-      </Form.Item>
-      {/* <Form.Item label="Cascader">
+        </Select> */}
         <Cascader
-          options={[
-            {
-              value: 'zhejiang',
-              label: 'Zhejiang',
-              children: [
-                {
-                  value: 'hangzhou',
-                  label: 'Hangzhou',
-                },
-              ],
-            },
-          ]}
+            fieldNames={{
+              label: 'name',
+              value: 'code',
+              children: 'items',
+            }}
+            options={options}
+            onChange={onChange}
+            placeholder="Please select"
         />
-      </Form.Item> */}
+      </Form.Item>
       <Form.Item name="Date-Found" label="Date-Time Found" {...config}>
         <DatePicker />
       </Form.Item>

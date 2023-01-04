@@ -35,8 +35,8 @@ const Detail = () => {
             <>
                 
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Col  xs={0} md={13} lg={12}  >{isLoaded? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={[data]} />: null}</Col>
-              <Col  xs={{ span: 24, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 12, offset: 0 }}  ><Card data={data} image={image}/></Col>
+              <Col  xs={0} md={13} lg={13}  >{isLoaded? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={[data]} />: null}</Col>
+              <Col  xs={{ span: 22, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 10, offset: 0 }}  ><Card data={data} image={image}/></Col>
               {/* <Alert message="已寄送信件" type="success" showIcon style={{top:"120px",position:"absolute",right:"150px"}}/> */}
             </>} 
          />

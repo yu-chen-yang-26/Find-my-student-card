@@ -32,7 +32,7 @@ const Search = ({setData}) => {
   }
   return(
   <>
-  <Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
+  <Space style={{top:"100px",position:"absolute",margin:"20px",right:"20px"}}>
       <Input allowClear placeholder="Enter the Student ID" value={ID} onChange={(e)=>{setID(e.target.value)}}></Input>
       {/* <Col xs={6}>
         <Cascader options={options} placeholder="Please select" 
