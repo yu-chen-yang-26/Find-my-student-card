@@ -27,6 +27,16 @@ router.get('/', async (req, res) => {
     });
 });
 
+router.get('/search', async (req, res) => {
+    await Card.find({$or:[{ID: req.query.ID}, {location: req.query.location}]}).exec(function(err, data){
+        if (err) {
+            res.status(403).send({dataList: [] });
+        }else{
+            res.status(200).send({dataList: data });
+        }
+    });
+});
+
 router.post('/upload', upload.single('file'), async (req, res) => {
     const id = await new Image({
         img: {
@@ -54,13 +64,15 @@ router.get('/detail', async (req, res) => {
         if (err) {
             res.status(403).send({dataList: [], imageList: [] });
         }else{
-            let imageList = [];  
-            for (let index = 0; index < data.image.length; index++) {
-                let element = data.image[index];
-                let temp = await Image.findOne({_id: element});
-                imageList = [...imageList, "data:image/"+temp.img.contentType+";base64,"+
-                temp.img.data.toString('base64')];
-            }          
+            let imageList = []; 
+            if (data.image) {
+                for (let index = 0; index < data.image.length; index++) {
+                    let element = data.image[index];
+                    let temp = await Image.findOne({_id: element});
+                    imageList = [...imageList, "data:image/"+temp.img.contentType+";base64,"+
+                    temp.img.data.toString('base64')];
+                }   
+            }       
             res.status(200).send({dataList: data, imageList: imageList });
         }
     });

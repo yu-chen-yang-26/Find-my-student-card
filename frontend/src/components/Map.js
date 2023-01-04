@@ -47,7 +47,7 @@ function Map(props) {
           // console.log("id=",ID,"position=",position);
           return(
           <Marker
-            key={ID}
+            key={ID+time}
             position={position}
             onClick={() => handleActiveMarker({ID,time})}
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components"
 import { Cascader } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Tooltip, Space, Input, Col } from 'antd';
+import axios from '../api';
 const Container= styled.div`
   margin: 0 0 0 20px;
   display: flex;
@@ -18,16 +19,30 @@ const options = [
     label: '圖書館',
   },
 ];
-const onChange = (value) => {
-  console.log(value);
-};
-const search = () => <>
-<Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
-    <Input allowClear placeholder="Enter the Student ID"></Input>
-    <Col xs={6}><Cascader options={options} onChange={onChange} placeholder="Please select" /></Col>
-    <Tooltip title="search">
-        <Button shape="circle" icon={<SearchOutlined />} />
-    </Tooltip>
-</Space>
-</>
-export default search;
+
+const Search = ({setData}) => {
+  const [ID, setID] = useState('');
+  const [location, setLocation] = useState('');
+  const handleCLick = async () => {
+    const { data: { dataList } } 
+    = await axios.get('/search', {params: {
+      ID: ID,
+      location: location,
+    }});
+    setData(dataList);
+  }
+  return(
+  <>
+  <Space style={{top:"90px",position:"absolute",margin:"20px",right:"20px"}}>
+      <Input allowClear placeholder="Enter the Student ID" value={ID} onChange={(e)=>{setID(e.target.value)}}></Input>
+      <Col xs={6}>
+        <Cascader options={options} placeholder="Please select" 
+          value={location} onChange={(e)=>{setLocation(e[0])}}/>
+      </Col>
+      <Tooltip title="search">
+          <Button shape="circle" icon={<SearchOutlined />} onClick={handleCLick}/>
+      </Tooltip>
+  </Space>
+  </>
+)}
+export default Search;

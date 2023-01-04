@@ -10,7 +10,7 @@ import { useLoadScript } from "@react-google-maps/api";
 const Homepage = () => {
     const [data, setData] = useState([]);
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "" // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+        googleMapsApiKey: "" // Add your API key//
     });
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +18,7 @@ const Homepage = () => {
             setData(dataList);
         }
         fetchData();
-    }, [isLoaded])
+    }, [])
     return (
         <Background  component={
             <>
@@ -29,7 +29,7 @@ const Homepage = () => {
                 </Col>
                 <Col xs={{ span: 24, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 12, offset: 0 }} ><Table data={data} /></Col>
                 {/* </Space> */}
-                <Search />
+                <Search setData={setData}/>
             </>
         } />
     )

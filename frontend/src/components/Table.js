@@ -77,9 +77,6 @@ const columns = [
   },
 ];
 
-const onChange = (pagination, filters, sorter, extra) => {
-  console.log('params', pagination, filters, sorter, extra);
-};
 const SearchTable = (data) => {
   const navigate = useNavigate();
   const toDetail = (record) => {
@@ -91,7 +88,7 @@ const SearchTable = (data) => {
         colorPrimary: "#faad14",
       },
       // }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
-    }}><StyledElement style={{  top: "100px", margin: "25px" }} columns={columns} dataSource={data.data} onChange={onChange} rowKey={'_id'}
+    }}><StyledElement style={{  top: "100px", margin: "25px" }} columns={columns} dataSource={data.data} rowKey={'_id'}
       scroll={{ x: "450px", y: 'calc(100vh - 410px)' }}
       onRow={record => {
         // console.log(record)
