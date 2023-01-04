@@ -285,10 +285,10 @@ function Map(props) {
     map.setCenter(props.position)
     setnewcenter(props.position)
   };
-  // useEffect(()=>{
-  //   console.log("activeMarker=",activeMarker)
-  //   }, [activeMarker]
-  // )
+  useEffect(()=>{
+    // console.log("activeMarker=",activeMarker)
+    }, [activeMarker]
+  )
   const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   // const mycenter = { lat: 25.017622284161067, lng: 121.5378841549027 };
   // console.log("props.positions=",props.positions)
@@ -300,7 +300,7 @@ function Map(props) {
         center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
         mapContainerClassName="map-container"
         onLoad={(map) => setMap(map)}
-        onClick={() => setActiveMarker(null)}
+        // onClick={() => setActiveMarker('')}
         mapContainerStyle={{ width: "100%", height: "100%" }}
         options={{ styles: exampleMapStyles }}
       // zoom={10}
@@ -320,7 +320,7 @@ function Map(props) {
             // onClick={() => map.setCenter(position)}
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
             >
-              {activeMarker == ID + time ? (
+              {/* {activeMarker == ID + time ? (
                 <InfoWindowF onCloseClick={() => setActiveMarker('')}>
                   <>
                     <div>{ID}</div>
@@ -328,7 +328,7 @@ function Map(props) {
                     <a href={'http://localhost:3000/detail/'+ID+'/'+Date.parse(time)}>link</a>
                   </>
                 </InfoWindowF>
-              ) : null}
+              ) : null} */}
             </Marker>
           )
         })}
