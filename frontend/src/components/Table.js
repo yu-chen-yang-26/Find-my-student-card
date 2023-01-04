@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, ConfigProvider } from 'antd';
 import styled from 'styled-components'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 const StyledElement = styled(Table)`
   .ant-spin-container {
     // background-color: #C9D6FF;
@@ -271,7 +271,6 @@ const SearchTable = (data) => {
       token: {
         colorPrimary: "#faad14",
       },
-      // }}><Table style={{width:"500px", height:'400px',top:"100px"}} columns={columns} dataSource={data} onChange={onChange} /></ConfigProvider>;
     }}><StyledElement style={{  top: "100px", margin: "25px" }} columns={columns} dataSource={data.data} rowKey={'_id'}
       scroll={{ x: "450px", y: 'calc(100vh - 410px)' }}
       onRow={record => {

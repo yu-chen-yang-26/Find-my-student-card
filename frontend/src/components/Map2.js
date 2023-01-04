@@ -6,10 +6,14 @@ import googleMapStyles from "./MapStyles2";
 const MapStyle = styled.div`
   height: 400px;
   // width: 700px;
-  margin: 20px 30px 0 20px;
+  margin: 20px 30px 0 25px;
   background-color: gray;
-  border: 2px solid palevioletred;
-  background-image: url(${props => props.img});
+  border: 4px outset palevioletred;
+  box-shadow:0 0 20px 0px Gray;
+  align-items: center;
+  display:flex;
+  justify-content: center;
+
 `;
 const gradient = [
   "rgba(102, 255, 0, 0)",
@@ -89,8 +93,7 @@ const exampleMapStyles = [
 class Map2 extends React.Component {
   render() {
     return (
-      <div className="map-container" style={{ height: '400px', width: '700px' }}>
-
+      <MapStyle className="map-container" style={{ height: '400px' }}>
         <Map
           containerStyle={containerStyle}
           google={this.props.google}
@@ -113,8 +116,7 @@ class Map2 extends React.Component {
             options={{styles: exampleMapStyles}}
           />
         </Map>
-
-      </div>
+      </MapStyle>
     );
   }
 }

@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
-import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import axios from '../api';
 import styled from "styled-components";
 import sendemail from './Mail';
 import {
-  Button,
   message,
   Cascader,
   DatePicker,
   Form,
   Input,
-  InputNumber,
   TimePicker,
-  Select,
-  Switch,
-  TreeSelect,
 } from 'antd';
 const HomeBT = styled.button`
   position: absolute;
@@ -307,13 +302,6 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       onValuesChange={onFormLayoutChange}
       size={componentSize}
     >
-      {/* <Form.Item label="Form Size" name="size">
-        <Radio.Group>
-          <Radio.Button value="small">Small</Radio.Button>
-          <Radio.Button value="default">Default</Radio.Button>
-          <Radio.Button value="large">Large</Radio.Button>
-        </Radio.Group>
-      </Form.Item> */}
       <Form.Item name="Student ID" label="Student ID" rules={[
           {
             type: 'string',
@@ -330,10 +318,6 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
             message: 'Please select',
           },
         ]}>
-        {/* <Select>
-          <Select.Option value="社科院">社科院</Select.Option>
-          <Select.Option value="圖書館">圖書館</Select.Option>
-        </Select> */}
         <Cascader
             fieldNames={{
               label: 'name',
@@ -354,9 +338,6 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       <Form.Item name="Remark" label="Remark">
         <Input />
       </Form.Item>
-      {/* <Form.Item label="InputNumber">
-        <InputNumber />
-      </Form.Item> */}
       <ConfigProvider 
       theme={{token: {
         colorPrimary: "#faad14",

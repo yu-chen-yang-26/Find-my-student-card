@@ -8,7 +8,6 @@ const MapStyle = styled.div`
   margin: 20px 30px 0 25px;
   background-color: gray;
   border: 4px outset palevioletred;
-  background-image: url(${props => props.img});
   box-shadow:0 0 20px 0px Gray;
 `;
 function Map(props) {

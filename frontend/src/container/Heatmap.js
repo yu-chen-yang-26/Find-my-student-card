@@ -1,9 +1,7 @@
-import Card from "../components/Card";
 import Background from "../components/Background";
-import styled from "styled-components";
 import Map2 from "../components/Map2";
 import {Col} from 'antd';
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 import { useLoadScript } from "@react-google-maps/api";
 import axios from '../api';
 const Heatmap = ({ setInfo }) => {
@@ -24,9 +22,14 @@ const Heatmap = ({ setInfo }) => {
         <Background component={
             <>
               {/* <div style={{ height: '200px', width:"200px"}}/> */}
-              <Col  xs={0} md={13} lg={12}  >{isLoaded && data !== [] ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={data} />:""}</Col>
+              <Col xs={24} >
+                {isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={markers} />:""}
+                </Col>
+              
+              {/* <Col xs={{ span: 24, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 6, offset: 4 }} ><StatisticCard/></Col> */}
             </>} 
-        setInfo={setInfo} />
+        setInfo={setInfo} 
+        />
     )
 }
 

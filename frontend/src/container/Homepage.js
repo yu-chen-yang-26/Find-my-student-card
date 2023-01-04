@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import Map from '../components/Map'
 import Table from '../components/Table'
 import Search from "../components/Searchbar"

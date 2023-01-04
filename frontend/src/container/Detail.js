@@ -1,9 +1,7 @@
 import Card from "../components/Card";
 import Background from "../components/Background";
-import styled from "styled-components";
 import Map from "../components/Map";
 import {Col} from 'antd';
-import { Alert, Space } from 'antd';
 import { useParams } from "react-router-dom";
 import axios from '../api';
 import {useState, useEffect} from 'react';
@@ -33,11 +31,8 @@ const Detail = () => {
     return (
         <Background component={
             <>
-                
-              {/* <div style={{ height: '200px', width:"200px"}}/> */}
               <Col  xs={0} md={13} lg={13}  >{isLoaded? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={[data]} />: null}</Col>
-              <Col  xs={{ span: 22, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 10, offset: 0 }}  ><Card data={data} image={image}/></Col>
-              {/* <Alert message="已寄送信件" type="success" showIcon style={{top:"120px",position:"absolute",right:"150px"}}/> */}
+              <Col  xs={{ span: 22, offset: 0 }} md={{ span:11, offset: 0 }} lg={{ span: 10, offset: 0 }}  ><Card style={{ marginLeft: "25px" }} data={data} image={image}/></Col>
             </>} 
          />
     )
