@@ -1,5 +1,16 @@
 {
   "dependencies": {
     "@ant-design/icons": "^4.8.0"
-  }
+  },
+  "scripts": {
+    "install:prod": "cd frontend && yarn install --freeze-lockfile && cd ../backend && yarn install--freeze-lockfile",
+    "build": "cd frontend && yarn build",
+    "deploy": "cd backend && yarn deploy"
+  },
+  "name": "FindMyStudentCard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Yixiu1121/FindMyStudentCard.git",
+  "author": "yu-chen-yang-26 <charlieck260405@gmail.com>",
+  "license": "MIT"
 }

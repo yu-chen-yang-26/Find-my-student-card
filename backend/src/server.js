@@ -3,11 +3,20 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import mongo from './mongo';
+import path from "path";
 import router from './routes/router.js';
-import {Card, Mail} from './models/schema.js';
-
-mongo.connect();
 const app = express();
+
+if (process.env.NODE_ENV === "production") {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, "../frontend", "build")));
+  }
+  
+  if (process.env.NODE_ENV === "development") {
+      app.use(cors());
+  }
+  
+mongo.connect();
 app.options('*', (req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'POST, DELETE');
@@ -18,7 +27,7 @@ const server = http.createServer(app);
 const db = mongoose.connection;
 app.use(cors());
 app.use(express.json());
-app.use('/', router);
+app.use('/api', router);
 db.once('open', async () => {
     console.log('MongoDB connected!');
 })
