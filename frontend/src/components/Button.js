@@ -47,7 +47,6 @@ const BigButton =({mode})=>{
     });
   };
     return (
-      
         <Container>
           {contextHolder}
         {mode?

@@ -16,10 +16,6 @@ function Map(props) {
   const navigate = useNavigate();
   const [activeMarker, setActiveMarker] = useState('');
   const [newcenter, setnewcenter] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
-  const NTUcenter = {
-    lat: 25.017622284161067,
-    lng: 121.5378841549027
-  };
   const exampleMapStyles = [
     {
       "elementType": "geometry",
@@ -269,7 +265,6 @@ function Map(props) {
       ]
     }
   ];
-  // const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   const [map, setMap] = useState('')
   useEffect(()=>{
@@ -289,14 +284,7 @@ function Map(props) {
   };
   const toDetail = (record) => {
     navigate(record);
-  }
-  useEffect(()=>{
-    // console.log("activeMarker=",activeMarker)
-    }, [activeMarker]
-  )
-  
-  const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
-  // const mycenter = { lat: 25.017622284161067, lng: 121.5378841549027 };
+  }  
   return (
       <MapStyle>
       <GoogleMap
@@ -304,14 +292,10 @@ function Map(props) {
         center={(props.isdetail===1)?props.center:{ lat: 25.017622284161067, lng: 121.5378841549027 }}
         mapContainerClassName="map-container"
         onLoad={(map) => setMap(map)}
-        // onClick={() => setActiveMarker('')}
         mapContainerStyle={{ width: "100%", height: "100%" }}
         options={{ styles: exampleMapStyles }}
-      // zoom={10}
       >
-        {/* <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} /> */}
         {props.positions.map(({ ID, date, time, position }) => {
-          // console.log("id=",ID,"position=",position);
           const a = new Date(date).toLocaleDateString();
           const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
           const timess = a + ' ' + b
@@ -321,19 +305,13 @@ function Map(props) {
               key={ID + time}
               position={position}
               onClick={() => {handleActiveMarker({ ID, time, position })}}
-            // onClick={() => map.setCenter(position)}
-            // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
             >
               {(activeMarker == ID + time) && (props.isdetail!==1)? (
                 <InfoWindowF onCloseClick={() => setActiveMarker('')}>
                   <>
                     <div>{ID}</div>
                     <div>{time}</div>
-                    {/* <a href={'http://localhost:3000/Detail/'+ID+'/'+Date.parse(time)}>link</a> */}
                     <Button danger onClick={() =>{toDetail('/Detail/'+ID+'/'+Date.parse(time))}}>link</Button>
-                    {/* style={{height:"20px"}} */}
-                    {/* <button onClick={() =>{toDetail('/Detail/'+ID+'/'+Date.parse(time))}}>link</button> */}
-                    {/* <a href={'#'} onClick={handleInfoWindow()}>link</a> */}
                   </>
                 </InfoWindowF>
               ) : null}

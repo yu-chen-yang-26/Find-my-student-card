@@ -17,7 +17,7 @@ const sendemail = async (ID,location,Email_Time,link) => {
       link: link
    };
    emailjs.send('service_tl8q7kp', 'template_1817ej1', templateParams,"PY6tsxJdjD_9qoWfO")
-   .then(async function(response) {
+   .then(async function() {
    const { data: { message } } 
    = await axios.post('/sendMail',
    {params: {
@@ -26,7 +26,7 @@ const sendemail = async (ID,location,Email_Time,link) => {
       sent: 'True',
       checkPassword: checkPassword
    }});
-   },async function(error) {
+   },async function() {
    const { data: { message } } 
    = await axios.post('/sendMail',
    {params: {

@@ -1,6 +1,5 @@
 import styled from "styled-components"
-import React, { useEffect, useMemo, useState } from "react";
-import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
+import React from "react";
 import { Map, HeatMap, GoogleApiWrapper } from "google-maps-react";
 const MapStyle = styled.div`
   height: 450px;
@@ -261,15 +260,10 @@ class HotMap extends React.Component {
           initialCenter={this.props.center}
           onReady={this.handleMapReady}
           styles={styles}
-          // options={{styles: exampleMapStyles}}
-          // style={exampleMapStyles}
         >
-          {/* <Marker onClick={this.onMarkerClick} name={'Current location'} position={this.props.center}/> */}
-
           <HeatMap
             gradient={gradient}
             positions={this.props.positions}
-						// positions={[{ lat: 25.018980966640957, lng: 121.5430102369873 },{ lat: 25.0175809726526, lng: 121.54213047243042 }]}
             opacity={1}
             radius={25}
             options={{styles: exampleMapStyles}}
@@ -279,7 +273,6 @@ class HotMap extends React.Component {
     );
   }
 }
-// Map2.defaultProps = googleMapStyles;
 export default GoogleApiWrapper({
   apiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   libraries: ["visualization"]

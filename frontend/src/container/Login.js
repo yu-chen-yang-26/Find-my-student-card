@@ -47,8 +47,6 @@ const Login=()=> {
         <Button/>
       </Wrapper>
     </Container>
-
-
   );
 }
 

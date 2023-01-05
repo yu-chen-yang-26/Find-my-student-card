@@ -1,13 +1,10 @@
 import { Steps, ConfigProvider } from 'antd';
-
-// const description = 'This is a description.';
-
 const StepsBar = ({currentStep}) => {
   return (
   <ConfigProvider
     theme={{
       token: {
-        colorPrimary: "#ba5370", //#ba5370
+        colorPrimary: "#ba5370", 
       },
     }}
   >
@@ -22,7 +19,6 @@ const StepsBar = ({currentStep}) => {
       {
         title: currentStep === 1? 'In Progress': currentStep === 0? 'Waiting': 'Finished',
         description: "地圖定位",
-        // subTitle: 'Left 00:00:08',
       },
       {
         title: currentStep === 2? 'In Progress': currentStep === 3? 'Finished': 'Waiting',

@@ -8,11 +8,8 @@ const props = {
   name: 'file',
   accept: "image/png, image/jpeg, image/jpg,",
   multiple: true,
-  action: 'http://localhost:4000/upload',
+  action: '/api/upload',
   listType: "picture-card",
-  onDrop(e) {
-    // console.log('Dropped files', e.dataTransfer.files);
-  },
   async onPreview(file)  {
     let src = file.thumbUrl;
     if (!src) {
@@ -35,9 +32,6 @@ const props = {
 const Drag = ({imageList, setImageList}) => {
   const onChange = (info) => {
     const { status, response } = info.file;
-    if (status !== 'uploading') {
-      // console.log(info.file, info.fileList);
-    }
     if (status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
       const { id: id } = response;

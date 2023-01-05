@@ -274,11 +274,9 @@ const SearchTable = (data) => {
     }}><StyledElement style={{  top: "100px", margin: "25px" }} columns={columns} dataSource={data.data} rowKey={'_id'}
       scroll={{ x: "450px", y: 'calc(100vh - 410px)' }}
       onRow={record => {
-        // console.log(record)
         return {
           onClick: event => { toDetail(record) }
         }}}
-        // rowClassvalue = {this.setClassvalue}
        /></ConfigProvider>
        
   )

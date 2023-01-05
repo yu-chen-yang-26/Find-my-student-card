@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ConfigProvider } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom'
 import axios from '../api';
-import styled from "styled-components";
 import sendemail from './Mail';
 import {
   message,
@@ -215,20 +214,19 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       name: "其他",
     }
   ];
-  const onChange = (value) => {
-    // console.log(value);
-  };
   const navigate = useNavigate();
   const handleSubmit = async () => {
     if (ID && location && date && time) {
       const a = new Date(date).toLocaleDateString();
       const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
+      const newLocation = location.length === 1? '其他':location[1];
+      const newDate = a + ' ' + b;
       const { data: { message, SendPermition} } 
       = await axios.post('/submit',
       {params: {
         ID: ID,
-        location: location.length === 1? '其他':location[1],
-        time: a + ' ' + b,
+        location: newLocation,
+        time: newDate,
         info: info? info: '',
         image: state.imageList,
         position: state.location,
@@ -239,7 +237,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){
-          sendemail(ID,location.length === 1? '其他':location[1],a + ' ' + b,'/detail/'+ID+'/'+ time);
+          sendemail(ID,newLocation,newDate,'/detail/'+ID+'/'+ time);
         }
       }
     }else{
@@ -308,7 +306,6 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
               children: 'items',
             }}
             options={options}
-            onChange={onChange}
             placeholder="Please select"
         />
       </Form.Item>

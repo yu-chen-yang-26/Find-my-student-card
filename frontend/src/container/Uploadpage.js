@@ -4,7 +4,7 @@ import styled from "styled-components";
 import UpMap from "../components/UpMap";
 import Drag from "../components/Drag";
 import React, { useState } from 'react';
-import { Layout, Result } from 'antd';
+import { Result } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom'
 import { useLoadScript } from "@react-google-maps/api";
 import Background from "../components/Background";
@@ -65,10 +65,6 @@ const Upload = () => {
   const [submit, setSubmit] = useState(false);
   const [location, setLocation] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
 
-  const ToHome = () => {
-    setSubmit(false);
-    navigate('/home');
-  }
   const ToInfo = () => {
     setSubmit(false);
     navigate('/detail/' + api.ID + '/' + api.time);
@@ -98,7 +94,6 @@ const Upload = () => {
       <div style={{display:"flex", flexWrap: "wrap", width:"100%",justifyContent: "center",height:"90%"}}>
         <StepsBar currentStep={parseInt(currentStep)}></StepsBar>
           <Wrapper>
-            
             {currentStep === "0" ?<Drag imageList={imageList} setImageList={setImageList}/>
               : currentStep === "1" && isLoaded == true ? <UpMap location={location} setLocation={setLocation}/>
                 : currentStep === "2" ? <Middle><InfoForm setImageList={setImageList} setLocation={setLocation} setApi={setApi} submit={submit}/></Middle>
@@ -106,8 +101,6 @@ const Upload = () => {
                     status="success"
                     title="Successfully upload!"
                   /> : ""}
-            {/* <HomeBT><HomeOutlined style={{ fontSize: '26px', color: 'white' }} onClick={ToHome} /></HomeBT> */}
-
           {currentStep !== "0" && currentStep !== "3"? <HomeBT style={{ color: 'grey', left: "6%", backgroundColor: "pink" }} onClick={LastPage}>Last page</HomeBT> : ""}
           {currentStep?<HomeBT style={{ right: "6%", backgroundColor: "#FFD700" }} onClick={currentStep !== "3" ? NextPage : ToInfo}>{currentStep === "2" ? "Submit": currentStep === "3"? "Info" : "Next page"}</HomeBT>:""}
           </Wrapper>

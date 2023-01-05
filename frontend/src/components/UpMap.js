@@ -43,9 +43,7 @@ const UpMap = ({ component, location, setLocation }) => {
   const [realdraggable, setrealdraggable] = useState(false);
   const [buttonText,setbuttonText] = useState(0);
   let Text = ['Locate','Relocate','Done'];
-  // const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   const [mycenter,setmycenter] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
-  // const
   const handleText = () => {
     if(buttonText===0){
       setDraggable(true);
@@ -62,58 +60,34 @@ const UpMap = ({ component, location, setLocation }) => {
     setrealdraggable(true)
   }
   const toggleDraggable = () => {
-    // setDraggable((d) => !d)
-    handleText();
-    
+    handleText();    
   } 
-  // const toggleDraggable = useCallback(() => {
-  //   // setDraggable((d) => !d)
-  //   handleText();
-    
-  // }, [])
   const markerRef = useRef(null);
-
   function onDragEnd(...args) {
-    // console.log("onDragEnd args: ", args);
-    // console.log(
-    //   markerRef.current.position.lat(),
-    //   markerRef.current.position.lng()
-    // );
     setLocation({
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng()
     });
-    // mycenter(location)
-    // setNewLocation();
   }
 
   const onMarkerLoad = useCallback(
     marker => {
       markerRef.current = marker;
-      // const path = marker.getPath();
-      // console.log(marker);
     },
-    
-    [onDragEnd]
-  );
+    [onDragEnd]);
 
   return (
     <>
-      {/* <MapStyle> */}
         <GoogleMap
           zoom={15}
           center={mycenter}
           mapContainerClassName="map-container"
-          // onClick={() => setActiveMarker(null)}
           mapContainerStyle={{ width: "100%", height: "100%" }}
-        // zoom={10}
         >
           {realdraggable?<Marker onDragEnd={onDragEnd} onLoad={onMarkerLoad} position={location} animation={(buttonText===1)?1:0} draggable={draggable} title={'Drag Me'}  />:""}        
         </GoogleMap>
         <Button onClick={toggleDraggable} style={{position:"absolute",bottom:"50px"}}><EnvironmentOutlined />{(buttonText===0)?'Pin up':(buttonText===1)?'Done':(buttonText===2)?'Relocate':''    }</Button>
-        {/* <Button onClick={toggleDraggable} style={{position:"absolute",bottom:"50px"}}><EnvironmentOutlined />{buttonText}</Button> */}
         <br></br>
-      {/* </MapStyle> */}
     </>
   );
 };

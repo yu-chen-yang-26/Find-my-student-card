@@ -4,13 +4,12 @@ import Detail from './container/Detail';
 import Heatmap from './container/Heatmap';
 import Upload from './container/Uploadpage';
 import Login from './container/Login';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
   <Router>
     <Routes>
-    {/* <Upload/> */}
       <Route path="/detail/:id/:time" element={<Detail/>} />
       <Route path="/home" element={<Homepage/>} />
       <Route path="/upload/:currentStep" element={<Upload/>} />
@@ -18,7 +17,6 @@ function App() {
       <Route path="/HeatMap" element={<Heatmap/>} />
     </Routes>
   </Router> 
-
   );
 }
 

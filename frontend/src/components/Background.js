@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Avatar } from 'antd';
-import { Layout, Row, Alert } from 'antd';
+import { Layout, Row } from 'antd';
 import Pic from "../Pic/bear.jpg";
 import {
   HomeOutlined,
