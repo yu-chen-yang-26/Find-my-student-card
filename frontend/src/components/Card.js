@@ -113,7 +113,7 @@ const Tab = ({data, image}) =>{
   const Table2 =(
         <StyledCard
           title={<><RocketOutlined />拾獲資訊 
-          {data.founded=="founded"|checked==true?<Tag  style={{marginLeft:"20%"}} icon={<CheckCircleOutlined />} color="success">return to origin owner</Tag>:""}</>}
+          {data.founded=="True"|checked==true?<Tag  style={{marginLeft:"20%"}} icon={<CheckCircleOutlined />} color="success">return to origin owner</Tag>:""}</>}
           bordered={true}
           style={{
             borderRadius: "0",
@@ -142,7 +142,7 @@ const Tab = ({data, image}) =>{
             <td>{data.info}</td>
           </tr>
           </tbody></table>
-          {data.founded === 'founded'? "" :checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
+          {data.founded === 'True'? "" :checked? "":<Button onClick={showModal}>我已尋回學生證</Button>}
       <Modal title="請輸入四位數確認碼" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} style={{top:"30%",width:"100px"}}>
         <Input.Password 
             placeholder="input password"
