@@ -220,24 +220,24 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       const a = new Date(date).toLocaleDateString();
       const b = new Date(time).toLocaleTimeString('en-US', { hourCycle: 'h23' });
       const newLocation = location.length === 1? '其他':location[1];
-      const newDate = a + ' ' + b;
+      const newTime = a + ' ' + b;
       const { data: { message, SendPermition} } 
       = await axios.post('/submit',
       {params: {
         ID: ID,
         location: newLocation,
-        time: newDate,
+        time: newTime,
         info: info? info: '',
         image: state.imageList,
         position: state.location,
       }});
       if (message === 'success') {
         setImageList([]);
-        setApi({ID: ID, time: Date.parse(a + ' ' + b)});
+        setApi({ID: ID, time: Date.parse(newTime)});
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){
-          sendemail(ID,newLocation,newDate,'/detail/'+ID+'/'+ time);
+          sendemail(ID,newLocation,newTime,'/detail/'+ID+'/'+ time);
         }
       }
     }else{

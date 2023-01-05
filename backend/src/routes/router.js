@@ -3,7 +3,7 @@ import {Card, Image, Mail} from '../models/schema';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-
+import bodyParser from 'body-parser';
 const router = Router();
 
 const storage = multer.diskStorage({
@@ -56,14 +56,14 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     }).save();
     res.json({id: id._id});
 });
-
-router.post('/submit', async (req, res) => {
+var jsonParser = bodyParser.json()
+router.post('/submit',jsonParser, async (req, res) => {
     await new Card({...req.body.params,
         founded: 'Not yet'}).save();
     res.json({message: 'success',SendPermition : true});
 });
 
-router.post('/sendMail', async (req, res) => {
+router.post('/sendMail',jsonParser, async (req, res) => {
     await new Mail({...req.body.params}).save();
     res.json({message: 'success'});
 });
@@ -88,7 +88,7 @@ router.get('/detail', async (req, res) => {
     });
 });
 
-router.post('/checkPassword', async (req, res) => {
+router.post('/checkPassword',jsonParser, async (req, res) => {
     await Mail.findOne({ID: req.body.params.ID, info: req.body.params.location+' '+req.body.params.time})
     .exec(async function(err, data){
         if (err) {
