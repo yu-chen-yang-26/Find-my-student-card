@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { useNavigate } from 'react-router-dom'
+import { notification } from 'antd';
 
 const Button = styled.button`
   width: 200px;
@@ -35,8 +36,27 @@ const BigButton =({mode})=>{
   const ToUpload = () => {
     navigate('/upload/0');
   }
+  // const [api, contextHolder] = notification.useNotification();
+  // const openNotification = (placement) => {
+  //   api.info({
+  //     message: `Notification`,
+  //     description:
+  //       '抱歉，此功能暫不開放，請由訪客登入',
+  //     placement,
+  //   });
+  // };
+  const openNotification = () => {
+    notification.open({
+      message: 'Notification Title',
+      description:
+        '抱歉，此功能暫不開放，請由訪客登入',
+      placement:"top",
+      duration: 2,
+  });}
     return (
+      
         <Container>
+          {/* {contextHolder} */}
         {mode?
         <>
           <Button>尋找學生證</Button>
@@ -44,7 +64,7 @@ const BigButton =({mode})=>{
         </>
         :<>
         <Button style={{fontSize: "1.5em"}} onClick={ToHome}>訪客登入</Button>
-        <Button style={{fontSize: "1.5em"}}>學號登入</Button>
+        <Button style={{fontSize: "1.5em"}} onClick={() => openNotification('top')}>學號登入</Button>
         </>}
       </Container>
     )

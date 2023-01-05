@@ -245,7 +245,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
       = await axios.post('/submit',
       {params: {
         ID: ID,
-        location: location[1],
+        location: location.length === 1? '其他':location[1],
         time: a + ' ' + b,
         info: info? info: '',
         image: state.imageList,
@@ -257,7 +257,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
         setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
         navigate('/upload/3');
         if(SendPermition){
-          sendemail(ID,location[1],a + ' ' + b,'/detail/'+ID+'/'+ time);
+          sendemail(ID,location.length === 1? '其他':location[1],a + ' ' + b,'/detail/'+ID+'/'+ time);
         }
       }
     }else{
@@ -307,9 +307,10 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
             type: 'string',
             required: true,
             message: 'Please input the Student ID!',
+            
           },
         ]}>
-        <Input />
+        <Input allowClear placeholder="Please enter owner's Student ID"/>
       </Form.Item>
       <Form.Item name="Location Zone" label="Location Zone" rules={[
           {
