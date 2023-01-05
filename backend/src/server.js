@@ -7,18 +7,18 @@ import path from "path";
 import router from './routes/router.js';
 const app = express();
 
-if (process.env.NODE_ENV === "production") {
-    const __dirname = path.resolve();
-    app.use(express.static(path.join(__dirname, "../frontend", "build")));
-  }
+// if (process.env.NODE_ENV === "production") {
+//     const __dirname = path.resolve();
+//     app.use(express.static(path.join(__dirname, "../frontend", "build")));
+//   }
   
-  if (process.env.NODE_ENV === "development") {
-      app.use(cors());
-  }
+//   if (process.env.NODE_ENV === "development") {
+//       app.use(cors());
+//   }
   
 mongo.connect();
 app.options('*', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
     next()
@@ -27,7 +27,7 @@ const server = http.createServer(app);
 const db = mongoose.connection;
 app.use(cors());
 app.use(express.json());
-app.use('/api', router);
+app.use('/', router);
 db.once('open', async () => {
     console.log('MongoDB connected!');
 })
