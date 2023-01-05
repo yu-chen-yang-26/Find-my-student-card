@@ -8,7 +8,7 @@ const props = {
   name: 'file',
   accept: "image/png, image/jpeg, image/jpg,",
   multiple: true,
-  action: '/api/upload',
+  action: process.env.NODE_ENV === "production"? '/api/upload': "http://localhost:4000/api/upload",
   listType: "picture-card",
   async onPreview(file)  {
     let src = file.thumbUrl;

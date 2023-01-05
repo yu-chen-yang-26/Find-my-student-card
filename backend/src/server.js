@@ -26,8 +26,8 @@ app.options('*', (req, res, next) => {
 const server = http.createServer(app);
 const db = mongoose.connection;
 app.use(cors());
-app.use(express.json());
 app.use('/api', router);
+app.use(express.json());
 db.once('open', async () => {
     console.log('MongoDB connected!');
 })
