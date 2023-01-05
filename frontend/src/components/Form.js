@@ -16,8 +16,8 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
   const { state } = useLocation();
   const [form] = Form.useForm();
   const ID = Form.useWatch('Student ID', form);
-  const location = Form.useWatch('Location Zone', form);
-  const date = Form.useWatch('Date-Found', form);
+  const location = Form.useWatch('Location Found', form);
+  const date = Form.useWatch('Date Found', form);
   const time = Form.useWatch('Time Found', form);
   const info = Form.useWatch('Remark', form);
   const options = [
