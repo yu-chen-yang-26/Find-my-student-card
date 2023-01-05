@@ -29,7 +29,7 @@ const Heatmap = ({ setInfo }) => {
         <Background component={
             <>
               <Col xs={24} >
-                {isLoaded ? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={tempstore} />:""}
+                {isLoaded && tempstore !== []? <Map2 center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={tempstore} />:""}
                 </Col>              
             </>} 
         />
