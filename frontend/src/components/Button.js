@@ -36,27 +36,28 @@ const BigButton =({mode})=>{
   const ToUpload = () => {
     navigate('/upload/0');
   }
-  // const [api, contextHolder] = notification.useNotification();
-  // const openNotification = (placement) => {
-  //   api.info({
-  //     message: `Notification`,
-  //     description:
-  //       '抱歉，此功能暫不開放，請由訪客登入',
-  //     placement,
-  //   });
-  // };
-  const openNotification = () => {
-    notification.open({
-      message: 'Notification Title',
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (placement) => {
+    api.info({
+      message: `Notification`,
       description:
         '抱歉，此功能暫不開放，請由訪客登入',
-      placement:"top",
+      placement,
       duration: 2,
-  });}
+    });
+  };
+  // const openNotification = () => {
+  //   notification.open({
+  //     message: 'Notification',
+  //     description:
+  //       '抱歉，此功能暫不開放，請由訪客登入',
+  //     placement:"top",
+  //     duration: 2,
+  // });}
     return (
       
         <Container>
-          {/* {contextHolder} */}
+          {contextHolder}
         {mode?
         <>
           <Button>尋找學生證</Button>
