@@ -249,8 +249,8 @@ const columns = [
     fixed: 'right',
     filters: [
       {
-        text: 'found',
-        value: 'found',
+        text: 'True',
+        value: 'True',
       },
       {
         text: 'Not yet',
