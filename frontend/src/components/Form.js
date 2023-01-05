@@ -12,24 +12,6 @@ import {
   Input,
   TimePicker,
 } from 'antd';
-const HomeBT = styled.button`
-  position: absolute;
-  bottom: 45%;
-  
-  width: 60px;
-  height: 55px;
-  border-radius: 50px;
-  border: transparent;
-  box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
-  background: palevioletred;
-  &:hover {
-    
-    width: 70px;
-    height: 70px;
-    cursor: pointer;
-    font-size: 1.2em;
-  }
-`
 
 const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
   const { state } = useLocation();

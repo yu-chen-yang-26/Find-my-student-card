@@ -41,6 +41,8 @@ const Pic = styled.div`
   background-repeat: no-repeat;
   box-shadow:0 0 20px 0px Gray;
   background-image: url(${props => props.img});
+  background-size: cover;
+  background-position: center bottom; //預設圖片左上方
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -46,14 +46,6 @@ const BigButton =({mode})=>{
       duration: 2,
     });
   };
-  // const openNotification = () => {
-  //   notification.open({
-  //     message: 'Notification',
-  //     description:
-  //       '抱歉，此功能暫不開放，請由訪客登入',
-  //     placement:"top",
-  //     duration: 2,
-  // });}
     return (
       
         <Container>
