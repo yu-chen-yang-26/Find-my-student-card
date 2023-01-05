@@ -292,7 +292,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
         ]}>
         <Input allowClear placeholder="Please enter owner's Student ID"/>
       </Form.Item>
-      <Form.Item name="Location Zone" label="Location Zone" rules={[
+      <Form.Item name="Location Found" label="Location Found" rules={[
           {
             type: 'array',
             required: true,
@@ -309,7 +309,7 @@ const InfoForm = ({setImageList, setLocation, setApi, submit}) => {
             placeholder="Please select"
         />
       </Form.Item>
-      <Form.Item name="Date-Found" label="Date-Time Found" {...config}>
+      <Form.Item name="Date Found" label="Date Found" {...config}>
         <DatePicker />
       </Form.Item>
       <Form.Item name="Time Found" label="Time Found" {...config}>

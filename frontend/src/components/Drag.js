@@ -48,7 +48,7 @@ const Drag = ({imageList, setImageList}) => {
             </p>
             <p className="ant-upload-text">Click or drag picture to this area to upload</p>
             <p className="ant-upload-hint">
-            The following file types can be uploaded: JPG, JPEG, PNG. Three pictures is the upper limit.
+            The following file types can be uploaded: JPG, JPEG, PNG. Upload limites: 3 photos.
             </p>
         </Dragger>
     </ImgCrop>
