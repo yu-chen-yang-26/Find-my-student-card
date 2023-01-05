@@ -2,7 +2,6 @@ import styled from "styled-components"
 import React, { useEffect, useMemo, useState } from "react";
 import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
 import { Map, HeatMap, GoogleApiWrapper } from "google-maps-react";
-import googleMapStyles from "./MapStyles2";
 const MapStyle = styled.div`
   height: 450px;
   // width: 700px;
@@ -28,7 +27,166 @@ const gradient = [
 "rgba(255, 57, 0, 0.7)",
 "rgba(255, 0, 0, 0.7)"
 ];
-
+const styles = [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#bdbdbd"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dadada"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#c9c9c9"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  }
+]
 const containerStyle = {
   position: 'relative',
   width: '100%',
@@ -90,7 +248,7 @@ const exampleMapStyles = [
       ]
   }
 ];
-class Map2 extends React.Component {
+class HotMap extends React.Component {
   render() {
     console.log(this.props.positions)
     return (
@@ -102,7 +260,7 @@ class Map2 extends React.Component {
           zoom={15}
           initialCenter={this.props.center}
           onReady={this.handleMapReady}
-          styles={googleMapStyles.styles}
+          styles={styles}
           // options={{styles: exampleMapStyles}}
           // style={exampleMapStyles}
         >
@@ -125,5 +283,5 @@ class Map2 extends React.Component {
 export default GoogleApiWrapper({
   apiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   libraries: ["visualization"]
-})(Map2);
+})(HotMap);
 

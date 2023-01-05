@@ -1,5 +1,5 @@
 import Background from "../components/Background";
-import Map2 from "../components/Map2";
+import Map2 from "../components/HotMap";
 import {Col} from 'antd';
 import {useState, useEffect} from 'react';
 import { useLoadScript } from "@react-google-maps/api";

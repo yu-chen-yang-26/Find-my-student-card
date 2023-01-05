@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import React, { useEffect, useMemo, useState } from "react";
 import { GoogleMap, InfoWindow, Marker, InfoWindowF } from "@react-google-maps/api";
+import { useNavigate } from 'react-router-dom'
+import { Button,Space } from 'antd';
 
 const MapStyle = styled.div`
   height: 400px;
@@ -11,6 +13,7 @@ const MapStyle = styled.div`
   box-shadow:0 0 20px 0px Gray;
 `;
 function Map(props) {
+  const navigate = useNavigate();
   const [activeMarker, setActiveMarker] = useState('');
   const [newcenter, setnewcenter] = useState({ lat: 25.017622284161067, lng: 121.5378841549027 });
   const NTUcenter = {
@@ -271,7 +274,11 @@ function Map(props) {
   const [map, setMap] = useState('')
   useEffect(()=>{
     if(map){
-      map.setCenter(newcenter)
+      if(props.isdetail===1){
+        map.setCenter(props.center)
+      }else{
+        map.setCenter(newcenter)
+      }
     }
 
     }, [activeMarker])
@@ -280,18 +287,21 @@ function Map(props) {
     map.setCenter(props.position)
     setnewcenter(props.position)
   };
+  const toDetail = (record) => {
+    navigate(record);
+  }
   useEffect(()=>{
     // console.log("activeMarker=",activeMarker)
     }, [activeMarker]
   )
+  
   const mycenter = useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   // const mycenter = { lat: 25.017622284161067, lng: 121.5378841549027 };
-  // console.log("props.positions=",props.positions)
   return (
       <MapStyle>
       <GoogleMap
         zoom={15}
-        center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
+        center={(props.isdetail===1)?props.center:{ lat: 25.017622284161067, lng: 121.5378841549027 }}
         mapContainerClassName="map-container"
         onLoad={(map) => setMap(map)}
         // onClick={() => setActiveMarker('')}
@@ -299,7 +309,7 @@ function Map(props) {
         options={{ styles: exampleMapStyles }}
       // zoom={10}
       >
-        <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} />
+        {/* <Marker title={'The marker`s title will appear as a tooltip.'} name={'SOMA'} position={mycenter} /> */}
         {props.positions.map(({ ID, date, time, position }) => {
           // console.log("id=",ID,"position=",position);
           const a = new Date(date).toLocaleDateString();
@@ -314,12 +324,16 @@ function Map(props) {
             // onClick={() => map.setCenter(position)}
             // icon= {{url: (require('../Pic/credit_card.png')),fillColor: '#EB00FF',scaledSize: {width: 30, height: 30}}}
             >
-              {activeMarker == ID + time ? (
+              {(activeMarker == ID + time) && (props.isdetail!==1)? (
                 <InfoWindowF onCloseClick={() => setActiveMarker('')}>
                   <>
                     <div>{ID}</div>
                     <div>{time}</div>
-                    <a href={'http://localhost:3000/detail/'+ID+'/'+Date.parse(time)}>link</a>
+                    {/* <a href={'http://localhost:3000/Detail/'+ID+'/'+Date.parse(time)}>link</a> */}
+                    <Button danger onClick={() =>{toDetail('/Detail/'+ID+'/'+Date.parse(time))}}>link</Button>
+                    {/* style={{height:"20px"}} */}
+                    {/* <button onClick={() =>{toDetail('/Detail/'+ID+'/'+Date.parse(time))}}>link</button> */}
+                    {/* <a href={'#'} onClick={handleInfoWindow()}>link</a> */}
                   </>
                 </InfoWindowF>
               ) : null}
