@@ -128,14 +128,6 @@ const Background = ({ component }) => {
           聯絡我們 &nbsp;
           <FacebookOutlined  style={{ fontSize: '26px', color: 'purple', cursor: "pointer", marginRight: "5px" }} onClick={ToFB}/>
           <GithubOutlined style={{ fontSize: '26px', color: 'purple', cursor: "pointer", marginRight: "5px" }} onClick={redirectToGoogle}/>
-          {/* <Alert
-            banner
-            message={
-              <Marquee pauseOnHover gradient={false} style={{backgroundColor:"transparent"}}>
-                I can be a React component, multiple React components, or just some text.
-              </Marquee>
-            }
-          /> */}
           </div>
         </Footer>
       </Layout>

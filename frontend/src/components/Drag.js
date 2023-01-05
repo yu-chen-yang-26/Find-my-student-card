@@ -25,7 +25,6 @@ const props = {
     imgWindow?.document.write(image.outerHTML);
   },
   showUploadList: {
-    showDownloadIcon: true,
     showRemoveIcon: true,
   },
 };
