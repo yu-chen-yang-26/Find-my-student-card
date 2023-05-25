@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import React from "react";
 import { Map, HeatMap, GoogleApiWrapper } from "google-maps-react";
 const MapStyle = styled.div`
@@ -7,250 +7,249 @@ const MapStyle = styled.div`
   margin: 20px 30px 0 25px;
   background-color: gray;
   border: 4px outset palevioletred;
-  box-shadow:0 0 20px 0px Gray;
+  box-shadow: 0 0 20px 0px Gray;
   align-items: center;
-  display:flex;
+  display: flex;
   justify-content: center;
-
 `;
 const gradient = [
   "rgba(102, 255, 0, 0)",
-"rgba(102, 255, 0, 0.7)",
-"rgba(147, 255, 0, 0.7)",
-"rgba(193, 255, 0, 0.7)",
-"rgba(238, 255, 0, 0.7)",
-"rgba(244, 227, 0, 0.7)",
-"rgba(249, 198, 0, 0.7)",
-"rgba(255, 170, 0, 0.7)",
-"rgba(255, 113, 0, 0.7)",
-"rgba(255, 57, 0, 0.7)",
-"rgba(255, 0, 0, 0.7)"
+  "rgba(102, 255, 0, 0.7)",
+  "rgba(147, 255, 0, 0.7)",
+  "rgba(193, 255, 0, 0.7)",
+  "rgba(238, 255, 0, 0.7)",
+  "rgba(244, 227, 0, 0.7)",
+  "rgba(249, 198, 0, 0.7)",
+  "rgba(255, 170, 0, 0.7)",
+  "rgba(255, 113, 0, 0.7)",
+  "rgba(255, 57, 0, 0.7)",
+  "rgba(255, 0, 0, 0.7)",
 ];
 const styles = [
   {
-    "elementType": "geometry",
-    "stylers": [
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#f5f5f5"
-      }
-    ]
+        color: "#f5f5f5",
+      },
+    ],
   },
   {
-    "elementType": "labels.icon",
-    "stylers": [
+    elementType: "labels.icon",
+    stylers: [
       {
-        "visibility": "off"
-      }
-    ]
+        visibility: "off",
+      },
+    ],
   },
   {
-    "elementType": "labels.text.fill",
-    "stylers": [
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#616161"
-      }
-    ]
+        color: "#616161",
+      },
+    ],
   },
   {
-    "elementType": "labels.text.stroke",
-    "stylers": [
+    elementType: "labels.text.stroke",
+    stylers: [
       {
-        "color": "#f5f5f5"
-      }
-    ]
+        color: "#f5f5f5",
+      },
+    ],
   },
   {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "administrative.land_parcel",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#bdbdbd"
-      }
-    ]
+        color: "#bdbdbd",
+      },
+    ],
   },
   {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "poi",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#eeeeee"
-      }
-    ]
+        color: "#eeeeee",
+      },
+    ],
   },
   {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#757575"
-      }
-    ]
+        color: "#757575",
+      },
+    ],
   },
   {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "poi.park",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#e5e5e5"
-      }
-    ]
+        color: "#e5e5e5",
+      },
+    ],
   },
   {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "poi.park",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#9e9e9e"
-      }
-    ]
+        color: "#9e9e9e",
+      },
+    ],
   },
   {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#ffffff"
-      }
-    ]
+        color: "#ffffff",
+      },
+    ],
   },
   {
-    "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.arterial",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#757575"
-      }
-    ]
+        color: "#757575",
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#dadada"
-      }
-    ]
+        color: "#dadada",
+      },
+    ],
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.highway",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#616161"
-      }
-    ]
+        color: "#616161",
+      },
+    ],
   },
   {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "road.local",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#9e9e9e"
-      }
-    ]
+        color: "#9e9e9e",
+      },
+    ],
   },
   {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "transit.line",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#e5e5e5"
-      }
-    ]
+        color: "#e5e5e5",
+      },
+    ],
   },
   {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "transit.station",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#eeeeee"
-      }
-    ]
+        color: "#eeeeee",
+      },
+    ],
   },
   {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [
       {
-        "color": "#c9c9c9"
-      }
-    ]
+        color: "#c9c9c9",
+      },
+    ],
   },
   {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
+    featureType: "water",
+    elementType: "labels.text.fill",
+    stylers: [
       {
-        "color": "#9e9e9e"
-      }
-    ]
-  }
-]
+        color: "#9e9e9e",
+      },
+    ],
+  },
+];
 const containerStyle = {
-  position: 'relative',
-  width: '100%',
-  height: '100%'
-}
+  position: "relative",
+  width: "100%",
+  height: "100%",
+};
 const exampleMapStyles = [
   {
-      "featureType": "all",
-      "elementType": "all",
-      "stylers": [
-          {
-              "hue": "#008eff"
-          }
-      ]
+    featureType: "all",
+    elementType: "all",
+    stylers: [
+      {
+        hue: "#008eff",
+      },
+    ],
   },
   {
-      "featureType": "poi",
-      "elementType": "all",
-      "stylers": [
-          {
-              "visibility": "off"
-          }
-      ]
+    featureType: "poi",
+    elementType: "all",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
   },
   {
-      "featureType": "road",
-      "elementType": "all",
-      "stylers": [
-          {
-              "saturation": "0"
-          },
-          {
-              "lightness": "0"
-          }
-      ]
+    featureType: "road",
+    elementType: "all",
+    stylers: [
+      {
+        saturation: "0",
+      },
+      {
+        lightness: "0",
+      },
+    ],
   },
   {
-      "featureType": "transit",
-      "elementType": "all",
-      "stylers": [
-          {
-              "visibility": "off"
-          }
-      ]
+    featureType: "transit",
+    elementType: "all",
+    stylers: [
+      {
+        visibility: "off",
+      },
+    ],
   },
   {
-      "featureType": "water",
-      "elementType": "all",
-      "stylers": [
-          {
-              "visibility": "simplified"
-          },
-          {
-              "saturation": "-60"
-          },
-          {
-              "lightness": "-20"
-          }
-      ]
-  }
+    featureType: "water",
+    elementType: "all",
+    stylers: [
+      {
+        visibility: "simplified",
+      },
+      {
+        saturation: "-60",
+      },
+      {
+        lightness: "-20",
+      },
+    ],
+  },
 ];
 class HotMap extends React.Component {
   render() {
     return (
-      <MapStyle className="map-container" style={{ height: '450px' }}>
+      <MapStyle className="map-container" style={{ height: "450px" }}>
         <Map
           containerStyle={containerStyle}
           google={this.props.google}
@@ -265,7 +264,7 @@ class HotMap extends React.Component {
             positions={this.props.positions}
             opacity={1}
             radius={25}
-            options={{styles: exampleMapStyles}}
+            options={{ styles: exampleMapStyles }}
           />
         </Map>
       </MapStyle>
@@ -274,6 +273,5 @@ class HotMap extends React.Component {
 }
 export default GoogleApiWrapper({
   apiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
-  libraries: ["visualization"]
+  libraries: ["visualization"],
 })(HotMap);
-
