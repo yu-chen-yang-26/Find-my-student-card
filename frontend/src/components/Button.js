@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { useNavigate } from 'react-router-dom'
-import { notification } from 'antd';
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { notification } from "antd";
 
 const Button = styled.button`
   width: 200px;
@@ -21,46 +21,52 @@ const Button = styled.button`
 `;
 
 const Container = styled.div`
-  
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
-const BigButton =({mode})=>{
+const BigButton = ({ mode }) => {
   const navigate = useNavigate();
   const ToHome = () => {
-    navigate('/home');
-  }
+    navigate("/home");
+  };
   const ToUpload = () => {
-    navigate('/upload/0');
-  }
+    navigate("/upload/0");
+  };
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (placement) => {
     api.info({
       message: `Notification`,
-      description:
-        '抱歉，此功能暫不開放，請由訪客登入',
+      description: "抱歉，此功能暫不開放，請由訪客登入",
       placement,
       duration: 2,
     });
   };
-    return (
-        <Container>
-          {contextHolder}
-        {mode?
+  return (
+    <Container>
+      {contextHolder}
+      {mode ? (
         <>
           <Button>尋找學生證</Button>
           <Button onClick={ToUpload}>拾獲學生證</Button>
         </>
-        :<>
-        <Button style={{fontSize: "1.5em"}} onClick={ToHome}>訪客登入</Button>
-        <Button style={{fontSize: "1.5em"}} onClick={() => openNotification('top')}>學號登入</Button>
-        </>}
-      </Container>
-    )
-
+      ) : (
+        <>
+          <Button style={{ fontSize: "1.5em" }} onClick={ToHome}>
+            訪客登入
+          </Button>
+          <Button
+            style={{ fontSize: "1.5em" }}
+            onClick={() => openNotification("top")}
+          >
+            學號登入
+          </Button>
+        </>
+      )}
+    </Container>
+  );
 };
 
 export default BigButton;
