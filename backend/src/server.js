@@ -1,8 +1,10 @@
 /* we use express^5.0.0-beta.1. 
 When facing error, it will automatically catch it and call next(err)*/
 import express from "express";
+import cors from "cors";
 import { getAllItems, addItem } from "./database.js";
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get("/", async (req, res) => {
