@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import axios from "../api";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -29,6 +29,33 @@ const LoginButton = styled(Button)(() => ({
 }));
 const Register = () => {
   const navigate = useNavigate();
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+
+  const register = async () => {
+    if (!/^[a-zA-z][0-9]{8}/.test(id)) {
+      console.log("invalid student id");
+    } else if (
+      !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+    ) {
+      console.log("invalid email");
+    } else if (password !== checkPassword) {
+      console.log("wrong checkpassword");
+    } else {
+      const {
+        data: { result },
+      } = await axios.post("/register", {
+        id,
+        email,
+        password,
+      });
+      console.log(result);
+    }
+  };
   return (
     <Container>
       <Logo span={12}>
@@ -45,18 +72,33 @@ const Register = () => {
             <h1>Register</h1>
             <Form>
               <Form.Item>
+                <Typography style={{ textAlign: "left" }}>
+                  Student ID
+                </Typography>
+                <Input value={id} onChange={(e) => setId(e.target.value)} />
+              </Form.Item>
+              <Form.Item>
                 <Typography style={{ textAlign: "left" }}>Email</Typography>
-                <Input />
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Form.Item>
               <Form.Item>
                 <Typography style={{ textAlign: "left" }}>Password</Typography>
-                <Input.Password />
+                <Input.Password
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Form.Item>
               <Form.Item>
                 <Typography style={{ textAlign: "left" }}>
                   Check Password
                 </Typography>
-                <Input.Password />
+                <Input.Password
+                  value={checkPassword}
+                  onChange={(e) => setCheckPassword(e.target.value)}
+                />
               </Form.Item>
               <Form.Item>
                 <div
@@ -71,7 +113,7 @@ const Register = () => {
                   <LoginButton block onClick={() => navigate("/")}>
                     <Typography>Cancel</Typography>
                   </LoginButton>
-                  <LoginButton block onClick={() => navigate("/")}>
+                  <LoginButton block onClick={() => register()}>
                     <Typography>Register</Typography>
                   </LoginButton>
                 </div>

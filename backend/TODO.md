@@ -1,2 +1,0 @@
-- [ ] image upload and download
-- [ ] consistent api

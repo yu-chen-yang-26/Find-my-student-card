@@ -11,7 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "aaxios": "^0.18.1",
     "antd": "^5.0.5",
-    "antd-img-crop": "^4.5.2",
+    "antd-img-crop": "^4.12.2",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "daisyui": "^2.42.1",

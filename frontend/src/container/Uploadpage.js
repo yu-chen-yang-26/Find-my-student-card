@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   width: 100%;
   border-radius: 3px;
   border: 2px solid #c8d4ff;
-  height: 80%;
+  height: 90%;
   min-height: 200px;
   display: flex;
   justify-content: center;
