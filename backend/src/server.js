@@ -1,37 +1,51 @@
-import http from "http";
+/* we use express^5.0.0-beta.1. 
+When facing error, it will automatically catch it and call next(err)*/
 import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import mongo from "./mongo";
-import path from "path";
-import router from "./routes/router.js";
+import { getAllItems, addItem } from "./database.js";
 const app = express();
-
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "../frontend", "build")));
-}
-
-if (process.env.NODE_ENV === "development") {
-  app.use(cors());
-}
-
-mongo.connect();
-app.options("*", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-  next();
-});
-const server = http.createServer(app);
-const db = mongoose.connection;
-app.use(cors());
-app.use("/api", router);
 app.use(express.json());
-db.once("open", async () => {
-  console.log("MongoDB connected!");
+
+app.get("/", async (req, res) => {
+  const items = await getAllItems();
+  res.send({ dataList: items });
 });
-const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => {
-  console.log(`Server is listening to port ${PORT}`);
+
+app.get("/search", async (req, res) => {
+  console.log("GET /search Request");
+});
+
+app.get("/detail", async (req, res) => {
+  console.log("GET /detail Request");
+});
+
+app.post("/upload", async (req, res) => {
+  const {
+    category,
+    discoverer,
+    location_discovered,
+    location_retrieve,
+    owner_candidate,
+    description,
+  } = req.body;
+  const note = await addItem(
+    category,
+    discoverer,
+    location_discovered,
+    location_retrieve,
+    owner_candidate,
+    description
+  );
+});
+
+/* universal error handler */
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    msg: err.message,
+    success: false,
+  });
+});
+
+app.listen(8080, () => {
+  console.log("server running on PORT 8080");
 });
