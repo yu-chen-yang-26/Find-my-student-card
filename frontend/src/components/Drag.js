@@ -4,7 +4,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 const { Dragger } = Upload;
 const props = {
-  maxCount: 3,
+  maxCount: 10,
   name: "file",
   accept: "image/png, image/jpeg, image/jpg,",
   multiple: true,
@@ -44,7 +44,7 @@ const Drag = ({ imageList, setImageList }) => {
   };
   return (
     <ImgCrop rotate aspect={1.6 / 1}>
-      <Dragger {...props} style={{ height: "110px" }} onChange={onChange}>
+      <Dragger {...props} style={{ height: "200px" }} onChange={onChange}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>

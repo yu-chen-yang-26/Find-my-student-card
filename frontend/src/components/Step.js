@@ -4,22 +4,21 @@ const StepsBar = ({ currentStep }) => {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#ba5370",
+          colorPrimary: "#c8d4ff",
         },
       }}
     >
       <Steps
+        direction="vertical"
         style={{
-          top: "10px",
-          width: "95%",
-          position: "relative",
-          height: "50px",
+          width: "100%",
+          height: "60%",
         }}
         current={currentStep}
         items={[
           {
             title: currentStep === 0 ? "In Progress" : "Finished",
-            description: "上傳學生證及相關照片",
+            description: "上傳拾獲物品照片",
           },
           {
             title:

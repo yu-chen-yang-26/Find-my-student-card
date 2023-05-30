@@ -1,5 +1,6 @@
 import Map from "../components/Map";
 import Table from "../components/Table";
+import Sidebar from "../components/Sidebar";
 import Search from "../components/Searchbar";
 import Background from "../components/Background";
 import { Col, Row, Layout } from "antd";
@@ -7,10 +8,12 @@ import { useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import axios from "../api";
 import styled from "styled-components";
-import { AiFillHome, AiFillSetting } from "react-icons/ai";
-import { BiUpload } from "react-icons/bi";
-const { Footer, Sider, Content } = Layout;
+const { Content } = Layout;
 
+const Container = styled(Layout)(() => ({
+  width: "100vw",
+  height: "100vh",
+}));
 const Homepage = () => {
   const [data, setData] = useState([]);
   const { isLoaded } = useLoadScript({
@@ -33,34 +36,12 @@ const Homepage = () => {
       }
     }
   }, [isLoaded, data]);
-  const Container = styled(Layout)(() => ({
-    width: "100vw",
-    height: "100vh",
-  }));
   return (
     <Container>
-      <Sider
-        style={{
-          backgroundColor: "#c8d4ff",
-        }}
-        width={100}
-      >
-        <Row
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "8vmin",
-            height: "100vh",
-          }}
-        >
-          <AiFillHome color="white" size={30} cursor="pointer" />
-          <BiUpload color="white" size={30} cursor="pointer" />
-          <AiFillSetting color="white" size={30} cursor="pointer" />
-        </Row>
-      </Sider>
-      <Content>
+      <Col span={2}>
+        <Sidebar />
+      </Col>
+      <Col span={22}>
         <Row>
           <Col span={14}>
             {isLoaded ? (
@@ -111,7 +92,7 @@ const Homepage = () => {
             <Table data={data} style={{ height: "80vh !important" }} />
           </Col>
         </Row>
-      </Content>
+      </Col>
     </Container>
     // <Background component={
     //     <>
