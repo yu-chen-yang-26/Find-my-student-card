@@ -1,9 +1,7 @@
-import dotenv from "dotenv-defaults";
 import mongoose from "mongoose";
 
-export default {
+const mongo_connect = {
   connect: () => {
-    dotenv.config({ path: __dirname + "/../.env" });
     if (!process.env.MONGO_URL) {
       console.error("Missing MONGO_URL!!!");
       process.exit(1);
@@ -21,3 +19,5 @@ export default {
     );
   },
 };
+
+export { mongo_connect };
