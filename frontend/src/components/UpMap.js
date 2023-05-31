@@ -89,7 +89,7 @@ const UpMap = ({ component, location, setLocation }) => {
           ""
         )}
       </GoogleMap>
-      <Button
+      {/* <Button
         onClick={toggleDraggable}
         style={{ position: "absolute", bottom: "50px" }}
       >
@@ -101,7 +101,7 @@ const UpMap = ({ component, location, setLocation }) => {
           : buttonText === 2
           ? "Relocate"
           : ""}
-      </Button>
+      </Button> */}
       <br></br>
     </MapStyle>
   );
