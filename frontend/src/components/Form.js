@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../api";
 import sendemail from "./Mail";
 import { message, Cascader, DatePicker, Form, Input, TimePicker } from "antd";
-
+import UploadImg from "./Upload";
 const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
   const { state } = useLocation();
   const [form] = Form.useForm();
@@ -267,11 +267,12 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
       <Form
         form={form}
         labelCol={{
-          span: 8,
+          span: 9,
         }}
         wrapperCol={{
-          span: 10,
+          span: 15,
         }}
+        style={{ width: "90%" }}
         layout="horizontal"
         initialValues={{
           size: componentSize,
@@ -280,17 +281,17 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
         size={componentSize}
       >
         <Form.Item
-          name="Student ID"
-          label="Student ID"
+          name="Category"
+          label="Category"
           rules={[
             {
               type: "string",
               required: true,
-              message: "Please input the Student ID!",
+              message: "Please input the Category!",
             },
           ]}
         >
-          <Input allowClear placeholder="Please enter owner's Student ID" />
+          <Input allowClear placeholder="Please enter category" />
         </Form.Item>
         <Form.Item
           name="Location Found"
@@ -313,11 +314,61 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             placeholder="Please select"
           />
         </Form.Item>
+        <Form.Item
+          name="Location Retrieve"
+          label="Location Retrieve"
+          rules={[
+            {
+              type: "array",
+              required: false,
+              message: "Please select",
+            },
+          ]}
+        >
+          <Cascader
+            fieldNames={{
+              label: "name",
+              value: "code",
+              children: "items",
+            }}
+            options={options}
+            placeholder="Please select"
+          />
+        </Form.Item>
+        <Form.Item
+          name="Student ID"
+          label="Student ID"
+          rules={[
+            {
+              type: "string",
+              required: false,
+              message: "Please input the Student ID!",
+            },
+          ]}
+        >
+          <Input allowClear placeholder="Please enter owner's Student ID" />
+        </Form.Item>
+        <Form.Item
+          name="Name"
+          label="Name"
+          rules={[
+            {
+              type: "string",
+              required: false,
+              message: "Please input the Name!",
+            },
+          ]}
+        >
+          <Input allowClear placeholder="Please enter owner's name" />
+        </Form.Item>
         <Form.Item name="Date Found" label="Date Found" {...config}>
           <DatePicker />
         </Form.Item>
         <Form.Item name="Time Found" label="Time Found" {...config}>
           <TimePicker />
+        </Form.Item>
+        <Form.Item name="Upload" label="Upload">
+          <UploadImg />
         </Form.Item>
         <Form.Item name="Remark" label="Remark">
           <Input />

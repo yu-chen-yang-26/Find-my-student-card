@@ -1,33 +1,12 @@
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-  useRef,
-} from "react";
-import { Upload } from "antd";
-import ImgCrop from "antd-img-crop";
+import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
-import Icon, { HomeOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { useLocation } from "react-router-dom";
-import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
-  InfoWindowF,
-} from "@react-google-maps/api";
-const Wrapper = styled.div`
-  width: 500px;
-  border-radius: 3px;
-  // border: 2px solid palevioletred;
-  background-color: #f5f5f5;
-`;
+import { EnvironmentOutlined } from "@ant-design/icons";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 const MapStyle = styled.div`
-  height: 400px;sload
-  width: 700px;
+  height: 80vh;
   margin: 0 30px 0 20px;
   background-color: gray;
-  border: 2px solid palevioletred;
+  border: 2px solid #c8d4ff;
   background-image: url(${(props) => props.img});
 `;
 const Button = styled.button`
@@ -47,16 +26,12 @@ const Button = styled.button`
 `;
 
 const UpMap = ({ component, location, setLocation }) => {
-  const [activeMarker, setActiveMarker] = useState("");
-  const [pin, setpin] = useState(false);
+  // const [activeMarker, setActiveMarker] = useState("");
+  // const [pin, setpin] = useState(false);
   const [draggable, setDraggable] = useState(false);
   const [realdraggable, setrealdraggable] = useState(false);
   const [buttonText, setbuttonText] = useState(0);
-  let Text = ["Locate", "Relocate", "Done"];
-  const [mycenter, setmycenter] = useState({
-    lat: 25.017622284161067,
-    lng: 121.5378841549027,
-  });
+  // let Text = ["Locate", "Relocate", "Done"];
   const handleText = () => {
     if (buttonText === 0) {
       setDraggable(true);
@@ -91,10 +66,13 @@ const UpMap = ({ component, location, setLocation }) => {
   );
 
   return (
-    <>
+    <MapStyle>
       <GoogleMap
         zoom={15}
-        center={mycenter}
+        center={{
+          lat: 25.017622284161067,
+          lng: 121.5378841549027,
+        }}
         mapContainerClassName="map-container"
         mapContainerStyle={{ width: "100%", height: "100%" }}
       >
@@ -125,7 +103,7 @@ const UpMap = ({ component, location, setLocation }) => {
           : ""}
       </Button>
       <br></br>
-    </>
+    </MapStyle>
   );
 };
 export default UpMap;

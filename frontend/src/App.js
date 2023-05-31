@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/detail/:id/:time" element={<Detail />} />
         <Route path="/home" element={<Homepage />} />
-        <Route path="/upload/:currentStep" element={<Upload />} />
+        <Route path="/upload" element={<Upload />} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<ForgotPassword />} />

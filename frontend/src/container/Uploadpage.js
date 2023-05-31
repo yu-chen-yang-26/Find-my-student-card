@@ -49,10 +49,13 @@ const Middle = styled.div`
 `;
 const Upload = () => {
   const navigate = useNavigate();
-  const { currentStep } = useParams();
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+  });
   const [imageList, setImageList] = useState([]);
   const [api, setApi] = useState({ ID: "", time: "" });
   const [submit, setSubmit] = useState(false);
+  const [newmarkers, setnewmarkers] = useState([]);
   const [location, setLocation] = useState({
     lat: 25.017622284161067,
     lng: 121.5378841549027,
@@ -62,27 +65,6 @@ const Upload = () => {
     setSubmit(false);
     navigate("/detail/" + api.ID + "/" + api.time);
   };
-  const NextPage = () => {
-    const nextStep = parseInt(currentStep) + 1;
-    if (currentStep === "2") {
-      setSubmit(true);
-    } else {
-      setSubmit(false);
-      navigate("/upload/" + nextStep, {
-        state: {
-          imageList: imageList,
-          location: location,
-        },
-      });
-    }
-  };
-  const LastPage = () => {
-    const lastStep = parseInt(currentStep) - 1;
-    navigate("/upload/" + lastStep);
-  };
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
-  });
   return (
     <Row>
       <Col span={2}>
@@ -97,69 +79,25 @@ const Upload = () => {
           padding: "3vmin",
         }}
       >
-        <Row style={{ width: "100%", height: "100%" }}>
-          <Col
-            span={6}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <StepsBar currentStep={parseInt(currentStep)}></StepsBar>
+        <Row
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: "1px solid #c8d4ff",
+          }}
+        >
+          <Col span={10}>
+            <InfoForm></InfoForm>
           </Col>
-          <Col
-            span={18}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Wrapper>
-              {currentStep === "0" ? (
-                <Drag imageList={imageList} setImageList={setImageList} />
-              ) : currentStep === "1" && isLoaded == true ? (
-                <UpMap location={location} setLocation={setLocation} />
-              ) : currentStep === "2" ? (
-                <Middle>
-                  <InfoForm
-                    setImageList={setImageList}
-                    setLocation={setLocation}
-                    setApi={setApi}
-                    submit={submit}
-                  />
-                </Middle>
-              ) : currentStep === "3" ? (
-                <Result status="success" title="Successfully upload!" />
-              ) : (
-                ""
-              )}
-              {currentStep !== "0" && currentStep !== "3" ? (
-                <HomeBT
-                  style={{ color: "grey", left: "6%", backgroundColor: "pink" }}
-                  onClick={LastPage}
-                >
-                  Last page
-                </HomeBT>
-              ) : (
-                ""
-              )}
-              {/* {currentStep ? (
-                <HomeBT
-                  style={{ right: "6%", backgroundColor: "#FFD700" }}
-                  onClick={currentStep !== "3" ? NextPage : ToInfo}
-                >
-                  {currentStep === "2"
-                    ? "Submit"
-                    : currentStep === "3"
-                    ? "Info"
-                    : "Next page"}
-                </HomeBT>
-              ) : (
-                ""
-              )} */}
-            </Wrapper>
+          <Col span={14}>
+            {isLoaded ? (
+              <UpMap location={location} setLocation={setLocation} />
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
       </Col>
