@@ -2,9 +2,10 @@ import React from "react";
 import ImgCrop from "antd-img-crop";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
+
 const { Dragger } = Upload;
 const props = {
-  maxCount: 3,
+  maxCount: 10,
   name: "file",
   accept: "image/png, image/jpeg, image/jpg,",
   multiple: true,
@@ -36,15 +37,15 @@ const Drag = ({ imageList, setImageList }) => {
     const { status, response } = info.file;
     if (status === "done") {
       message.success(`${info.file.name} file uploaded successfully.`);
-      const { id: id } = response;
+      const { id } = response;
       setImageList([...imageList, id]);
     } else if (status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
   };
   return (
-    <ImgCrop rotate aspect={1.6 / 1}>
-      <Dragger {...props} style={{ height: "110px" }} onChange={onChange}>
+    <ImgCrop rotationSlider aspectSlider modalWidth={700}>
+      <Dragger {...props} onChange={onChange}>
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
@@ -53,7 +54,7 @@ const Drag = ({ imageList, setImageList }) => {
         </p>
         <p className="ant-upload-hint">
           The following file types can be uploaded: JPG, JPEG, PNG. Upload
-          limites: 3 photos.
+          limits: 10 photos.
         </p>
       </Dragger>
     </ImgCrop>

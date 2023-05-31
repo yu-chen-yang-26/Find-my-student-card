@@ -4,11 +4,10 @@ import styled from "styled-components";
 import UpMap from "../components/UpMap";
 import Drag from "../components/Drag";
 import React, { useState } from "react";
-import { Result } from "antd";
+import { Col, Result, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLoadScript } from "@react-google-maps/api";
-import Background from "../components/Background";
-
+import Sidebar from "../components/Sidebar";
 const HomeBT = styled.button`
   position: absolute;
   bottom: 45%;
@@ -27,24 +26,17 @@ const HomeBT = styled.button`
   }
 `;
 const Wrapper = styled.div`
-  width: 95%;
-  position: absolute;
-  top: 300px; //-45px;
+  width: 100%;
   border-radius: 3px;
-  border: 2px solid white;
-  // margin: 10px;
-  height: 65%;
+  border: 2px solid #c8d4ff;
+  height: 90%;
   min-height: 200px;
   display: flex;
-  // flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
-  overflow-y: auto;
   @media (min-width: 570px) {
     top: 190px;
-    border: 2px solid palevioletred;
+    border: 2px solid #c8d4ff;
     min-height: 300px;
     // background-color: white;
   }
@@ -57,10 +49,13 @@ const Middle = styled.div`
 `;
 const Upload = () => {
   const navigate = useNavigate();
-  const { currentStep } = useParams();
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+  });
   const [imageList, setImageList] = useState([]);
   const [api, setApi] = useState({ ID: "", time: "" });
   const [submit, setSubmit] = useState(false);
+  const [newmarkers, setnewmarkers] = useState([]);
   const [location, setLocation] = useState({
     lat: 25.017622284161067,
     lng: 121.5378841549027,
@@ -70,87 +65,43 @@ const Upload = () => {
     setSubmit(false);
     navigate("/detail/" + api.ID + "/" + api.time);
   };
-  const NextPage = () => {
-    const nextStep = parseInt(currentStep) + 1;
-    if (currentStep === "2") {
-      setSubmit(true);
-    } else {
-      setSubmit(false);
-      navigate("/upload/" + nextStep, {
-        state: {
-          imageList: imageList,
-          location: location,
-        },
-      });
-    }
-  };
-  const LastPage = () => {
-    const lastStep = parseInt(currentStep) - 1;
-    navigate("/upload/" + lastStep);
-  };
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
-  });
   return (
-    <Background
-      component={
-        <div
+    <Row>
+      <Col span={2}>
+        <Sidebar />
+      </Col>
+      <Col
+        span={22}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          padding: "3vmin",
+        }}
+      >
+        <Row
           style={{
-            display: "flex",
-            flexWrap: "wrap",
             width: "100%",
+            height: "100%",
+            display: "flex",
             justifyContent: "center",
-            height: "90%",
+            alignItems: "center",
+            border: "1px solid #c8d4ff",
           }}
         >
-          <StepsBar currentStep={parseInt(currentStep)}></StepsBar>
-          <Wrapper>
-            {currentStep === "0" ? (
-              <Drag imageList={imageList} setImageList={setImageList} />
-            ) : currentStep === "1" && isLoaded == true ? (
+          <Col span={10}>
+            <InfoForm></InfoForm>
+          </Col>
+          <Col span={14}>
+            {isLoaded ? (
               <UpMap location={location} setLocation={setLocation} />
-            ) : currentStep === "2" ? (
-              <Middle>
-                <InfoForm
-                  setImageList={setImageList}
-                  setLocation={setLocation}
-                  setApi={setApi}
-                  submit={submit}
-                />
-              </Middle>
-            ) : currentStep === "3" ? (
-              <Result status="success" title="Successfully upload!" />
             ) : (
-              ""
+              <></>
             )}
-            {currentStep !== "0" && currentStep !== "3" ? (
-              <HomeBT
-                style={{ color: "grey", left: "6%", backgroundColor: "pink" }}
-                onClick={LastPage}
-              >
-                Last page
-              </HomeBT>
-            ) : (
-              ""
-            )}
-            {currentStep ? (
-              <HomeBT
-                style={{ right: "6%", backgroundColor: "#FFD700" }}
-                onClick={currentStep !== "3" ? NextPage : ToInfo}
-              >
-                {currentStep === "2"
-                  ? "Submit"
-                  : currentStep === "3"
-                  ? "Info"
-                  : "Next page"}
-              </HomeBT>
-            ) : (
-              ""
-            )}
-          </Wrapper>
-        </div>
-      }
-    ></Background>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 };
 export default Upload;
