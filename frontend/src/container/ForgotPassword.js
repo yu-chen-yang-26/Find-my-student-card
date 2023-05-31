@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import lostFound from "../Pic/lost&found.png";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -31,21 +31,43 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   return (
     <Container>
-      <Logo span={12}>
-        <Typography style={{ fontSize: "108px", fontWeight: "bolder" }}>
-          NTU
+      <Logo className="left" span={12}>
+        <hr style={{ borderTop: "3px solid white", width: "95%" }} />
+        <Typography className="fontContainer_2 logo">
+          <img src={lostFound} alt="" width={500} />
         </Typography>
-        <Typography style={{ fontSize: "72px", fontWeight: "bolder" }}>
-          Lost and Found
-        </Typography>
+
+        <div>
+          <hr
+            style={{
+              borderTop: "3px solid white",
+              width: "58%",
+              position: "relative",
+              top: "15px",
+              left: "10px",
+              margin: "0 10px",
+            }}
+          />
+          <Typography
+            className="fontContainer_2 subtitle"
+            style={{ display: "flex", fontSize: "20px", fontWeight: "bolder" }}
+          >
+            by &thinsp; NTU&thinsp; Lost & Found &thinsp;Group
+          </Typography>
+        </div>
       </Logo>
       <Col span={12}>
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
           <Col span={14}>
-            <h1>Forgot Password</h1>
+            <h1 className="fontContainer_2">Oops&thinsp;‼️ Forgot Password</h1>
             <Form>
               <Form.Item>
-                <Typography style={{ textAlign: "left" }}>Email</Typography>
+                <Typography
+                  className="fontContainer_2"
+                  style={{ textAlign: "left" }}
+                >
+                  &thinsp;Email
+                </Typography>
                 <Input />
               </Form.Item>
               <Form.Item>
@@ -58,10 +80,18 @@ const ForgotPassword = () => {
                     gap: "1vmin",
                   }}
                 >
-                  <LoginButton block onClick={() => navigate("/")}>
+                  <LoginButton
+                    className="fontContainer_2 btn"
+                    block
+                    onClick={() => navigate("/")}
+                  >
                     <Typography>Cancel</Typography>
                   </LoginButton>
-                  <LoginButton block onClick={() => navigate("/")}>
+                  <LoginButton
+                    className="fontContainer_2 btn"
+                    block
+                    onClick={() => navigate("/")}
+                  >
                     <Typography>Send</Typography>
                   </LoginButton>
                 </div>

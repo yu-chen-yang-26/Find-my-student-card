@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Divider, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import googleIcon from "../Pic/google-logo.png";
+import lostFound from "../Pic/lost&found.png";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import "./Login.css";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -59,39 +61,70 @@ const Login = () => {
   }, [setProfile, user, navigate]);
   return (
     <Container>
-      <Logo span={12}>
-        <Typography style={{ fontSize: "108px", fontWeight: "bolder" }}>
-          NTU
+      <Logo className="left" span={12}>
+        <hr style={{ borderTop: "3px solid white", width: "95%" }} />
+        <Typography className="fontContainer_2 logo">
+          <img src={lostFound} alt="" width={500} />
         </Typography>
-        <Typography style={{ fontSize: "72px", fontWeight: "bolder" }}>
-          Lost and Found
-        </Typography>
+
+        <div>
+          <hr
+            style={{
+              borderTop: "3px solid white",
+              width: "58%",
+              position: "relative",
+              top: "15px",
+              left: "10px",
+              margin: "0 10px",
+            }}
+          />
+          <Typography
+            className="fontContainer_2 subtitle"
+            style={{ display: "flex", fontSize: "20px", fontWeight: "bolder" }}
+          >
+            by &thinsp; NTU&thinsp; Lost & Found &thinsp;Group
+          </Typography>
+        </div>
       </Logo>
       <Col span={12}>
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
           <Col span={14}>
-            <h1>Login</h1>
+            <h1 className="fontContainer_2">👋&thinsp;Hello, Login Here... </h1>
             <Form>
               <Form.Item>
-                <Typography style={{ textAlign: "left" }}>Email</Typography>
+                <Typography
+                  className="fontContainer_2"
+                  style={{ textAlign: "left" }}
+                >
+                  &thinsp;Email
+                </Typography>
                 <Input />
               </Form.Item>
               <Form.Item>
-                <Typography style={{ textAlign: "left" }}>Password</Typography>
+                <Typography
+                  className="fontContainer_2"
+                  style={{ textAlign: "left" }}
+                >
+                  &thinsp;Password
+                </Typography>
                 <Input.Password />
               </Form.Item>
               <Form.Item>
-                <LoginButton htmlType="submit" block>
-                  <Typography>Login</Typography>
+                <LoginButton className="btn" htmlType="submit" block>
+                  <Typography className="fontContainer_2">Login</Typography>
                 </LoginButton>
               </Form.Item>
             </Form>
             <Row justify="space-between">
               <Col>
-                <a href="/register">Register</a>
+                <a className="fontContainer_2" href="/register">
+                  Register
+                </a>
               </Col>
               <Col>
-                <a href="/forgot">Forget password?</a>
+                <a className="fontContainer_2" href="/forgot">
+                  Forget password?
+                </a>
               </Col>
             </Row>
             <Divider />
@@ -100,16 +133,24 @@ const Login = () => {
             >
               <Row justify="center">
                 <Col span={24}>
-                  <LoginButton block onClick={() => login()}>
-                    <img src={googleIcon} alt="" width={25} />
-                    <Typography>Sign in with Google</Typography>
+                  <LoginButton className="btn" block onClick={() => login()}>
+                    <img src={googleIcon} alt="" width={20} />
+                    <Typography className="fontContainer_2">
+                      Sign in with Google
+                    </Typography>
                   </LoginButton>
                 </Col>
               </Row>
               <Row justify="center">
                 <Col span={24}>
-                  <LoginButton block onClick={() => navigate("/home")}>
-                    <Typography>Guest Login</Typography>
+                  <LoginButton
+                    block
+                    onClick={() => navigate("/home")}
+                    className="btn"
+                  >
+                    <Typography className="fontContainer_2">
+                      Guest Login
+                    </Typography>
                   </LoginButton>
                 </Col>
               </Row>
