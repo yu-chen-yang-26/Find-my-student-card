@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Row, Typography } from "antd";
-import Pic from "../Pic/cat.jpg";
-import Sidebar from "../components/Sidebar";
+import Pic from "../../Pic/cat.jpg";
+import Sidebar from "../../components/Sidebar";
 import styled from "styled-components";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { GrLanguage } from "react-icons/gr";

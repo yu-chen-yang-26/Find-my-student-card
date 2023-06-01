@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import lostFound from "../Pic/lost&found.png";
+import axios from "../../api";
+// import "./Register.css";
+import lostFound from "../../Pic/lost&found.png";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -27,8 +29,35 @@ const LoginButton = styled(Button)(() => ({
   alignItems: "center",
   gap: "1vmin",
 }));
-const ForgotPassword = () => {
+const Register = () => {
   const navigate = useNavigate();
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
+
+  const register = async () => {
+    if (!/^[a-zA-z][0-9]{8}/.test(id)) {
+      console.log("invalid student id");
+    } else if (
+      !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        email
+      )
+    ) {
+      console.log("invalid email");
+    } else if (password !== checkPassword) {
+      console.log("wrong checkpassword");
+    } else {
+      const {
+        data: { result },
+      } = await axios.post("/register", {
+        id,
+        email,
+        password,
+      });
+      console.log(result);
+    }
+  };
   return (
     <Container>
       <Logo className="left" span={12}>
@@ -59,8 +88,14 @@ const ForgotPassword = () => {
       <Col span={12}>
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
           <Col span={14}>
-            <h1 className="fontContainer_2">Oops&thinsp;‼️ Forgot Password</h1>
+            <h1 className="fontContainer_2">Newly Arrived! Register Here</h1>
             <Form>
+              <Form.Item className="fontContainer_2">
+                <Typography style={{ textAlign: "left" }}>
+                  &thinsp;Student ID
+                </Typography>
+                <Input value={id} onChange={(e) => setId(e.target.value)} />
+              </Form.Item>
               <Form.Item>
                 <Typography
                   className="fontContainer_2"
@@ -68,7 +103,31 @@ const ForgotPassword = () => {
                 >
                   &thinsp;Email
                 </Typography>
-                <Input />
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Typography
+                  className="fontContainer_2"
+                  style={{ textAlign: "left" }}
+                >
+                  &thinsp;Password
+                </Typography>
+                <Input.Password
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item className="fontContainer_2">
+                <Typography style={{ textAlign: "left" }}>
+                  &thinsp;Check Password
+                </Typography>
+                <Input.Password
+                  value={checkPassword}
+                  onChange={(e) => setCheckPassword(e.target.value)}
+                />
               </Form.Item>
               <Form.Item>
                 <div
@@ -81,18 +140,18 @@ const ForgotPassword = () => {
                   }}
                 >
                   <LoginButton
-                    className="fontContainer_2 btn"
+                    className="btn"
                     block
                     onClick={() => navigate("/")}
                   >
-                    <Typography>Cancel</Typography>
+                    <Typography className="back_btn">←</Typography>
                   </LoginButton>
                   <LoginButton
                     className="fontContainer_2 btn"
                     block
-                    onClick={() => navigate("/")}
+                    onClick={() => register()}
                   >
-                    <Typography>Send</Typography>
+                    <Typography>Register</Typography>
                   </LoginButton>
                 </div>
               </Form.Item>
@@ -104,4 +163,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default Register;
