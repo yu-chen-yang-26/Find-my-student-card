@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import { mongo_connect } from "./mongo.js";
-import router from "./routes/router.js";
+import router from "./router.js";
 
 // activate dotenv
 dotenv.config();
