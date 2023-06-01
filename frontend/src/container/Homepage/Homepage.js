@@ -17,7 +17,7 @@ const Container = styled(Layout)(() => ({
 const Homepage = () => {
   const [data, setData] = useState([]);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+    googleMapsApiKey: "AIzaSyDQdme1BbYD7iIP3X_RIxjkEIQAQau38PY", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
   const [newmarkers, setnewmarkers] = useState([]);
   useEffect(() => {

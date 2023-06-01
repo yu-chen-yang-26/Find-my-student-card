@@ -2,10 +2,13 @@ import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { GoogleMap, Marker } from "@react-google-maps/api";
+import { useTranslation } from "react-i18next";
+
 const MapStyle = styled.div`
   height: 80vh;
   margin: 0 30px 0 20px;
   background-color: gray;
+  position: relative;
   border: 2px solid #c8d4ff;
   background-image: url(${(props) => props.img});
 `;
@@ -16,7 +19,11 @@ const Button = styled.button`
   border-radius: 50px;
   border: transparent;
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
-  background: palevioletred;
+  background: #b3aaf7;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -5%);
   &:hover {
     width: 120px;
     height: 45px;
@@ -25,14 +32,13 @@ const Button = styled.button`
   }
 `;
 
-const UpMap = ({ component, location, setLocation }) => {
-  // const [activeMarker, setActiveMarker] = useState("");
-  // const [pin, setpin] = useState(false);
+const UpMap = ({ location, setLocation }) => {
+  const { t } = useTranslation();
   const [draggable, setDraggable] = useState(false);
-  const [realdraggable, setrealdraggable] = useState(false);
+  const [pin, setPin] = useState(false);
   const [buttonText, setbuttonText] = useState(0);
-  // let Text = ["Locate", "Relocate", "Done"];
-  const handleText = () => {
+  const markerRef = useRef(null);
+  const clickButton = () => {
     if (buttonText === 0) {
       setDraggable(true);
       setbuttonText(1);
@@ -45,25 +51,17 @@ const UpMap = ({ component, location, setLocation }) => {
       setDraggable(true);
       setbuttonText(1);
     }
-    setrealdraggable(true);
+    setPin(true);
   };
-  const toggleDraggable = () => {
-    handleText();
-  };
-  const markerRef = useRef(null);
-  function onDragEnd(...args) {
+  const onDragEnd = () => {
     setLocation({
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng(),
     });
-  }
-
-  const onMarkerLoad = useCallback(
-    (marker) => {
-      markerRef.current = marker;
-    },
-    [onDragEnd]
-  );
+  };
+  const onMarkerLoad = useCallback((marker) => {
+    markerRef.current = marker;
+  }, []);
 
   return (
     <MapStyle>
@@ -76,7 +74,7 @@ const UpMap = ({ component, location, setLocation }) => {
         mapContainerClassName="map-container"
         mapContainerStyle={{ width: "100%", height: "100%" }}
       >
-        {realdraggable ? (
+        {pin ? (
           <Marker
             onDragEnd={onDragEnd}
             onLoad={onMarkerLoad}
@@ -89,19 +87,16 @@ const UpMap = ({ component, location, setLocation }) => {
           ""
         )}
       </GoogleMap>
-      {/* <Button
-        onClick={toggleDraggable}
-        style={{ position: "absolute", bottom: "50px" }}
-      >
+      <Button onClick={() => clickButton()}>
         <EnvironmentOutlined />
         {buttonText === 0
-          ? "Pin up"
+          ? t("Pin up")
           : buttonText === 1
-          ? "Done"
+          ? t("Done")
           : buttonText === 2
-          ? "Relocate"
+          ? t("Relocate")
           : ""}
-      </Button> */}
+      </Button>
       <br></br>
     </MapStyle>
   );

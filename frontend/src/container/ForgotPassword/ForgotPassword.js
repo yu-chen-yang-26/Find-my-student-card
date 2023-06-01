@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import lostFound from "../../Pic/lost&found.png";
+import { useTranslation } from "react-i18next";
+
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -28,6 +30,7 @@ const LoginButton = styled(Button)(() => ({
   gap: "1vmin",
 }));
 const ForgotPassword = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <Container>
@@ -59,14 +62,16 @@ const ForgotPassword = () => {
       <Col span={12}>
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
           <Col span={14}>
-            <h1 className="fontContainer_2">Oops&thinsp;‼️ Forgot Password</h1>
+            <h1 className="fontContainer_2">
+              {t("Oops")}&thinsp;{t("‼️")} {t("Forgot Password")}
+            </h1>
             <Form>
               <Form.Item>
                 <Typography
                   className="fontContainer_2"
                   style={{ textAlign: "left" }}
                 >
-                  &thinsp;Email
+                  &thinsp;{t("Email")}
                 </Typography>
                 <Input />
               </Form.Item>
@@ -85,14 +90,14 @@ const ForgotPassword = () => {
                     block
                     onClick={() => navigate("/")}
                   >
-                    <Typography>Cancel</Typography>
+                    <Typography>{t("Cancel")}</Typography>
                   </LoginButton>
                   <LoginButton
                     className="fontContainer_2 btn"
                     block
                     onClick={() => navigate("/")}
                   >
-                    <Typography>Send</Typography>
+                    <Typography>{t("Send")}</Typography>
                   </LoginButton>
                 </div>
               </Form.Item>
