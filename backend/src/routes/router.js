@@ -4,8 +4,109 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import bodyParser from "body-parser";
+import jwt from "jsonwebtoken";
+import verify from "./middleware.js";
+const JWT_SECRET = "PUI-final-project-group9";
 const router = Router();
 
+router.post("/register", async (req, res) => {
+  try {
+    await User.findOne({
+      email: req.body.email,
+    })
+      .then(async (data) => {
+        if (data !== null) {
+          res.status(403).send({ result: "the email has been used" });
+        } else {
+          await new User({
+            name: req.body.name,
+            student_id: req.body.id,
+            email: req.body.email,
+            password: req.body.password,
+          }).save();
+          res.status(200).send({ result: "success" });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({ result: "server error" });
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
+});
+router.post("/logined", verify, async (req, res) => {
+  try {
+    res.status(200).send({ logined: true });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ logined: false });
+  }
+});
+
+router.post("/google", async (req, res) => {
+  return res.status(200).send({
+    token: jwt.sign({ user: req.body.name }, JWT_SECRET),
+  });
+});
+
+router.post("/guest", async (req, res) => {
+  return res.status(200).send({
+    token: jwt.sign({ user: "guest" }, JWT_SECRET),
+  });
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    let data = await User.find({
+      email: req.body.email,
+      password: req.body.password,
+    }).exec();
+    if (data.length !== 0) {
+      res.status(200).send({
+        token: jwt.sign({ user: "guest" }, JWT_SECRET),
+        result: "success",
+      });
+    } else {
+      res.status(400).send({ result: "failed" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
+});
+router.get("/send", async (req, res) => {
+  try {
+    let data = await User.find({
+      email: req.query.email,
+    }).exec();
+    if (data.length !== 0) {
+      await User.updateOne(
+        { email: req.query.email },
+        { password: req.query.password }
+      )
+        .then(() => res.status(200).send({ result: true }))
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send({ result: false });
+        });
+    } else {
+      res.status(400).send({ result: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
+});
+router.post("/logout", verify, async (req, res) => {
+  try {
+    res.status(200).send({ result: "success" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "unauthorized" });
+  }
+});
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, path.join(__dirname, "/uploads/"));

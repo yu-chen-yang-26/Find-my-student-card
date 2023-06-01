@@ -4,7 +4,8 @@ import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import lostFound from "../../Pic/lost&found.png";
 import { useTranslation } from "react-i18next";
-
+import sendemail from "../../components/Mail";
+import api from "../../api";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -32,6 +33,50 @@ const LoginButton = styled(Button)(() => ({
 const ForgotPassword = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const getRandomInt = (min, max) => {
+    return min + Math.floor(Math.random() * max);
+  };
+  const sendMail = async () => {
+    const checkPassword = getRandomInt(1000, 8999);
+    await api
+      .get("/send", { params: { email: email, password: checkPassword } })
+      .then((response) => {
+        console.log(response);
+        if (response.data.result) {
+          console.log("success");
+          sendemail(email, checkPassword);
+          navigate("/");
+        } else {
+          console.log("not found");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    const checkLogined = async () => {
+      if (localStorage.getItem("token") !== null) {
+        await api
+          .post(
+            "/logined",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            if (response.data.logined) {
+              navigate("/home");
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    };
+    checkLogined();
+  }, [navigate]);
   return (
     <Container>
       <Logo className="left" span={12}>
@@ -73,7 +118,10 @@ const ForgotPassword = () => {
                 >
                   &thinsp;{t("Email")}
                 </Typography>
-                <Input />
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Form.Item>
               <Form.Item>
                 <div
@@ -95,7 +143,7 @@ const ForgotPassword = () => {
                   <LoginButton
                     className="fontContainer_2 btn"
                     block
-                    onClick={() => navigate("/")}
+                    onClick={() => sendMail()}
                   >
                     <Typography>{t("Send")}</Typography>
                   </LoginButton>
