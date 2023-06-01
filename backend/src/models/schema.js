@@ -2,23 +2,33 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  student_id: { type: String, required: true },
+  student_id: { type: String, required: true, lowercase: true },
   name: { type: String, required: true },
-  language: { type: String, required: true, default: "zh-TW" },
+  language: { type: String, required: true, lowercase: true, default: "zh-tw" },
   password: { type: String, required: true },
+});
+
+const LocationSchema = new Schema({
+  location: { type: String, required: true },
+  position: {
+    lat: { type: Number, required: true },
+    lng: { type: Number, required: true },
+  },
 });
 
 const FoundItemSchema = new Schema(
   {
     category: { type: String, required: true },
-    finder: { type: mongoose.Types.ObjectId, ref: "user" },
-    location: { type: String, required: true },
-    position: {
-      lat: { type: Number, required: true },
-      lng: { type: Number, required: true },
+    finder: {
+      type: mongoose.Types.ObjectId,
+      ref: "user",
+      required: true,
+      default: "647801dfd2fca987a0c04fb4",
     },
-    time: { type: String, required: true },
-    info: { type: String },
+    found_location: { type: LocationSchema, required: true },
+    retrieve_location: { type: LocationSchema, required: true },
+    time: { type: Date, required: true },
+    remark: { type: String },
     mislayer_clue: {
       student_id: { type: String },
       name: { type: String },
@@ -37,17 +47,11 @@ const FoundItemSchema = new Schema(
 
 const LostItemSchema = new Schema(
   {
+    mislayer: { type: mongoose.Types.ObjectId, ref: "user", required: true },
     category: { type: String, required: true },
-    mislayer: { type: mongoose.Types.ObjectId, ref: "user" },
-    locations: [{ type: String, required: true }],
-    positions: [
-      {
-        lat: { type: Number, required: true },
-        lng: { type: Number, required: true },
-      },
-    ],
-    time: { type: String, required: true },
-    info: { type: String },
+    locations: [{ type: LocationSchema }],
+    time: { type: Date, required: true },
+    remark: { type: String },
     correspond: { type: mongoose.Types.ObjectId, ref: "lost_item" },
   },
   { timestamps: { createdAt: "created_at" } }
