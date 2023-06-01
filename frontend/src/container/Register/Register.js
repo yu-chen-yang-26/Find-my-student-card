@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api";
-// import "./Register.css";
+import "./Register.css";
 import lostFound from "../../Pic/lost&found.png";
+import { useTranslation } from "react-i18next";
+
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -30,7 +32,9 @@ const LoginButton = styled(Button)(() => ({
   gap: "1vmin",
 }));
 const Register = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -88,11 +92,22 @@ const Register = () => {
       <Col span={12}>
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
           <Col span={14}>
-            <h1 className="fontContainer_2">Newly Arrived! Register Here</h1>
+            <h1 className="fontContainer_2">
+              {t("Newly Arrived! Register Here")}
+            </h1>
             <Form>
+              <Form.Item>
+                <Typography
+                  className="fontContainer_2"
+                  style={{ textAlign: "left" }}
+                >
+                  &thinsp;{t("Name")}
+                </Typography>
+                <Input value={name} onChange={(e) => setName(e.target.value)} />
+              </Form.Item>
               <Form.Item className="fontContainer_2">
                 <Typography style={{ textAlign: "left" }}>
-                  &thinsp;Student ID
+                  &thinsp;{t("Student ID")}
                 </Typography>
                 <Input value={id} onChange={(e) => setId(e.target.value)} />
               </Form.Item>
@@ -101,7 +116,7 @@ const Register = () => {
                   className="fontContainer_2"
                   style={{ textAlign: "left" }}
                 >
-                  &thinsp;Email
+                  &thinsp;{t("Email")}
                 </Typography>
                 <Input
                   value={email}
@@ -113,7 +128,7 @@ const Register = () => {
                   className="fontContainer_2"
                   style={{ textAlign: "left" }}
                 >
-                  &thinsp;Password
+                  &thinsp;{t("Password")}
                 </Typography>
                 <Input.Password
                   value={password}
@@ -122,7 +137,7 @@ const Register = () => {
               </Form.Item>
               <Form.Item className="fontContainer_2">
                 <Typography style={{ textAlign: "left" }}>
-                  &thinsp;Check Password
+                  &thinsp;{t("Check Password")}
                 </Typography>
                 <Input.Password
                   value={checkPassword}
@@ -151,7 +166,7 @@ const Register = () => {
                     block
                     onClick={() => register()}
                   >
-                    <Typography>Register</Typography>
+                    <Typography>{t("Register")}</Typography>
                   </LoginButton>
                 </div>
               </Form.Item>

@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import googleIcon from "../../Pic/google-logo.png";
 import lostFound from "../../Pic/lost&found.png";
 import { useGoogleLogin } from "@react-oauth/google";
+import { GrLanguage } from "react-icons/gr";
 import axios from "axios";
 import "./Login.css";
+import { useTranslation } from "react-i18next";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -32,6 +34,7 @@ const LoginButton = styled(Button)(() => ({
   gap: "1vmin",
 }));
 const Login = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [profile, setProfile] = useState([]);
   const [user, setUser] = useState([]);
@@ -39,6 +42,20 @@ const Login = () => {
     onSuccess: (codeResponse) => setUser(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
   });
+  const changeLang = () => {
+    const newlang = (() => {
+      switch (i18n.language) {
+        case "zh":
+          return "en";
+        case "en":
+          return "zh";
+        default:
+          return "";
+      }
+    })();
+    localStorage.setItem("lang", newlang);
+    i18n.changeLanguage(newlang);
+  };
   useEffect(() => {
     if (user.length !== 0) {
       axios
@@ -89,14 +106,16 @@ const Login = () => {
       <Col span={12}>
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
           <Col span={14}>
-            <h1 className="fontContainer_2">👋&thinsp;Hello, Login Here... </h1>
+            <h1 className="fontContainer_2">
+              👋&thinsp;{t("Hello, Login Here...")}
+            </h1>
             <Form>
               <Form.Item>
                 <Typography
                   className="fontContainer_2"
                   style={{ textAlign: "left" }}
                 >
-                  &thinsp;Email
+                  &thinsp;{t("Email")}
                 </Typography>
                 <Input />
               </Form.Item>
@@ -105,25 +124,27 @@ const Login = () => {
                   className="fontContainer_2"
                   style={{ textAlign: "left" }}
                 >
-                  &thinsp;Password
+                  &thinsp;{t("Password")}
                 </Typography>
                 <Input.Password />
               </Form.Item>
               <Form.Item>
                 <LoginButton className="btn" htmlType="submit" block>
-                  <Typography className="fontContainer_2">Login</Typography>
+                  <Typography className="fontContainer_2">
+                    {t("Login")}
+                  </Typography>
                 </LoginButton>
               </Form.Item>
             </Form>
             <Row justify="space-between">
               <Col>
                 <a className="fontContainer_2" href="/register">
-                  Register
+                  {t("Register")}
                 </a>
               </Col>
               <Col>
                 <a className="fontContainer_2" href="/forgot">
-                  Forget password?
+                  {t("Forget password?")}
                 </a>
               </Col>
             </Row>
@@ -136,7 +157,7 @@ const Login = () => {
                   <LoginButton className="btn" block onClick={() => login()}>
                     <img src={googleIcon} alt="" width={20} />
                     <Typography className="fontContainer_2">
-                      Sign in with Google
+                      {t("Sign in with Google")}
                     </Typography>
                   </LoginButton>
                 </Col>
@@ -149,7 +170,7 @@ const Login = () => {
                     className="btn"
                   >
                     <Typography className="fontContainer_2">
-                      Guest Login
+                      {t("Guest Login")}
                     </Typography>
                   </LoginButton>
                 </Col>
@@ -158,6 +179,13 @@ const Login = () => {
           </Col>
         </Row>
       </Col>
+      <LoginButton
+        onClick={() => changeLang("")}
+        className="btn"
+        style={{ position: "absolute", top: "10px", right: "10px" }}
+      >
+        <GrLanguage size={20} />
+      </LoginButton>
     </Container>
   );
 };

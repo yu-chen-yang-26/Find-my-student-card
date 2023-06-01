@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { GrLanguage } from "react-icons/gr";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { useTranslation } from "react-i18next";
+
 const ProfileDiv = styled(Row)(() => ({
   width: "60%",
   display: "flex",
@@ -19,6 +21,21 @@ const ProfileButton = styled(Button)(() => ({
   backgroundColor: "#c8d4ff",
 }));
 const Settings = () => {
+  const { t, i18n } = useTranslation();
+  const changeLang = () => {
+    const newlang = (() => {
+      switch (i18n.language) {
+        case "zh":
+          return "en";
+        case "en":
+          return "zh";
+        default:
+          return "";
+      }
+    })();
+    localStorage.setItem("lang", newlang);
+    i18n.changeLanguage(newlang);
+  };
   return (
     <Row>
       <Col span={2}>
@@ -73,16 +90,16 @@ const Settings = () => {
             <Typography> testname</Typography>
             <ProfileDiv>
               <RiLockPasswordFill size={30} />
-              <ProfileButton>Reset Password</ProfileButton>
+              <ProfileButton>{t("Reset Password")}</ProfileButton>
             </ProfileDiv>
-            <ProfileDiv>
+            <ProfileDiv onClick={() => changeLang()}>
               <GrLanguage size={30} />
-              <ProfileButton>切換至中文</ProfileButton>
+              <ProfileButton>{t("Switch to English")}</ProfileButton>
             </ProfileDiv>
             <ProfileDiv>
               <RiLogoutBoxRLine size={30} />
 
-              <ProfileButton>Log out</ProfileButton>
+              <ProfileButton>{t("Log out")}</ProfileButton>
             </ProfileDiv>
           </Col>
         </Row>

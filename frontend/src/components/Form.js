@@ -15,11 +15,13 @@ import {
   ConfigProvider,
 } from "antd";
 import UploadImg from "./Upload";
+import { useTranslation } from "react-i18next";
 const FormButton = styled(Button)(() => ({
   backgroundColor: "#c8d4ff",
   width: "35%",
 }));
 const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
+  const { t } = useTranslation();
   const curLocation = useLocation();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -28,6 +30,60 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
   const date = Form.useWatch("Date Found", form);
   const time = Form.useWatch("Time Found", form);
   const info = Form.useWatch("Remark", form);
+  const categories = [
+    {
+      code: "學生證",
+      name: "學生證",
+    },
+    {
+      code: "錢包",
+      name: "錢包",
+    },
+    {
+      code: "手機",
+      name: "手機",
+    },
+    {
+      code: "現金",
+      name: "現金",
+    },
+    {
+      code: "水壺",
+      name: "水壺",
+    },
+    {
+      code: "雨傘",
+      name: "雨傘",
+    },
+    {
+      code: "筆記本",
+      name: "筆記本",
+    },
+    {
+      code: "筆電平板",
+      name: "筆電平板",
+    },
+    {
+      code: "帽子",
+      name: "帽子",
+    },
+    {
+      code: "衣服",
+      name: "衣服",
+    },
+    {
+      code: "耳機",
+      name: "耳機",
+    },
+    {
+      code: "鑰匙",
+      name: "鑰匙",
+    },
+    {
+      code: "其他",
+      name: "其他",
+    },
+  ];
   const options = [
     {
       code: "社科院",
@@ -291,24 +347,7 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
       >
         <Form.Item
           name="Category"
-          label="Category"
-          rules={[
-            {
-              type: "string",
-              required: true,
-              message: "Please input the Category!",
-            },
-          ]}
-        >
-          <Input allowClear placeholder="Please enter category" />
-        </Form.Item>
-        <Form.Item
-          name="Location Found"
-          label={
-            curLocation.pathname === "/upload"
-              ? "Location Found"
-              : "Location Lost"
-          }
+          label={t("Category")}
           rules={[
             {
               type: "array",
@@ -323,14 +362,39 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
               value: "code",
               children: "items",
             }}
+            options={categories}
+            placeholder={t("Please select category")}
+          />
+        </Form.Item>
+        <Form.Item
+          name="Location Found"
+          label={
+            curLocation.pathname === "/upload"
+              ? t("Location Found")
+              : t("Location Lost")
+          }
+          rules={[
+            {
+              type: "array",
+              required: true,
+              message: "Please select location",
+            },
+          ]}
+        >
+          <Cascader
+            fieldNames={{
+              label: "name",
+              value: "code",
+              children: "items",
+            }}
             options={options}
-            placeholder="Please select"
+            placeholder={t("Please select")}
           />
         </Form.Item>
         {curLocation.pathname === "/upload" ? (
           <Form.Item
             name="Location Retrieve"
-            label="Location Retrieve"
+            label={t("Location Retrieve")}
             rules={[
               {
                 type: "array",
@@ -346,13 +410,13 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
                 children: "items",
               }}
               options={options}
-              placeholder="Please select"
+              placeholder={t("Please select location")}
             />
           </Form.Item>
         ) : null}
         <Form.Item
           name="Student ID"
-          label="Student ID"
+          label={t("Student ID")}
           rules={[
             {
               type: "string",
@@ -361,11 +425,14 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             },
           ]}
         >
-          <Input allowClear placeholder="Please enter owner's Student ID" />
+          <Input
+            allowClear
+            placeholder={t("Please enter owner's Student ID")}
+          />
         </Form.Item>
         <Form.Item
           name="Name"
-          label="Name"
+          label={t("Name")}
           rules={[
             {
               type: "string",
@@ -374,30 +441,40 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             },
           ]}
         >
-          <Input allowClear placeholder="Please enter owner's name" />
+          <Input allowClear placeholder={t("Please enter owner's name")} />
         </Form.Item>
         <Form.Item
           name="Date Found"
           label={
-            curLocation.pathname === "/upload" ? "Date Found" : "Date Lost"
+            curLocation.pathname === "/upload"
+              ? t("Date Found")
+              : t("Date Lost")
           }
           {...config}
         >
-          <DatePicker />
+          <DatePicker
+            style={{ width: "100%" }}
+            placeholder={t("Please select date")}
+          />
         </Form.Item>
         <Form.Item
           name="Time Found"
           label={
-            curLocation.pathname === "/upload" ? "Time Found" : "Time Lost"
+            curLocation.pathname === "/upload"
+              ? t("Time Found")
+              : t("Time Lost")
           }
           {...config}
         >
-          <TimePicker />
+          <TimePicker
+            style={{ width: "100%" }}
+            placeholder={t("Please select time")}
+          />
         </Form.Item>
-        <Form.Item name="Upload" label="Upload">
+        <Form.Item name="Upload" label={t("Upload")}>
           <UploadImg />
         </Form.Item>
-        <Form.Item name="Remark" label="Remark">
+        <Form.Item name="Remark" label={t("Remark")}>
           <Input />
         </Form.Item>
         <Row
@@ -407,8 +484,8 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             marginTop: "5vmin",
           }}
         >
-          <FormButton>Continue uploading</FormButton>
-          <FormButton>Done</FormButton>
+          <FormButton>{t("Continue")}</FormButton>
+          <FormButton>{t("Done")}</FormButton>
         </Row>
         <ConfigProvider
           theme={{

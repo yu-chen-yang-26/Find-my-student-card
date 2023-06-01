@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'CustomFont1';
-    src: url('../../public/fonts/Caveat-Medium.ttf') format('truetype');
+    src: url('../../../public/fonts/Caveat-Medium.ttf') format('truetype');
 }
 
 
 @font-face {
     font-family: 'CustomFont2';
-    src: url('../../public/fonts/Teko-SemiBold.ttf') format('truetype');
+    src: url('../../../public/fonts/Teko-SemiBold.ttf') format('truetype');
 }
 
 .fontContainer_1 {

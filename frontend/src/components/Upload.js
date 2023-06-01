@@ -2,8 +2,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
 import { useState } from "react";
 import ImgCrop from "antd-img-crop";
+import { useTranslation } from "react-i18next";
 
 const UploadImg = () => {
+  const { t } = useTranslation();
   const props = {
     maxCount: 1,
     name: "file",
@@ -44,7 +46,7 @@ const UploadImg = () => {
         fileList={fileList}
         onChange={onChange}
       >
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        <Button icon={<UploadOutlined />}>{t("Click to Upload")}</Button>
       </Upload>
     </ImgCrop>
   );
