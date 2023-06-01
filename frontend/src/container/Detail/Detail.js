@@ -1,9 +1,9 @@
-import Card from "../components/Card";
-import Background from "../components/Background";
-import Map from "../components/Map";
+import Card from "../../components/Card";
+import Background from "../../components/Background";
+import Map from "../../components/Map";
 import { Col } from "antd";
 import { useParams } from "react-router-dom";
-import axios from "../api";
+import axios from "../../api";
 import { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 

@@ -1,33 +1,15 @@
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-  useRef,
-} from "react";
-import { Upload } from "antd";
-import ImgCrop from "antd-img-crop";
+import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
-import Icon, { HomeOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { useLocation } from "react-router-dom";
-import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
-  InfoWindowF,
-} from "@react-google-maps/api";
-const Wrapper = styled.div`
-  width: 500px;
-  border-radius: 3px;
-  // border: 2px solid palevioletred;
-  background-color: #f5f5f5;
-`;
+import { EnvironmentOutlined } from "@ant-design/icons";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import { useTranslation } from "react-i18next";
+
 const MapStyle = styled.div`
-  height: 400px;sload
-  width: 700px;
+  height: 80vh;
   margin: 0 30px 0 20px;
   background-color: gray;
-  border: 2px solid palevioletred;
+  position: relative;
+  border: 2px solid #c8d4ff;
   background-image: url(${(props) => props.img});
 `;
 const Button = styled.button`
@@ -37,7 +19,11 @@ const Button = styled.button`
   border-radius: 50px;
   border: transparent;
   box-shadow: 6px 2px 5px 1px rgba(0, 0, 0, 0.2);
-  background: palevioletred;
+  background: #b3aaf7;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -5%);
   &:hover {
     width: 120px;
     height: 45px;
@@ -46,18 +32,13 @@ const Button = styled.button`
   }
 `;
 
-const UpMap = ({ component, location, setLocation }) => {
-  const [activeMarker, setActiveMarker] = useState("");
-  const [pin, setpin] = useState(false);
+const UpMap = ({ location, setLocation }) => {
+  const { t } = useTranslation();
   const [draggable, setDraggable] = useState(false);
-  const [realdraggable, setrealdraggable] = useState(false);
+  const [pin, setPin] = useState(false);
   const [buttonText, setbuttonText] = useState(0);
-  let Text = ["Locate", "Relocate", "Done"];
-  const [mycenter, setmycenter] = useState({
-    lat: 25.017622284161067,
-    lng: 121.5378841549027,
-  });
-  const handleText = () => {
+  const markerRef = useRef(null);
+  const clickButton = () => {
     if (buttonText === 0) {
       setDraggable(true);
       setbuttonText(1);
@@ -70,35 +51,30 @@ const UpMap = ({ component, location, setLocation }) => {
       setDraggable(true);
       setbuttonText(1);
     }
-    setrealdraggable(true);
+    setPin(true);
   };
-  const toggleDraggable = () => {
-    handleText();
-  };
-  const markerRef = useRef(null);
-  function onDragEnd(...args) {
+  const onDragEnd = () => {
     setLocation({
       lat: markerRef.current.position.lat(),
       lng: markerRef.current.position.lng(),
     });
-  }
-
-  const onMarkerLoad = useCallback(
-    (marker) => {
-      markerRef.current = marker;
-    },
-    [onDragEnd]
-  );
+  };
+  const onMarkerLoad = useCallback((marker) => {
+    markerRef.current = marker;
+  }, []);
 
   return (
-    <>
+    <MapStyle>
       <GoogleMap
         zoom={15}
-        center={mycenter}
+        center={{
+          lat: 25.017622284161067,
+          lng: 121.5378841549027,
+        }}
         mapContainerClassName="map-container"
         mapContainerStyle={{ width: "100%", height: "100%" }}
       >
-        {realdraggable ? (
+        {pin ? (
           <Marker
             onDragEnd={onDragEnd}
             onLoad={onMarkerLoad}
@@ -111,21 +87,18 @@ const UpMap = ({ component, location, setLocation }) => {
           ""
         )}
       </GoogleMap>
-      <Button
-        onClick={toggleDraggable}
-        style={{ position: "absolute", bottom: "50px" }}
-      >
+      <Button onClick={() => clickButton()}>
         <EnvironmentOutlined />
         {buttonText === 0
-          ? "Pin up"
+          ? t("Pin up")
           : buttonText === 1
-          ? "Done"
+          ? t("Done")
           : buttonText === 2
-          ? "Relocate"
+          ? t("Relocate")
           : ""}
       </Button>
       <br></br>
-    </>
+    </MapStyle>
   );
 };
 export default UpMap;
