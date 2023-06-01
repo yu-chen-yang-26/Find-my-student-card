@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'CustomFont1';
+    src: url('../../../public/fonts/Caveat-Medium.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'CustomFont2';
+    src: url('../../../public/fonts/Teko-SemiBold.ttf') format('truetype');
+}
+
+.fontContainer_1 {
+    
+    font-family: 'CustomFont1', sans-serif;
+}
+
+.fontContainer_2 {
+    font-family: 'CustomFont2', sans-serif;
+}
+
+
+.left {
+    background: radial-gradient(circle, #b3aaf7, #7068cb);
+    animation: gradientAnimation 5s infinite linear;
+    background-size: 200% 200%;
+}
+
+.btn {
+    background: linear-gradient(to left, #c7c1f6, #a6a0e5);
+}
+
+.ntu {
+    margin-top: 80px;
+    margin-bottom: -20px;
+}
+
+@keyframes gradientAnimation {
+    0% {
+      background-position: 0% 100%;
+    }
+    50% {
+      background-position: 100% 0%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
+  }
+
+.back_btn {
+font-size: 30px;
+align-items: center;
+}
+
+
