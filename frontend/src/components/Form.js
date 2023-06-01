@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { ConfigProvider } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../api";
 import sendemail from "./Mail";
-import { message, Cascader, DatePicker, Form, Input, TimePicker } from "antd";
-
+import styled from "styled-components";
+import {
+  Row,
+  message,
+  Cascader,
+  DatePicker,
+  Form,
+  Input,
+  TimePicker,
+  Button,
+  ConfigProvider,
+} from "antd";
+import UploadImg from "./Upload";
+const FormButton = styled(Button)(() => ({
+  backgroundColor: "#c8d4ff",
+  width: "35%",
+}));
 const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
-  const { state } = useLocation();
+  const curLocation = useLocation();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const ID = Form.useWatch("Student ID", form);
   const location = Form.useWatch("Location Found", form);
@@ -207,7 +222,6 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
       name: "其他",
     },
   ];
-  const navigate = useNavigate();
   const handleSubmit = async () => {
     if (ID && location && date && time) {
       const a = new Date(date).toLocaleDateString();
@@ -224,8 +238,6 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
           location: newLocation,
           time: newTime,
           info: info ? info : "",
-          image: state.imageList,
-          position: state.location,
         },
       });
       if (message === "success") {
@@ -250,9 +262,6 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
-  const buttonItemLayout = {
-    wrapperCol: { span: "10", offset: "8" },
-  };
   const config = {
     rules: [
       {
@@ -267,11 +276,12 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
       <Form
         form={form}
         labelCol={{
-          span: 8,
+          span: 9,
         }}
         wrapperCol={{
-          span: 10,
+          span: 15,
         }}
+        style={{ width: "90%" }}
         layout="horizontal"
         initialValues={{
           size: componentSize,
@@ -280,21 +290,25 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
         size={componentSize}
       >
         <Form.Item
-          name="Student ID"
-          label="Student ID"
+          name="Category"
+          label="Category"
           rules={[
             {
               type: "string",
               required: true,
-              message: "Please input the Student ID!",
+              message: "Please input the Category!",
             },
           ]}
         >
-          <Input allowClear placeholder="Please enter owner's Student ID" />
+          <Input allowClear placeholder="Please enter category" />
         </Form.Item>
         <Form.Item
           name="Location Found"
-          label="Location Found"
+          label={
+            curLocation.pathname === "/upload"
+              ? "Location Found"
+              : "Location Lost"
+          }
           rules={[
             {
               type: "array",
@@ -313,15 +327,89 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             placeholder="Please select"
           />
         </Form.Item>
-        <Form.Item name="Date Found" label="Date Found" {...config}>
+        {curLocation.pathname === "/upload" ? (
+          <Form.Item
+            name="Location Retrieve"
+            label="Location Retrieve"
+            rules={[
+              {
+                type: "array",
+                required: false,
+                message: "Please select",
+              },
+            ]}
+          >
+            <Cascader
+              fieldNames={{
+                label: "name",
+                value: "code",
+                children: "items",
+              }}
+              options={options}
+              placeholder="Please select"
+            />
+          </Form.Item>
+        ) : null}
+        <Form.Item
+          name="Student ID"
+          label="Student ID"
+          rules={[
+            {
+              type: "string",
+              required: false,
+              message: "Please input the Student ID!",
+            },
+          ]}
+        >
+          <Input allowClear placeholder="Please enter owner's Student ID" />
+        </Form.Item>
+        <Form.Item
+          name="Name"
+          label="Name"
+          rules={[
+            {
+              type: "string",
+              required: false,
+              message: "Please input the Name!",
+            },
+          ]}
+        >
+          <Input allowClear placeholder="Please enter owner's name" />
+        </Form.Item>
+        <Form.Item
+          name="Date Found"
+          label={
+            curLocation.pathname === "/upload" ? "Date Found" : "Date Lost"
+          }
+          {...config}
+        >
           <DatePicker />
         </Form.Item>
-        <Form.Item name="Time Found" label="Time Found" {...config}>
+        <Form.Item
+          name="Time Found"
+          label={
+            curLocation.pathname === "/upload" ? "Time Found" : "Time Lost"
+          }
+          {...config}
+        >
           <TimePicker />
+        </Form.Item>
+        <Form.Item name="Upload" label="Upload">
+          <UploadImg />
         </Form.Item>
         <Form.Item name="Remark" label="Remark">
           <Input />
         </Form.Item>
+        <Row
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            marginTop: "5vmin",
+          }}
+        >
+          <FormButton>Continue uploading</FormButton>
+          <FormButton>Done</FormButton>
+        </Row>
         <ConfigProvider
           theme={{
             token: {

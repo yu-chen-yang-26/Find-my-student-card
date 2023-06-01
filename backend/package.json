@@ -4,11 +4,6 @@
   "description": "",
   "type": "module",
   "main": "src/server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node src/server.js",
-    "dev": "nodemon src/server.js"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +15,16 @@
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.7",
+    "@babel/node": "^7.22.1",
+    "@babel/preset-env": "^7.22.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node src/server.js --ext js --exec babel-node",
+    "dev": "nodemon src/server.js --ext js --exec babel-node",
+    "deploy": "NODE_ENV=production babel-node src/server.js"
   }
 }
