@@ -1,12 +1,12 @@
 import "./App.css";
-import Homepage from "./container/Homepage";
-import Detail from "./container/Detail";
-import Heatmap from "./container/Heatmap";
-import Upload from "./container/Uploadpage";
-import Login from "./container/Login";
-import Register from "./container/Register";
-import ForgotPassword from "./container/ForgotPassword";
-import Settings from "./container/Settings";
+import Homepage from "./container/Homepage/Homepage";
+import Detail from "./container/Detail/Detail";
+import Heatmap from "./container/Heatmap/Heatmap";
+import Upload from "./container/Uploadpage/Uploadpage";
+import Login from "./container/Login/Login";
+import Register from "./container/Register/Register";
+import ForgotPassword from "./container/ForgotPassword/ForgotPassword";
+import Settings from "./container/Settings/Settings";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {

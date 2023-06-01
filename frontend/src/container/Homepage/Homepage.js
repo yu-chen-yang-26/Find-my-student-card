@@ -1,12 +1,12 @@
-import Map from "../components/Map";
-import Table from "../components/Table";
-import Sidebar from "../components/Sidebar";
-import Search from "../components/Searchbar";
-import Background from "../components/Background";
+import Map from "../../components/Map";
+import Table from "../../components/Table";
+import Sidebar from "../../components/Sidebar";
+import Search from "../../components/Searchbar";
+import Background from "../../components/Background";
 import { Col, Row, Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
-import axios from "../api";
+import axios from "../../api";
 import styled from "styled-components";
 const { Content } = Layout;
 

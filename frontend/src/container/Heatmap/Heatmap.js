@@ -1,9 +1,9 @@
-import Background from "../components/Background";
-import Map2 from "../components/HotMap";
+import Background from "../../components/Background";
+import Map2 from "../../components/HotMap";
 import { Col } from "antd";
 import { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
-import axios from "../api";
+import axios from "../../api";
 const Heatmap = ({ setInfo }) => {
   const [data, setData] = useState([]);
   const [tempstore, settempstore] = useState([]);

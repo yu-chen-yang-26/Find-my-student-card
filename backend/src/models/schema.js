@@ -1,16 +1,30 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-const CardSchema = new Schema(
+
+const UserSchema = new Schema({
+  student_id: { type: String, required: true },
+  name: { type: String, required: true },
+  language: { type: String, required: true, default: "zh-TW" },
+  password: { type: String, required: true },
+});
+
+const FoundItemSchema = new Schema(
   {
-    ID: { type: String, required: true },
+    category: { type: String, required: true },
+    finder: { type: mongoose.Types.ObjectId, ref: "user" },
     location: { type: String, required: true },
-    info: { type: String },
-    time: { type: String, required: true },
     position: {
       lat: { type: Number, required: true },
       lng: { type: Number, required: true },
     },
-    founded: { type: String, required: true },
+    time: { type: String, required: true },
+    info: { type: String },
+    mislayer_clue: {
+      student_id: { type: String },
+      name: { type: String },
+    },
+    group: { type: String },
+    correspond: { type: mongoose.Types.ObjectId, ref: "lost_item" },
     image: [
       {
         type: mongoose.Types.ObjectId,
@@ -20,7 +34,24 @@ const CardSchema = new Schema(
   },
   { timestamps: { createdAt: "created_at" } }
 );
-const Card = mongoose.model("card", CardSchema);
+
+const LostItemSchema = new Schema(
+  {
+    category: { type: String, required: true },
+    mislayer: { type: mongoose.Types.ObjectId, ref: "user" },
+    locations: [{ type: String, required: true }],
+    positions: [
+      {
+        lat: { type: Number, required: true },
+        lng: { type: Number, required: true },
+      },
+    ],
+    time: { type: String, required: true },
+    info: { type: String },
+    correspond: { type: mongoose.Types.ObjectId, ref: "lost_item" },
+  },
+  { timestamps: { createdAt: "created_at" } }
+);
 
 const MailSchema = new Schema(
   {
@@ -31,7 +62,6 @@ const MailSchema = new Schema(
   },
   { timestamps: { createdAt: "created_at" } }
 );
-const Mail = mongoose.model("mail", MailSchema);
 
 const ImageSchema = new Schema({
   img: {
@@ -39,6 +69,11 @@ const ImageSchema = new Schema({
     contentType: String,
   },
 });
+
+const User = mongoose.model("user", UserSchema);
+const FoundItem = mongoose.model("found_item", FoundItemSchema);
+const LostItem = mongoose.model("lost_item", LostItemSchema);
+const Mail = mongoose.model("mail", MailSchema);
 const Image = mongoose.model("image", ImageSchema);
 
-export { Card, Mail, Image };
+export { User, FoundItem, LostItem, Mail, Image };
