@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "647801dfd2fca987a0c04fb4"
+  },
+  "student_id": "b00000000",
+  "name": "guest",
+  "language": "zh-tw",
+  "password": "123"
+},
+{
+  "_id": {
+    "$oid": "647801dfd2fca987a0c04fb5"
+  },
+  "student_id": "b66011012",
+  "name": "孫大炮",
+  "language": "zh-tw",
+  "password": "loveandfreedom"
+},
+{
+  "_id": {
+    "$oid": "647801dfd2fca987a0c04fb6"
+  },
+  "student_id": "b87010031",
+  "name": "老蔣",
+  "language": "zh-tw",
+  "password": "ilovepower"
+},
+{
+  "_id": {
+    "$oid": "647801dfd2fca987a0c04fb7"
+  },
+  "student_id": "b23001015",
+  "name": "豆花",
+  "language": "zh-tw",
+  "password": "freedomandgun"
+},
+{
+  "_id": {
+    "$oid": "647801dfd2fca987a0c04fb8"
+  },
+  "student_id": "b50010012",
+  "name": "打扁",
+  "language": "zh-tw",
+  "password": "moneymoneymoney"
+}]
