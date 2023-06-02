@@ -40,6 +40,7 @@ const Settings = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [name, setName] = useState("");
   const appendData = () => {
     fetch(fakeDataUrl)
       .then((res) => res.json())
@@ -48,6 +49,20 @@ const Settings = () => {
       });
   };
   useEffect(() => {
+    const getName = async () => {
+      await api
+        .get("/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Accept: "application/json",
+          },
+        })
+        .then((response) => {
+          setName(response.data.name);
+        })
+        .catch((err) => console.log(err));
+    };
+    getName();
     appendData();
   }, []);
   const onScroll = (e) => {
@@ -173,7 +188,7 @@ const Settings = () => {
           >
             <Typography>
               {" "}
-              {t("Hello")}, {localStorage.getItem("name")}
+              {t("Hello")}, {name}
             </Typography>
             <ProfileDiv>
               <RiLockPasswordFill size={30} />

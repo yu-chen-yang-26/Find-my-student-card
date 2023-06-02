@@ -164,9 +164,9 @@ router.get("/detail", async (req, res) => {
 });
 
 // this need to have authorization!!!
-router.get("/lostItem", async (req, res) => {
+router.get("/lostItem", verify, async (req, res) => {
   try {
-    const userId = req.query.id;
+    const userId = req.user;
     // find data of user
     const user = await User.findById(userId).exec();
     if (!user) {
@@ -222,12 +222,12 @@ router.post("/register", async (req, res) => {
         if (data !== null) {
           res.status(403).send({ result: "the email has been used" });
         } else {
-          await new User({
+          await User.create({
             name: req.body.name,
             student_id: req.body.id,
             email: req.body.email,
             password: req.body.password,
-          }).save();
+          });
           res.status(200).send({ result: "success" });
         }
       })
@@ -250,28 +250,59 @@ router.post("/logined", verify, async (req, res) => {
 });
 
 router.post("/google", async (req, res) => {
-  return res.status(200).send({
-    token: jwt.sign({ user: req.body.name }, JWT_SECRET),
-  });
+  try {
+    let data = await User.findOne({
+      name: req.body.name,
+      email: req.body.email,
+    }).exec();
+    if (data === null) {
+      data = await User.create({
+        name: req.body.name,
+        student_id: randomUUID(),
+        email: req.body.email,
+        password: randomUUID(),
+      });
+    }
+    res.status(200).send({
+      token: jwt.sign({ user: data._id }, JWT_SECRET),
+      id: data._id,
+      result: "success",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
 });
 
 router.post("/guest", async (req, res) => {
-  return res.status(200).send({
-    token: jwt.sign({ user: "guest" }, JWT_SECRET),
-  });
+  try {
+    const data = await User.create({
+      name: "guest",
+      student_id: randomUUID(),
+      email: "hi",
+      password: randomUUID(),
+    });
+    res.status(200).send({
+      token: jwt.sign({ user: data._id }, JWT_SECRET),
+      id: data._id,
+      result: "success",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
 });
 
 router.post("/login", async (req, res) => {
   try {
-    let data = await User.find({
+    let data = await User.findOne({
       email: req.body.email,
       password: req.body.password,
     }).exec();
-    if (data.length !== 0) {
+    if (data !== null) {
       res.status(200).send({
-        token: jwt.sign({ user: "guest" }, JWT_SECRET),
-        name: data[0].name,
-        email: data[0].email,
+        token: jwt.sign({ user: data._id }, JWT_SECRET),
+        id: data._id,
         result: "success",
       });
     } else {
@@ -284,10 +315,10 @@ router.post("/login", async (req, res) => {
 });
 router.get("/send", async (req, res) => {
   try {
-    let data = await User.find({
+    let data = await User.findOne({
       email: req.query.email,
     }).exec();
-    if (data.length !== 0) {
+    if (data !== null) {
       await User.updateOne(
         { email: req.query.email },
         { password: req.query.password }
@@ -308,9 +339,30 @@ router.get("/send", async (req, res) => {
 router.post("/logout", verify, async (req, res) => {
   try {
     res.status(200).send({ result: "success" });
+    req.user = null;
+    req.token = null;
   } catch (err) {
     console.log(err);
     res.status(500).send({ result: "unauthorized" });
+  }
+});
+
+router.get("/profile", verify, async (req, res) => {
+  try {
+    let data = await User.findOne({
+      _id: req.user,
+    }).exec();
+    if (data !== null) {
+      res.status(200).send({
+        name: data.name,
+        result: "success",
+      });
+    } else {
+      res.status(400).send({ result: "failed" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
   }
 });
 export default router;
