@@ -10,11 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { Button, Space } from "antd";
 
 const MapStyle = styled.div`
-  height: 400px;
+  height: 550px;
   // width: 700px;
   // margin: 20px 30px 0 25px;
   // background-color: gray;
-  // border: 4px outset palevioletred;
+  border: 6px outset;
+  border-radius: 10px;
+  border-color: #b3aaf7;
   // box-shadow: 0 0 20px 0px Gray;
 `;
 function Map(props) {

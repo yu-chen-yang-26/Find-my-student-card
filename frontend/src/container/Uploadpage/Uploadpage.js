@@ -1,20 +1,13 @@
-import { InfoForm } from "../../components/Form";
-import UpMap from "../../components/UpMap";
-import React, { useEffect, useState } from "react";
+import { InfoForm } from "../../components/Form/Form";
+import UpMap from "../../components/UpMap/UpMap";
+import React from "react";
 import { Col, Row } from "antd";
 import { useLoadScript } from "@react-google-maps/api";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 const Upload = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDQdme1BbYD7iIP3X_RIxjkEIQAQau38PY", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
-  const [location, setLocation] = useState({
-    lat: 25.017622284161067,
-    lng: 121.5378841549027,
-  });
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
   return (
     <Row>
       <Col span={2}>
@@ -42,13 +35,7 @@ const Upload = () => {
           <Col span={10} style={{ overflowY: "scroll" }}>
             <InfoForm></InfoForm>
           </Col>
-          <Col span={14}>
-            {isLoaded ? (
-              <UpMap location={location} setLocation={setLocation} />
-            ) : (
-              <></>
-            )}
-          </Col>
+          <Col span={14}>{isLoaded ? <UpMap /> : <></>}</Col>
         </Row>
       </Col>
     </Row>

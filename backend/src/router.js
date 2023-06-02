@@ -7,6 +7,7 @@ import {
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import verify from "./middleware.js";
@@ -14,6 +15,8 @@ const JWT_SECRET = "PUI-final-project-group9";
 const router = express.Router();
 
 // 還是不太懂 multer
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "/uploads/"));
@@ -80,7 +83,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-router.post("/submit/foundItem", express.json(), async (req, res) => {
+router.post("/submit/foundItem", verify, async (req, res) => {
   let itemParam = req.body; // 吃一個 json / js object
   if (!itemParam.group) {
     itemParam.group = randomUUID();
@@ -101,7 +104,7 @@ router.post("/submit/foundItem", express.json(), async (req, res) => {
   }
 });
 
-router.post("/submit/lostItem", express.json(), async (req, res) => {
+router.post("/submit/lostItem", verify, async (req, res) => {
   let itemParam = req.body;
   try {
     const data = await LostItem.create(itemParam); // mongoose 應該有偷偷做資料轉換
@@ -210,7 +213,6 @@ router.delete("/lostItem", async (req, res) => {
     res.status(400).send({ status: "fail", error: error.message });
   }
 });
-
 router.post("/register", async (req, res) => {
   try {
     await User.findOne({
@@ -268,6 +270,8 @@ router.post("/login", async (req, res) => {
     if (data.length !== 0) {
       res.status(200).send({
         token: jwt.sign({ user: "guest" }, JWT_SECRET),
+        name: data[0].name,
+        email: data[0].email,
         result: "success",
       });
     } else {
@@ -309,5 +313,4 @@ router.post("/logout", verify, async (req, res) => {
     res.status(500).send({ result: "unauthorized" });
   }
 });
-
 export default router;

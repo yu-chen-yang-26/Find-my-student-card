@@ -249,7 +249,7 @@ const exampleMapStyles = [
 class HotMap extends React.Component {
   render() {
     return (
-      <MapStyle className="map-container" style={{ height: "450px" }}>
+      <MapStyle className="map-container" style={{ height: "230px" }}>
         <Map
           containerStyle={containerStyle}
           google={this.props.google}

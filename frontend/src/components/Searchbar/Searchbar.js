@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip, Space, Input } from "antd";
-import axios from "../api";
+import axios from "../../api";
 
 const Search = ({ setData }) => {
   const [ID, setID] = useState("");

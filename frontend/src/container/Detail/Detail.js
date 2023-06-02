@@ -1,6 +1,6 @@
-import Card from "../../components/Card";
-import Background from "../../components/Background";
-import Map from "../../components/Map";
+import Card from "../../components/Card/Card";
+import Background from "../../components/Background/Background";
+import Map from "../../components/Map/Map";
 import { Col } from "antd";
 import { useParams } from "react-router-dom";
 import axios from "../../api";

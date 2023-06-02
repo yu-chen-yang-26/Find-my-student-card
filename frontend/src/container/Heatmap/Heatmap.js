@@ -1,9 +1,10 @@
-import Background from "../../components/Background";
-import Map2 from "../../components/HotMap";
+import Background from "../../components/Background/Background";
+import Map2 from "../../components/HotMap/HotMap";
 import { Col } from "antd";
 import { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import axios from "../../api";
+import "./Heatmap.css";
 const Heatmap = ({ setInfo }) => {
   const [data, setData] = useState([]);
   const [tempstore, settempstore] = useState([]);
@@ -28,22 +29,16 @@ const Heatmap = ({ setInfo }) => {
     }
   }, [isLoaded, data]);
   return (
-    <Background
-      component={
-        <>
-          <Col xs={24}>
-            {isLoaded && tempstore !== [] ? (
-              <Map2
-                center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
-                positions={tempstore}
-              />
-            ) : (
-              ""
-            )}
-          </Col>
-        </>
-      }
-    />
+    <div className="map" style={{ width: "500px" }}>
+      {isLoaded && tempstore !== [] ? (
+        <Map2
+          center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
+          positions={tempstore}
+        />
+      ) : (
+        ""
+      )}
+    </div>
   );
 };
 

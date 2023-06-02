@@ -39,10 +39,9 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profile, setProfile] = useState([]);
   const [user, setUser] = useState([]);
   const googleLogin = useGoogleLogin({
-    onSuccess: async (codeResponse) => setUser(codeResponse),
+    onSuccess: (codeResponse) => setUser(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
   });
   const changeLang = () => {
@@ -63,6 +62,7 @@ const Login = () => {
     await api
       .post("/guest")
       .then((response) => {
+        localStorage.setItem("name", "guest");
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -75,6 +75,7 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
+        localStorage.setItem("name", response.data.name);
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -117,7 +118,7 @@ const Login = () => {
           }
         )
         .then(async (res) => {
-          setProfile(res.data);
+          localStorage.setItem("name", res.data.name);
           await api
             .post("/google", {
               name: res.data.email,
@@ -130,7 +131,8 @@ const Login = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, [setProfile, user, navigate]);
+  }, [user, navigate]);
+
   return (
     <Container>
       <Logo className="left" span={12}>
@@ -175,7 +177,7 @@ const Login = () => {
                 <Input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                />
+                />{" "}
               </Form.Item>
               <Form.Item>
                 <Typography
@@ -187,7 +189,7 @@ const Login = () => {
                 <Input.Password
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                />
+                />{" "}
               </Form.Item>
               <Form.Item>
                 <LoginButton
@@ -196,6 +198,7 @@ const Login = () => {
                   block
                   onClick={() => userLogin()}
                 >
+                  {" "}
                   <Typography className="fontContainer_2">
                     {t("Login")}
                   </Typography>
@@ -225,6 +228,7 @@ const Login = () => {
                     block
                     onClick={() => googleLogin()}
                   >
+                    {" "}
                     <img src={googleIcon} alt="" width={20} />
                     <Typography className="fontContainer_2">
                       {t("Sign in with Google")}

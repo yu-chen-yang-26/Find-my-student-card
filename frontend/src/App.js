@@ -15,11 +15,11 @@ function App() {
       <Routes>
         <Route path="/detail/:id/:time" element={<Detail />} />
         <Route path="/home" element={<Homepage />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/announcement" element={<Upload />} />
+        <Route path="/found" element={<Upload />} />
+        <Route path="/lost" element={<Upload />} />
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Settings />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/HeatMap" element={<Heatmap />} />
       </Routes>

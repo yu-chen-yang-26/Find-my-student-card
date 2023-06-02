@@ -7,7 +7,7 @@ import {
   CheckCircleOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
-import axios from "../api";
+import axios from "../../api";
 
 const StyledCard = styled(Card)`
   .ant-card-head-title {

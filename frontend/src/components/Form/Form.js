@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "../api";
-import sendemail from "./Mail";
+import api from "../../api";
+import sendemail from "../Mail/Mail";
 import styled from "styled-components";
 import {
   Row,
@@ -14,19 +14,26 @@ import {
   Button,
   ConfigProvider,
 } from "antd";
-import UploadImg from "./Upload";
+import UploadImg from "../Upload/Upload";
 import { useTranslation } from "react-i18next";
+import { useHooks } from "../../hook/useHooks";
 const FormButton = styled(Button)(() => ({
   backgroundColor: "#c8d4ff",
   width: "35%",
 }));
-const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
+const { TextArea } = Input;
+const InfoForm = () => {
   const { t } = useTranslation();
   const curLocation = useLocation();
   const navigate = useNavigate();
+  const { fileList, setFileList, location, setLocation, group, setGroup } =
+    useHooks();
   const [form] = Form.useForm();
   const ID = Form.useWatch("Student ID", form);
-  const location = Form.useWatch("Location Found", form);
+  const category = Form.useWatch("Category", form);
+  const locationRetrieve = Form.useWatch("Location Retrieve", form);
+  const locationFound = Form.useWatch("Location Found", form);
+  const name = Form.useWatch("Name", form);
   const date = Form.useWatch("Date Found", form);
   const time = Form.useWatch("Time Found", form);
   const info = Form.useWatch("Remark", form);
@@ -94,30 +101,12 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
   ];
   const options = [
     {
-      code: "社科院",
-      name: "社科院",
-      items: [
-        {
-          code: "社科圖",
-          name: "社科圖",
-        },
-        {
-          code: "經濟系",
-          name: "經濟系",
-        },
-      ],
-    },
-    {
       code: "椰林大道",
       name: "椰林大道",
       items: [
         {
-          code: "森林系",
-          name: "森林系",
-        },
-        {
-          code: "土木系",
-          name: "土木系",
+          code: "振興草坪",
+          name: "振興草坪",
         },
         {
           code: "椰林大道近總圖",
@@ -152,12 +141,12 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
           name: "公館捷運站",
         },
         {
-          code: "大一女宿",
-          name: "大一女宿",
+          code: "大一女",
+          name: "大一女",
         },
         {
-          code: "研一",
-          name: "研一",
+          code: "鹿鳴堂",
+          name: "鹿鳴堂",
         },
       ],
     },
@@ -202,6 +191,20 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
         {
           code: "新生",
           name: "新生",
+        },
+      ],
+    },
+    {
+      code: "社科院",
+      name: "社科院",
+      items: [
+        {
+          code: "社科圖",
+          name: "社科圖",
+        },
+        {
+          code: "118巷",
+          name: "118巷",
         },
       ],
     },
@@ -257,10 +260,6 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
           code: "田徑場",
           name: "田徑場",
         },
-        {
-          code: "網球場",
-          name: "網球場",
-        },
       ],
     },
     {
@@ -286,64 +285,110 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
       name: "其他",
     },
   ];
-  const handleSubmit = async () => {
-    if (ID && location && date && time) {
+  const handleSubmit = async (Continue) => {
+    if (category && locationFound && locationRetrieve && date && time) {
       const a = new Date(date).toLocaleDateString();
       const b = new Date(time).toLocaleTimeString("en-US", {
         hourCycle: "h23",
       });
-      const newLocation = location.length === 1 ? "其他" : location[1];
+      const found_location =
+        locationFound.length === 1 ? "其他" : locationFound[1];
       const newTime = a + " " + b;
-      const {
-        data: { message, SendPermition },
-      } = await axios.post("/submit", {
-        params: {
-          ID: ID,
-          location: newLocation,
-          time: newTime,
-          info: info ? info : "",
-        },
-      });
-      if (message === "success") {
-        setImageList([]);
-        setApi({ ID: ID, time: Date.parse(newTime) });
-        setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
-        navigate("/upload/3");
-        if (SendPermition) {
-          sendemail(ID, newLocation, newTime, "/detail/" + ID + "/" + time);
-        }
+      if (curLocation.pathname === "/found") {
+        const retrieve_location =
+          locationRetrieve.length === 1 ? "其他" : locationRetrieve[1];
+        await api
+          .post(
+            "/submit/foundItem",
+            {
+              category: category[0],
+              mislayer_clue: { student_id: ID, name: name },
+              found_location: { location: found_location, position: location },
+              retrieve_location: {
+                location: retrieve_location,
+              },
+              time: newTime,
+              group: group ? group : false,
+              remark: info ? info : "",
+              image: fileList.length === 1 ? fileList[0].response.id : null,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            setFileList([]);
+            setGroup(response.data.group);
+            if (
+              category[0] === "學生證" &&
+              /^[a-zA-z][0-9]{8}/.test(ID) &&
+              response.data.SendPermition
+            ) {
+              sendemail({
+                mode: "lost",
+                ID: ID,
+                category: category,
+                foundLocation: found_location,
+                retrieveLocation: retrieve_location,
+                remark: info,
+                time: newTime,
+              });
+            }
+            if (Continue) {
+              form.resetFields(["Category", "Remark", "Student ID", "Name"]);
+            } else {
+              setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
+              navigate("/detail/" + response.data.id);
+            }
+          })
+          .catch((err) => console.log(err));
+      } else {
+        await api
+          .post(
+            "/submit/lostItem",
+            {
+              category: category[0],
+              mislayer_clue: { student_id: ID, name: name },
+              locations: { location: found_location, position: location },
+              time: newTime,
+              remark: info ? info : "",
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
+            navigate("/profile");
+          })
+          .catch((err) => console.log(err));
       }
     } else {
       message.error("Please fill the form correctly.");
     }
   };
-  useEffect(() => {
-    if (submit === true) {
-      handleSubmit();
-    }
-  }, [submit]);
   const [componentSize, setComponentSize] = useState("default");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
-  const config = {
-    rules: [
-      {
-        type: "object",
-        required: true,
-        message: "Please select!",
-      },
-    ],
-  };
+  useEffect(() => {
+    setGroup(false);
+  }, [setGroup]);
   return (
     <>
       <Form
         form={form}
         labelCol={{
-          span: 9,
+          span: 7,
         }}
         wrapperCol={{
-          span: 15,
+          span: 17,
         }}
         style={{ width: "90%" }}
         layout="horizontal"
@@ -360,7 +405,7 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             {
               type: "array",
               required: true,
-              message: "Please select",
+              message: t("Please select category"),
             },
           ]}
         >
@@ -377,7 +422,7 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
         <Form.Item
           name="Location Found"
           label={
-            curLocation.pathname === "/upload"
+            curLocation.pathname === "/found"
               ? t("Location Found")
               : t("Location Lost")
           }
@@ -385,7 +430,7 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             {
               type: "array",
               required: true,
-              message: "Please select location",
+              message: t("Please select location"),
             },
           ]}
         >
@@ -396,18 +441,18 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
               children: "items",
             }}
             options={options}
-            placeholder={t("Please select")}
+            placeholder={t("Please select location")}
           />
         </Form.Item>
-        {curLocation.pathname === "/upload" ? (
+        {curLocation.pathname === "/found" ? (
           <Form.Item
             name="Location Retrieve"
             label={t("Location Retrieve")}
             rules={[
               {
                 type: "array",
-                required: false,
-                message: "Please select",
+                required: true,
+                message: t("Please select location"),
               },
             ]}
           >
@@ -429,7 +474,7 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             {
               type: "string",
               required: false,
-              message: "Please input the Student ID!",
+              message: t("Please enter owner's Student ID"),
             },
           ]}
         >
@@ -445,7 +490,7 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             {
               type: "string",
               required: false,
-              message: "Please input the Name!",
+              message: t("Please enter owner's name"),
             },
           ]}
         >
@@ -454,11 +499,15 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
         <Form.Item
           name="Date Found"
           label={
-            curLocation.pathname === "/upload"
-              ? t("Date Found")
-              : t("Date Lost")
+            curLocation.pathname === "/found" ? t("Date Found") : t("Date Lost")
           }
-          {...config}
+          rules={[
+            {
+              type: "object",
+              required: true,
+              message: t("Please select date"),
+            },
+          ]}
         >
           <DatePicker
             style={{ width: "100%" }}
@@ -468,22 +517,35 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
         <Form.Item
           name="Time Found"
           label={
-            curLocation.pathname === "/upload"
-              ? t("Time Found")
-              : t("Time Lost")
+            curLocation.pathname === "/found" ? t("Time Found") : t("Time Lost")
           }
-          {...config}
+          rules={[
+            {
+              type: "object",
+              required: true,
+              message: t("Please select time"),
+            },
+          ]}
         >
           <TimePicker
             style={{ width: "100%" }}
             placeholder={t("Please select time")}
           />
         </Form.Item>
-        <Form.Item name="Upload" label={t("Upload")}>
-          <UploadImg />
-        </Form.Item>
+        {curLocation.pathname === "/found" ? (
+          <Form.Item name="Upload" label={t("Upload")}>
+            <UploadImg />
+          </Form.Item>
+        ) : null}
         <Form.Item name="Remark" label={t("Remark")}>
-          <Input />
+          <TextArea
+            autoSize={{ minRows: 3, maxRows: 3 }}
+            placeholder={
+              curLocation.pathname === "/found"
+                ? "藍色 iPhone 12，在總圖三樓男廁尋獲，請找圖書館人員領取"
+                : "藍色 iPhone 12，可能在總圖三樓遺失"
+            }
+          />
         </Form.Item>
         <Row
           style={{
@@ -492,8 +554,12 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
             marginTop: "5vmin",
           }}
         >
-          <FormButton>{t("Continue")}</FormButton>
-          <FormButton>{t("Done")}</FormButton>
+          {curLocation.pathname === "/found" ? (
+            <FormButton onClick={() => handleSubmit(1)}>
+              {t("Continue")}
+            </FormButton>
+          ) : null}
+          <FormButton onClick={() => handleSubmit(0)}>{t("Done")}</FormButton>
         </Row>
         <ConfigProvider
           theme={{
