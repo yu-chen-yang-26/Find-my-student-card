@@ -171,7 +171,10 @@ const Settings = () => {
               gap: "3vmin",
             }}
           >
-            <Typography> {t("Hello")}, testname</Typography>
+            <Typography>
+              {" "}
+              {t("Hello")}, {localStorage.getItem("name")}
+            </Typography>
             <ProfileDiv>
               <RiLockPasswordFill size={30} />
               <ProfileButton>{t("Reset Password")}</ProfileButton>

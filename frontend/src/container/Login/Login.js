@@ -39,7 +39,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [profile, setProfile] = useState([]);
   const [user, setUser] = useState([]);
   const googleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
@@ -63,6 +62,7 @@ const Login = () => {
     await api
       .post("/guest")
       .then((response) => {
+        localStorage.setItem("name", "guest");
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -75,6 +75,7 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
+        localStorage.setItem("name", response.data.name);
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -117,7 +118,7 @@ const Login = () => {
           }
         )
         .then(async (res) => {
-          setProfile(res.data);
+          localStorage.setItem("name", res.data.name);
           await api
             .post("/google", {
               name: res.data.email,
@@ -130,7 +131,7 @@ const Login = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, [setProfile, user, navigate]);
+  }, [user, navigate]);
 
   return (
     <Container>
