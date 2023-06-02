@@ -3,7 +3,9 @@ import Table from "../../components/Table/Table";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Searchbar/Searchbar";
 import Background from "../../components/Background/Background";
-import { Col, Row, Layout } from "antd";
+import Heatmap from "../Heatmap/Heatmap";
+import { Col, Row, Layout, Statistic } from "antd";
+import { FrownTwoTone } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import axios from "../../api";
@@ -47,10 +49,11 @@ const Homepage = () => {
             {isLoaded ? (
               <div
                 style={{
-                  height: "60vh",
+                  height: "100vh",
                   margin: "20px",
+                  marginTop: "60px",
                   borderRadius: "10px",
-                  overflow: "hidden",
+                  // overflow: "hidden",
                 }}
               >
                 <Map
@@ -67,28 +70,9 @@ const Homepage = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
-            >
-              <div
-                style={{
-                  border: "1px solid black",
-                  borderRadius: "10px",
-                  width: "350px",
-                  height: "200px",
-                  overflow: "hidden",
-                }}
-              ></div>
-              <div
-                style={{
-                  border: "1px solid black",
-                  borderRadius: "10px",
-                  width: "350px",
-                  height: "200px",
-                  overflow: "hidden",
-                }}
-              ></div>
-            </div>
+            ></div>
           </Col>
-          <Col span={10} style={{ marginTop: "200px", height: "70vh" }}>
+          <Col span={10} style={{ marginTop: "100px", height: "70vh" }}>
             <Table data={data} style={{ height: "80vh !important" }} />
           </Col>
         </Row>

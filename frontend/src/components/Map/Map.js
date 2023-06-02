@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Space } from "antd";
 
 const MapStyle = styled.div`
-  height: 400px;
+  height: 550px;
   // width: 700px;
   // margin: 20px 30px 0 25px;
   // background-color: gray;

@@ -1,14 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, List, message, Input, Col } from "antd";
+import { Avatar, List, message, Input, Col, Select } from "antd";
 import VirtualList from "rc-virtual-list";
 import "./Table.css";
 import { useNavigate } from "react-router-dom";
 
 const fakeDataUrl =
   "https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo";
+// 時間、地點、物品種類、remark
+const options = [
+  {
+    value: "category",
+    label: "category",
+  },
+  {
+    value: "location",
+    label: "loctaion",
+  },
+  {
+    value: "time",
+    label: "time",
+  },
+  {
+    value: "remark",
+    label: "remark",
+  },
+];
 const ContainerHeight = 460;
 const { Search } = Input;
 const SearchTable = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const appendData = () => {
     fetch(fakeDataUrl)
@@ -31,12 +51,10 @@ const SearchTable = () => {
   };
   return (
     <div>
-      <Search
-        placeholder="input search text"
-        enterButton="Search"
-        size="large"
-        // loading
-      />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Select size="large" defaultValue="category" options={options} />
+        <Search placeholder="search" enterButton="Search" size="large" />
+      </div>
       <List>
         <VirtualList
           data={data}
@@ -51,7 +69,9 @@ const SearchTable = () => {
                 <List.Item.Meta
                   className="list"
                   avatar={<Avatar src={item.picture.large} />}
-                  title="錢包"
+                  title={
+                    <a onClick={() => navigate("/detail/:id/:time")}>錢包</a>
+                  }
                   description="可能掉在路燈旁邊的椅子上,或是在社科院的廁所裡面"
                 />
               </Col>
@@ -65,7 +85,7 @@ const SearchTable = () => {
   );
 };
 export default SearchTable;
-// 時間、地點、物品種類、remark
+
 // const StyledElement = styled(List)`
 //   .ant-spin-container {
 //     // box-shadow: 5px -5px 5px Gray;
