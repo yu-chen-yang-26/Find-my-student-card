@@ -1,19 +1,53 @@
 import emailjs from "@emailjs/browser";
+import axios from "../api";
 
-const sendemail = async (email, checkPassword) => {
+const getRandomInt = (min, max) => {
+  return min + Math.floor(Math.random() * max);
+};
+
+const sendemail = async (ID, location, Email_Time, link) => {
+  const checkPassword = getRandomInt(1000, 8999);
   const templateParams = {
-    to_name: "hihi",
-    to_email: email,
+    to_email: ID,
+    time: Email_Time,
+    id: ID,
+    location: location,
     checkPassword: checkPassword,
     from_name: "Check this out!",
+    link: link,
   };
   emailjs
     .send(
-      "service_zd5j8ce",
-      "template_ua8ixjm",
+      "service_tl8q7kp",
+      "template_1817ej1",
       templateParams,
-      "iJ9lomQIf6oO5SchE"
+      "PY6tsxJdjD_9qoWfO"
     )
-    .catch((err) => console.log(err));
+    .then(
+      async function () {
+        const {
+          data: { message },
+        } = await axios.post("/sendMail", {
+          params: {
+            ID: ID,
+            info: location + " " + Email_Time,
+            sent: "True",
+            checkPassword: checkPassword,
+          },
+        });
+      },
+      async function () {
+        const {
+          data: { message },
+        } = await axios.post("/sendMail", {
+          params: {
+            ID: ID,
+            info: location + " " + Email_Time,
+            sent: "False",
+            checkPassword: checkPassword,
+          },
+        });
+      }
+    );
 };
 export default sendemail;

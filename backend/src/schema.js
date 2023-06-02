@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   student_id: { type: String, required: true, lowercase: true },
   name: { type: String, required: true },
-  email: { type: String, required: true },
   language: { type: String, required: true, lowercase: true, default: "zh-tw" },
   password: { type: String, required: true },
 });
