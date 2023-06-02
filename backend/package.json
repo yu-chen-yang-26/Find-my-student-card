@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "src/server.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@react-email/render": "^0.0.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.1.1",
+    "dotenv": "^16.1.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.2",
@@ -18,16 +23,6 @@
     "nodemailer": "^6.9.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.7",
-    "@babel/node": "^7.22.1",
-    "@babel/preset-env": "^7.22.4",
     "nodemon": "^2.0.22"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node src/server.js --ext js --exec babel-node",
-    "dev": "nodemon src/server.js --ext js --exec babel-node",
-    "deploy": "NODE_ENV=production babel-node src/server.js"
   }
 }
