@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api";
+import api from "../../api";
 import "./Register.css";
 import lostFound from "../../Pic/lost&found.png";
 import { useTranslation } from "react-i18next";
@@ -52,16 +52,44 @@ const Register = () => {
     } else if (password !== checkPassword) {
       console.log("wrong checkpassword");
     } else {
-      const {
-        data: { result },
-      } = await axios.post("/register", {
-        id,
-        email,
-        password,
-      });
-      console.log(result);
+      await api
+        .post("/register", {
+          name: name,
+          id: id,
+          email: email,
+          password: password,
+        })
+        .then((response) => {
+          console.log(response.data.result);
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
     }
   };
+  useEffect(() => {
+    const checkLogined = async () => {
+      if (localStorage.getItem("token") !== null) {
+        await api
+          .post(
+            "/logined",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            if (response.data.logined) {
+              navigate("/home");
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    };
+    checkLogined();
+  }, [navigate]);
   return (
     <Container>
       <Logo className="left" span={12}>

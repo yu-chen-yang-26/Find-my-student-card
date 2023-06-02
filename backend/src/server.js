@@ -16,7 +16,7 @@ const db = mongoose.connection; // observe the first connection
 db.once("open", async () => {
   console.log("MongoDB connected!");
 });
-
+app.use(express.json());
 app.use(cors());
 app.use("/api", router);
 
