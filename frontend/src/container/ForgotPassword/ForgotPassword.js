@@ -44,7 +44,11 @@ const ForgotPassword = () => {
       .then((response) => {
         if (response.data.result) {
           console.log("success");
-          sendemail(email, checkPassword);
+          sendemail({
+            mode: "forgot",
+            email: email,
+            checkPassword: checkPassword,
+          });
           navigate("/");
         } else {
           console.log("not found");

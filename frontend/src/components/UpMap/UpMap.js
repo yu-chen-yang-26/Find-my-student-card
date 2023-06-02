@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useTranslation } from "react-i18next";
-
+import { useHooks } from "../../hook/useHooks";
 const MapStyle = styled.div`
   height: 80vh;
   margin: 0 30px 0 20px;
@@ -32,11 +32,12 @@ const Button = styled.button`
   }
 `;
 
-const UpMap = ({ location, setLocation }) => {
+const UpMap = () => {
   const { t } = useTranslation();
   const [draggable, setDraggable] = useState(false);
   const [pin, setPin] = useState(false);
   const [buttonText, setbuttonText] = useState(0);
+  const { location, setLocation } = useHooks();
   const markerRef = useRef(null);
   const clickButton = () => {
     if (buttonText === 0) {
