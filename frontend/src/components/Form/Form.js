@@ -286,15 +286,15 @@ const InfoForm = () => {
     },
   ];
   const handleSubmit = async (Continue) => {
-    if (category && locationFound && locationRetrieve && date && time) {
-      const a = new Date(date).toLocaleDateString();
-      const b = new Date(time).toLocaleTimeString("en-US", {
-        hourCycle: "h23",
-      });
-      const found_location =
-        locationFound.length === 1 ? "其他" : locationFound[1];
-      const newTime = a + " " + b;
-      if (curLocation.pathname === "/found") {
+    if (curLocation.pathname === "/found") {
+      if (category && locationFound && locationRetrieve && date && time) {
+        const a = new Date(date).toLocaleDateString();
+        const b = new Date(time).toLocaleTimeString("en-US", {
+          hourCycle: "h23",
+        });
+        const found_location =
+          locationFound.length === 1 ? "其他" : locationFound[1];
+        const newTime = a + " " + b;
         const retrieve_location =
           locationRetrieve.length === 1 ? "其他" : locationRetrieve[1];
         await api
@@ -345,13 +345,22 @@ const InfoForm = () => {
             }
           })
           .catch((err) => console.log(err));
-      } else {
+      }
+    } else {
+      if (category && locationFound && date && time) {
+        const a = new Date(date).toLocaleDateString();
+        const b = new Date(time).toLocaleTimeString("en-US", {
+          hourCycle: "h23",
+        });
+        const found_location =
+          locationFound.length === 1 ? "其他" : locationFound[1];
+        const newTime = a + " " + b;
         await api
           .post(
             "/submit/lostItem",
             {
               category: category[0],
-              mislayer_clue: { student_id: ID, name: name },
+              mislayer: localStorage.getItem("id"),
               locations: { location: found_location, position: location },
               time: newTime,
               remark: info ? info : "",
@@ -368,9 +377,9 @@ const InfoForm = () => {
             navigate("/profile");
           })
           .catch((err) => console.log(err));
+      } else {
+        message.error("Please fill the form correctly.");
       }
-    } else {
-      message.error("Please fill the form correctly.");
     }
   };
   const [componentSize, setComponentSize] = useState("default");
@@ -467,35 +476,39 @@ const InfoForm = () => {
             />
           </Form.Item>
         ) : null}
-        <Form.Item
-          name="Student ID"
-          label={t("Student ID")}
-          rules={[
-            {
-              type: "string",
-              required: false,
-              message: t("Please enter owner's Student ID"),
-            },
-          ]}
-        >
-          <Input
-            allowClear
-            placeholder={t("Please enter owner's Student ID")}
-          />
-        </Form.Item>
-        <Form.Item
-          name="Name"
-          label={t("Name")}
-          rules={[
-            {
-              type: "string",
-              required: false,
-              message: t("Please enter owner's name"),
-            },
-          ]}
-        >
-          <Input allowClear placeholder={t("Please enter owner's name")} />
-        </Form.Item>
+        {curLocation.pathname === "/found" ? (
+          <Form.Item
+            name="Student ID"
+            label={t("Student ID")}
+            rules={[
+              {
+                type: "string",
+                required: false,
+                message: t("Please enter owner's Student ID"),
+              },
+            ]}
+          >
+            <Input
+              allowClear
+              placeholder={t("Please enter owner's Student ID")}
+            />
+          </Form.Item>
+        ) : null}
+        {curLocation.pathname === "/found" ? (
+          <Form.Item
+            name="Name"
+            label={t("Name")}
+            rules={[
+              {
+                type: "string",
+                required: false,
+                message: t("Please enter owner's name"),
+              },
+            ]}
+          >
+            <Input allowClear placeholder={t("Please enter owner's name")} />
+          </Form.Item>
+        ) : null}
         <Form.Item
           name="Date Found"
           label={

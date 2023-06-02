@@ -62,7 +62,6 @@ const Login = () => {
     await api
       .post("/guest")
       .then((response) => {
-        localStorage.setItem("name", "guest");
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -75,7 +74,6 @@ const Login = () => {
         password: password,
       })
       .then((response) => {
-        localStorage.setItem("name", response.data.name);
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -121,7 +119,8 @@ const Login = () => {
           localStorage.setItem("name", res.data.name);
           await api
             .post("/google", {
-              name: res.data.email,
+              name: res.data.name,
+              email: res.data.email,
             })
             .then((response) => {
               localStorage.setItem("token", response.data.token);
