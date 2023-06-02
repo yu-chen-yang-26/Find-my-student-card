@@ -1,11 +1,13 @@
 import express from "express";
-import { User, FoundItem, LostItem, Mail, Image } from "./schema.js";
-import { queryFoundItems } from "./mongoose/query.js";
+import { User, FoundItem, LostItem, Image } from "./schema.js";
+import {
+  queryFoundItems,
+  queryFoundItemWithLostItem,
+} from "./mongoose/query.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import bodyParser from "body-parser";
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import verify from "./middleware.js";
@@ -39,36 +41,46 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/search", async (req, res) => {
-  // parse the query string
-  const { category, location, startTime, endTime, name, student_id } =
-    req.query;
-
   try {
-    const data = await queryFoundItems(
+    // parse the query string
+    const { category, location, time, name, student_id, remark } = req.query;
+    let startTime, endTime;
+    if (time) {
+      startTime = time;
+      endTime = new Date(time);
+      endTime.setDate(endTime.getDate() + 1);
+    }
+    const data = await queryFoundItems({
       category,
       location,
       startTime,
       endTime,
       name,
-      student_id
-    );
+      student_id,
+      remark,
+    });
     res.status(200).send({ dataList: data });
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     res.status(403).send({ dataList: [] });
   }
 });
 
 // 完全不懂 upload 怎麼運作的，放著不動
 router.post("/upload", upload.single("file"), async (req, res) => {
-  const id = await new Image({
-    img: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: req.file.mimetype,
-    },
-  }).save();
-  res.json({ id: id._id });
+  try {
+    const id = await new Image({
+      img: {
+        data: fs.readFileSync(
+          path.join(__dirname + "/uploads/" + req.file.filename)
+        ),
+        contentType: req.file.mimetype,
+      },
+    }).save();
+    res.json({ id: id._id });
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 router.post("/submit/foundItem", verify, async (req, res) => {
@@ -77,7 +89,7 @@ router.post("/submit/foundItem", verify, async (req, res) => {
     itemParam.group = randomUUID();
   }
   try {
-    const data = await FoundItem.create(itemParam);
+    const data = await FoundItem.create(itemParam); // mongoose 應該有偷偷做資料轉換
     res.json({
       message: "success",
       SendPermition: true,
@@ -85,6 +97,7 @@ router.post("/submit/foundItem", verify, async (req, res) => {
       group: itemParam.group,
     });
   } catch (error) {
+    console.error(error);
     res
       .status(405)
       .send({ message: "fail", SendPermition: false, detail: error.message });
@@ -94,50 +107,110 @@ router.post("/submit/foundItem", verify, async (req, res) => {
 router.post("/submit/lostItem", verify, async (req, res) => {
   let itemParam = req.body;
   try {
-    const data = await LostItem.create(itemParam);
+    const data = await LostItem.create(itemParam); // mongoose 應該有偷偷做資料轉換
     res.json({
       message: "success",
       SendPermition: true,
       id: data._id,
-      group: itemParam.group,
     });
   } catch (error) {
+    console.error(error);
     res
       .status(405)
       .send({ message: "fail", SendPermition: false, detail: error.message });
   }
 });
 
-// router.post("/sendMail", express.json(), async (req, res) => {
-//   await new Mail({ ...req.body.params }).save();
-//   res.json({ message: "success" });
-// });
-
 router.get("/detail", async (req, res) => {
   try {
+    // query lost item with id
     const id = req.query.id;
     if (!id) {
       throw new Error("need query id");
     }
-    const data = await FoundItem.findById(id);
-    // 搞圖片，這我就不懂了
-    let imageList = [];
-    if (data.image) {
-      for (let index = 0; index < data.image.length; index++) {
-        let element = data.image[index];
-        let temp = await Image.findOne({ _id: element });
-        imageList = [
-          ...imageList,
-          "data:image/" +
-            temp.img.contentType +
-            ";base64," +
-            temp.img.data.toString("base64"),
-        ];
-      }
+    const data = await FoundItem.findById(id).exec();
+    if (!data) {
+      throw new Error("invalid id");
     }
-    res.status(200).send({ dataList: data, imageList: imageList });
+    // query image and assemble image
+    let image = "";
+    if (data.image) {
+      let temp = await Image.findById(data.image).exec();
+      image =
+        "data:image/" +
+        temp.img.contentType +
+        ";base64," +
+        temp.img.data.toString("base64");
+    }
+    // query lost item with queried groupId
+    const { group } = data;
+    let groupList = [];
+    if (group) {
+      groupList = await FoundItem.find({ group, _id: { $ne: id } })
+        .select({
+          category: 1,
+          found_location: 1,
+          time: 1,
+          remark: 1,
+        })
+        .exec();
+    }
+    // send
+    res.status(200).send({ dataList: data, imageList: image, groupList });
   } catch (error) {
-    res.status(403).send({ dataList: [], imageList: [] });
+    console.error(error);
+    res.status(403).send({ dataList: {}, imageList: "", groupList: [] });
+  }
+});
+
+// this need to have authorization!!!
+router.get("/lostItem", async (req, res) => {
+  try {
+    const userId = req.query.id;
+    // find data of user
+    const user = await User.findById(userId).exec();
+    if (!user) {
+      throw new Error("wrong mislayer id");
+    }
+    // query all lost item according to user id
+    const lostItems = await LostItem.find({ mislayer: userId }).exec();
+    // for each lost item, query similar ones in found items
+    let foundItems = [];
+    let tmp = [];
+    for (let lostItem of lostItems) {
+      tmp = await queryFoundItemWithLostItem(lostItem);
+      foundItems = [...foundItems, ...tmp];
+    }
+    // query found item with user name, student_id
+    tmp = await queryFoundItems({ name: user.name });
+    foundItems = [...foundItems, ...tmp];
+    tmp = await queryFoundItems({ student_id: user.student_id });
+    foundItems = [...foundItems, ...tmp];
+    // walk through foundItems, remove duplicates
+    // read to understand this sytax: https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects
+    let data = foundItems.filter(
+      (item, index, self) =>
+        index === self.findIndex((it) => item._id === it._id)
+    );
+    // send data
+    res.status(200).send({ dataList: data });
+  } catch (error) {
+    console.error(error);
+    res.status(400).send(error.message);
+  }
+});
+
+// this need to have authorization!!!
+router.delete("/lostItem", async (req, res) => {
+  try {
+    const deleteStatus = await LostItem.deleteOne({ _id: req.query.id });
+    if (deleteStatus.deletedCount === 0) {
+      throw new Error("id is incorrect");
+    }
+    res.status(200).send({ message: "success" });
+  } catch (error) {
+    console.error(error);
+    res.status(400).send({ status: "fail", error: error.message });
   }
 });
 router.post("/register", async (req, res) => {
@@ -240,61 +313,4 @@ router.post("/logout", verify, async (req, res) => {
     res.status(500).send({ result: "unauthorized" });
   }
 });
-// router.post("/checkPassword", jsonParser, async (req, res) => {
-//   await Mail.findOne({
-//     ID: req.body.params.ID,
-//     info: req.body.params.location + " " + req.body.params.time,
-//   }).exec(async function (err, data) {
-//     if (err) {
-//       res.status(403).send({ messages: "error" });
-//     } else {
-//       if (data.checkPassword === parseInt(req.body.params.password)) {
-//         await FoundItem.updateOne(
-//           {
-//             ID: req.body.params.ID,
-//             time: req.body.params.time,
-//             location: req.body.params.location,
-//           },
-//           { founded: "True" }
-//         )
-//           .then(() => res.status(200).send({ messages: "correct" }))
-//           .catch((err) => {
-//             console.log(err);
-//             res.status(403).send({ messages: "error" });
-//           });
-//       } else {
-//         res.status(200).send({ messages: "wrong" });
-//       }
-//     }
-//   });
-// });
-
-// router.post("/checkPassword", jsonParser, async (req, res) => {
-//   await Mail.findOne({
-//     ID: req.body.params.ID,
-//     info: req.body.params.location + " " + req.body.params.time,
-//   }).exec(async function (err, data) {
-//     if (err) {
-//       res.status(403).send({ messages: "error" });
-//     } else {
-//       if (data.checkPassword === parseInt(req.body.params.password)) {
-//         await Card.updateOne(
-//           {
-//             ID: req.body.params.ID,
-//             time: req.body.params.time,
-//             location: req.body.params.location,
-//           },
-//           { founded: "True" }
-//         )
-//           .then(() => res.status(200).send({ messages: "correct" }))
-//           .catch((err) => {
-//             console.log(err);
-//             res.status(403).send({ messages: "error" });
-//           });
-//       } else {
-//         res.status(200).send({ messages: "wrong" });
-//       }
-//     }
-//   });
-// });
 export default router;
