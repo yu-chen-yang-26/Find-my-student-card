@@ -36,12 +36,7 @@ const FoundItemSchema = new Schema(
     },
     group: { type: String },
     correspond: { type: mongoose.Types.ObjectId, ref: "lost_item" },
-    image: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "image",
-      },
-    ],
+    image: { type: mongoose.Types.ObjectId, ref: "image" },
   },
   { timestamps: { createdAt: "created_at" } }
 );
@@ -58,16 +53,6 @@ const LostItemSchema = new Schema(
   { timestamps: { createdAt: "created_at" } }
 );
 
-const MailSchema = new Schema(
-  {
-    ID: { type: String, required: true },
-    checkPassword: { type: Number, required: true },
-    sent: { type: String, required: true },
-    info: { type: String, required: true },
-  },
-  { timestamps: { createdAt: "created_at" } }
-);
-
 const ImageSchema = new Schema({
   img: {
     data: Buffer,
@@ -78,7 +63,6 @@ const ImageSchema = new Schema({
 const User = mongoose.model("user", UserSchema);
 const FoundItem = mongoose.model("found_item", FoundItemSchema);
 const LostItem = mongoose.model("lost_item", LostItemSchema);
-const Mail = mongoose.model("mail", MailSchema);
 const Image = mongoose.model("image", ImageSchema);
 
-export { User, FoundItem, LostItem, Mail, Image };
+export { User, FoundItem, LostItem, Image };
