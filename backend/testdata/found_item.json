@@ -17,6 +17,7 @@
     }
   },
   "time": { "$date": "2023-02-01T06:59:00.000Z" },
+  "group": "e9d873f3-2910-45fc-80c7-67e215159636'",
   "remark": "宿舍門鑰匙，總圖三樓男廁發現，請找圖書館服務人員取回"
 },
 {
@@ -39,6 +40,7 @@
   },
   "time": { "$date": "2023-04-06T02:41:00.000Z" },
   "remark": "藍色iPhone12，總圖前草皮拾獲，請找活大辦公室領取",
+  "group": "284aac8c-17b3-4acd-a5b6-d7e68049c271",
   "mislayer_clue": {
     "name": "豆花"
   }
@@ -63,6 +65,33 @@
   },
   "time": { "$date": "2023-05-03T02:41:00.000Z" },
   "remark": "學生證，重訓室撿到，請找重訓室櫃檯領取",
+  "group": "6c7dbab7-1088-49ff-a6e6-a2cee6731487",
+  "mislayer_clue": {
+    "name": "李大壯", 
+    "student_id": "b15901037"
+  }
+},
+{
+  "_id": { "$oid": "6479b5657676187c4917af12" },
+  "category": "手機",
+  "finder": { "$oid": "647807597676187c4917afb6" },
+  "found_location": {
+    "location": "新體",
+    "position": {
+      "lat": 25.02159718288846, 
+      "lng": 121.53504449965081
+    }
+  },
+  "retrieve_location": {
+    "location": "新體",
+    "position": {
+      "lat": 25.02159718288846, 
+      "lng": 121.53504449965081
+    }
+  },
+  "time": { "$date": "2023-05-03T02:41:00.000Z" },
+  "remark": "samsung手機，重訓室撿到，請找重訓室櫃檯領取",
+  "group": "6c7dbab7-1088-49ff-a6e6-a2cee6731487",
   "mislayer_clue": {
     "name": "李大壯", 
     "student_id": "b15901037"
