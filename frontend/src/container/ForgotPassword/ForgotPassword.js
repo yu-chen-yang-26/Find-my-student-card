@@ -4,7 +4,7 @@ import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import lostFound from "../../Pic/lost&found.png";
 import { useTranslation } from "react-i18next";
-import sendemail from "../../components/Mail";
+import sendemail from "../../components/Mail/Mail";
 import api from "../../api";
 const Container = styled(Row)(() => ({
   width: "100vw",
@@ -42,7 +42,6 @@ const ForgotPassword = () => {
     await api
       .get("/send", { params: { email: email, password: checkPassword } })
       .then((response) => {
-        console.log(response);
         if (response.data.result) {
           console.log("success");
           sendemail(email, checkPassword);
