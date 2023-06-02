@@ -1,0 +1,9 @@
+.list{
+    font-size: 30px;
+}
+
+.list-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

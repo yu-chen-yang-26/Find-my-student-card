@@ -1,0 +1,5 @@
+.sidebar{
+    background: radial-gradient(circle, #b3aaf7, #5950bd);
+    animation: gradientAnimation 5s infinite linear;
+    background-size: 200% 200%;
+}
