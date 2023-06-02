@@ -137,7 +137,6 @@ router.get("/detail", async (req, res) => {
     res.status(403).send({ dataList: [], imageList: [] });
   }
 });
-
 router.post("/register", async (req, res) => {
   try {
     await User.findOne({
@@ -236,7 +235,6 @@ router.post("/logout", verify, async (req, res) => {
     res.status(500).send({ result: "unauthorized" });
   }
 });
-
 // router.post("/checkPassword", jsonParser, async (req, res) => {
 //   await Mail.findOne({
 //     ID: req.body.params.ID,

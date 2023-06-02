@@ -7,6 +7,7 @@ import lostFound from "../../Pic/lost&found.png";
 import { useGoogleLogin } from "@react-oauth/google";
 import { GrLanguage } from "react-icons/gr";
 import axios from "axios";
+import api from "../../api";
 import "./Login.css";
 import { useTranslation } from "react-i18next";
 const Container = styled(Row)(() => ({
@@ -36,9 +37,11 @@ const LoginButton = styled(Button)(() => ({
 const Login = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [profile, setProfile] = useState([]);
   const [user, setUser] = useState([]);
-  const login = useGoogleLogin({
+  const googleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
   });
@@ -56,6 +59,51 @@ const Login = () => {
     localStorage.setItem("lang", newlang);
     i18n.changeLanguage(newlang);
   };
+  const guestLogin = async () => {
+    await api
+      .post("/guest")
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      })
+      .catch((error) => console.log(error));
+  };
+  const userLogin = async () => {
+    await api
+      .post("/login", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    const checkLogined = async () => {
+      if (localStorage.getItem("token") !== null) {
+        await api
+          .post(
+            "/logined",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
+          .then((response) => {
+            if (response.data.logined) {
+              navigate("/home");
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    };
+    checkLogined();
+  }, [navigate]);
   useEffect(() => {
     if (user.length !== 0) {
       axios
@@ -69,13 +117,21 @@ const Login = () => {
           }
         )
         .then(async (res) => {
-          console.log(res.data);
           setProfile(res.data);
-          navigate("/home");
+          await api
+            .post("/google", {
+              name: res.data.email,
+            })
+            .then((response) => {
+              localStorage.setItem("token", response.data.token);
+              navigate("/home");
+            })
+            .catch((error) => console.log(error));
         })
         .catch((err) => console.log(err));
     }
   }, [setProfile, user, navigate]);
+
   return (
     <Container>
       <Logo className="left" span={12}>
@@ -117,7 +173,10 @@ const Login = () => {
                 >
                   &thinsp;{t("Email")}
                 </Typography>
-                <Input />
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />{" "}
               </Form.Item>
               <Form.Item>
                 <Typography
@@ -126,10 +185,19 @@ const Login = () => {
                 >
                   &thinsp;{t("Password")}
                 </Typography>
-                <Input.Password />
+                <Input.Password
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />{" "}
               </Form.Item>
               <Form.Item>
-                <LoginButton className="btn" htmlType="submit" block>
+                <LoginButton
+                  className="btn"
+                  htmlType="submit"
+                  block
+                  onClick={() => userLogin()}
+                >
+                  {" "}
                   <Typography className="fontContainer_2">
                     {t("Login")}
                   </Typography>
@@ -154,7 +222,12 @@ const Login = () => {
             >
               <Row justify="center">
                 <Col span={24}>
-                  <LoginButton className="btn" block onClick={() => login()}>
+                  <LoginButton
+                    className="btn"
+                    block
+                    onClick={() => googleLogin()}
+                  >
+                    {" "}
                     <img src={googleIcon} alt="" width={20} />
                     <Typography className="fontContainer_2">
                       {t("Sign in with Google")}
@@ -166,7 +239,7 @@ const Login = () => {
                 <Col span={24}>
                   <LoginButton
                     block
-                    onClick={() => navigate("/home")}
+                    onClick={() => guestLogin()}
                     className="btn"
                   >
                     <Typography className="fontContainer_2">

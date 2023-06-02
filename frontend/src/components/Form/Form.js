@@ -36,6 +36,10 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
       name: "學生證",
     },
     {
+      code: "其他證件",
+      name: "其他證件",
+    },
+    {
       code: "錢包",
       name: "錢包",
     },
@@ -46,6 +50,10 @@ const InfoForm = ({ setImageList, setLocation, setApi, submit }) => {
     {
       code: "現金",
       name: "現金",
+    },
+    {
+      code: "信用卡",
+      name: "信用卡",
     },
     {
       code: "水壺",
