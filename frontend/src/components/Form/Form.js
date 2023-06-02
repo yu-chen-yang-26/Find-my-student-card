@@ -298,18 +298,27 @@ const InfoForm = () => {
         const retrieve_location =
           locationRetrieve.length === 1 ? "其他" : locationRetrieve[1];
         await api
-          .post("/submit/foundItem", {
-            category: category[0],
-            mislayer_clue: { student_id: ID, name: name },
-            found_location: { location: found_location, position: location },
-            retrieve_location: {
-              location: retrieve_location,
+          .post(
+            "/submit/foundItem",
+            {
+              category: category[0],
+              mislayer_clue: { student_id: ID, name: name },
+              found_location: { location: found_location, position: location },
+              retrieve_location: {
+                location: retrieve_location,
+              },
+              time: newTime,
+              group: group ? group : false,
+              remark: info ? info : "",
+              image: fileList.length === 1 ? fileList[0].response.id : null,
             },
-            time: newTime,
-            group: group ? group : false,
-            remark: info ? info : "",
-            image: fileList[0].response ? fileList[0].response.id : null,
-          })
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
           .then((response) => {
             setFileList([]);
             setGroup(response.data.group);
@@ -338,13 +347,22 @@ const InfoForm = () => {
           .catch((err) => console.log(err));
       } else {
         await api
-          .post("/submit/lostItem", {
-            category: category[0],
-            mislayer_clue: { student_id: ID, name: name },
-            locations: { location: found_location, position: location },
-            time: newTime,
-            remark: info ? info : "",
-          })
+          .post(
+            "/submit/lostItem",
+            {
+              category: category[0],
+              mislayer_clue: { student_id: ID, name: name },
+              locations: { location: found_location, position: location },
+              time: newTime,
+              remark: info ? info : "",
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Accept: "application/json",
+              },
+            }
+          )
           .then((response) => {
             setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
             navigate("/profile");

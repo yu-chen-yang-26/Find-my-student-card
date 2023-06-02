@@ -71,7 +71,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   res.json({ id: id._id });
 });
 
-router.post("/submit/foundItem", express.json(), async (req, res) => {
+router.post("/submit/foundItem", verify, async (req, res) => {
   let itemParam = req.body; // 吃一個 json / js object
   if (!itemParam.group) {
     itemParam.group = randomUUID();
@@ -91,7 +91,7 @@ router.post("/submit/foundItem", express.json(), async (req, res) => {
   }
 });
 
-router.post("/submit/lostItem", express.json(), async (req, res) => {
+router.post("/submit/lostItem", verify, async (req, res) => {
   let itemParam = req.body;
   try {
     const data = await LostItem.create(itemParam);
@@ -197,6 +197,8 @@ router.post("/login", async (req, res) => {
     if (data.length !== 0) {
       res.status(200).send({
         token: jwt.sign({ user: "guest" }, JWT_SECRET),
+        name: data[0].name,
+        email: data[0].email,
         result: "success",
       });
     } else {
