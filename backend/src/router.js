@@ -4,6 +4,7 @@ import { queryFoundItems } from "./mongoose/query.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
@@ -12,6 +13,8 @@ const JWT_SECRET = "PUI-final-project-group9";
 const router = express.Router();
 
 // 還是不太懂 multer
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "/uploads/"));

@@ -39,5 +39,12 @@
     "Click to Upload": "點擊上傳",
     "Reset Password": "重設密碼",
     "Switch to English": "Switch to English",
-    "Log out": "登出"
+    "Log out": "登出",
+    "Home": "首頁",
+    "Found": "拾獲物品",
+    "Lost": "遺失物品",
+    "Profile": "個人資訊",
+    "Hello": "嗨",
+    "Your Item": "你的遺失物",
+    "Possible Item": "可能是你的遺失物"
 }

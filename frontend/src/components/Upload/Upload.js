@@ -1,11 +1,11 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
-import { useState } from "react";
 import ImgCrop from "antd-img-crop";
 import { useTranslation } from "react-i18next";
-
+import { useHooks } from "../../hook/useHooks";
 const UploadImg = () => {
   const { t } = useTranslation();
+  const { fileList, setFileList } = useHooks();
   const props = {
     maxCount: 1,
     name: "file",
@@ -33,19 +33,14 @@ const UploadImg = () => {
       showRemoveIcon: true,
     },
   };
-  const [fileList, setFileList] = useState([]);
 
   const onChange = ({ fileList: newFileList }) => {
+    console.log(newFileList);
     setFileList(newFileList);
   };
   return (
     <ImgCrop rotationSlider aspectSlider modalWidth={700}>
-      <Upload
-        {...props}
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        fileList={fileList}
-        onChange={onChange}
-      >
+      <Upload {...props} fileList={fileList} onChange={onChange}>
         <Button icon={<UploadOutlined />}>{t("Click to Upload")}</Button>
       </Upload>
     </ImgCrop>

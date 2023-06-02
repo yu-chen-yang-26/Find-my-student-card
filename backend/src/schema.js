@@ -12,8 +12,8 @@ const UserSchema = new Schema({
 const LocationSchema = new Schema({
   location: { type: String, required: true },
   position: {
-    lat: { type: Number, required: true },
-    lng: { type: Number, required: true },
+    lat: { type: Number },
+    lng: { type: Number },
   },
 });
 

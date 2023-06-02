@@ -9,9 +9,7 @@ import "./i18n";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <GoogleOAuthProvider clientId="600991463395-kfki074igd6ja2phbp7sf9khr41pg92c.apps.googleusercontent.com">
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </GoogleOAuthProvider>
 );
 
