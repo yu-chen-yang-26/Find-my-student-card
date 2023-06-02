@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Button, Col, Row, Typography } from "antd";
 import Pic from "../../Pic/cat.jpg";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import styled from "styled-components";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { GrLanguage } from "react-icons/gr";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
-import api from "../../api";
-import { useNavigate } from "react-router-dom";
+
 const ProfileDiv = styled(Row)(() => ({
   width: "60%",
   display: "flex",
@@ -23,7 +22,6 @@ const ProfileButton = styled(Button)(() => ({
 }));
 const Settings = () => {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const changeLang = () => {
     const newlang = (() => {
       switch (i18n.language) {
@@ -37,23 +35,6 @@ const Settings = () => {
     })();
     localStorage.setItem("lang", newlang);
     i18n.changeLanguage(newlang);
-  };
-  const logout = async () => {
-    const {
-      data: { result },
-    } = await api.post(
-      "/logout",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          Accept: "application/json",
-        },
-      }
-    );
-    console.log(result);
-    localStorage.setItem("token", null);
-    navigate("/");
   };
   return (
     <Row>
@@ -117,9 +98,8 @@ const Settings = () => {
             </ProfileDiv>
             <ProfileDiv>
               <RiLogoutBoxRLine size={30} />
-              <ProfileButton onClick={() => logout()}>
-                {t("Log out")}
-              </ProfileButton>
+
+              <ProfileButton>{t("Log out")}</ProfileButton>
             </ProfileDiv>
           </Col>
         </Row>
