@@ -2,15 +2,11 @@ import Map from "../../components/Map/Map";
 import Table from "../../components/Table/Table";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Searchbar/Searchbar";
-import Background from "../../components/Background/Background";
-import Heatmap from "../Heatmap/Heatmap";
-import { Col, Row, Layout, Statistic } from "antd";
-import { FrownTwoTone } from "@ant-design/icons";
+import { Col, Row, Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
-import axios from "../../api";
+import api from "../../api";
 import styled from "styled-components";
-const { Content } = Layout;
 
 const Container = styled(Layout)(() => ({
   width: "100vw",
@@ -23,13 +19,19 @@ const Homepage = () => {
   });
   const [newmarkers, setnewmarkers] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      const {
-        data: { dataList },
-      } = await axios.get("/");
-      setData(dataList);
+    const appendData = async () => {
+      await api
+        .get("/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Accept: "application/json",
+          },
+        })
+        .then((response) => {
+          setData(response.data.dataList);
+        });
     };
-    fetchData();
+    appendData();
   }, []);
   useEffect(() => {
     if (isLoaded) {
@@ -50,10 +52,11 @@ const Homepage = () => {
               <div
                 style={{
                   height: "100vh",
-                  margin: "20px",
-                  marginTop: "60px",
+                  padding: "20px",
                   borderRadius: "10px",
-                  // overflow: "hidden",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContents: "center",
                 }}
               >
                 <Map
@@ -62,31 +65,21 @@ const Homepage = () => {
                 />
               </div>
             ) : null}
-            <div
-              style={{
-                height: "30vh",
-                margin: "20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            ></div>
           </Col>
-          <Col span={10} style={{ marginTop: "100px", height: "70vh" }}>
-            <Table data={data} style={{ height: "80vh !important" }} />
+          <Col
+            span={10}
+            style={{
+              paddingTop: "4vmin",
+              paddingBottom: "4vmin",
+              paddingLeft: "2vmin",
+              paddingRight: "2vmin",
+            }}
+          >
+            <Table data={data} />
           </Col>
         </Row>
       </Col>
     </Container>
-    // <Background component={
-    //     <>
-    //         <Col xs={0} md={13} lg={12} >
-    //             {isLoaded? <Map center={{ lat: 25.017622284161067, lng: 121.5378841549027 }} positions={newmarkers} /> : null}
-    //         </Col>
-    //         <Col xs={{ span: 24, offset: 0 }} md={{ span: 11, offset: 0 }} lg={{ span: 12, offset: 0 }} ><Table data={data} /></Col>
-    //         <Search setData={setData} />
-    //     </>
-    // } />
   );
 };
 

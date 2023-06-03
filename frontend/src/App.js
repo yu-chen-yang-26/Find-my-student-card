@@ -1,7 +1,6 @@
 import "./App.css";
 import Homepage from "./container/Homepage/Homepage";
 import Detail from "./container/Detail/Detail";
-import Heatmap from "./container/Heatmap/Heatmap";
 import Upload from "./container/Uploadpage/Uploadpage";
 import Login from "./container/Login/Login";
 import Register from "./container/Register/Register";
@@ -13,7 +12,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/detail/:id/:time" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/home" element={<Homepage />} />
         <Route path="/found" element={<Upload />} />
         <Route path="/lost" element={<Upload />} />
@@ -21,7 +20,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Settings />} />
         <Route path="/forgot" element={<ForgotPassword />} />
-        <Route path="/HeatMap" element={<Heatmap />} />
       </Routes>
     </Router>
   );

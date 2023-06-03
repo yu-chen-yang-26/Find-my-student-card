@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { useTranslation } from "react-i18next";
 import { useHooks } from "../../hook/useHooks";
+import locationRef from "../../assets/location.json";
 const MapStyle = styled.div`
   height: 80vh;
   margin: 0 30px 0 20px;
@@ -37,7 +38,7 @@ const UpMap = () => {
   const [draggable, setDraggable] = useState(false);
   const [pin, setPin] = useState(false);
   const [buttonText, setbuttonText] = useState(0);
-  const { location, setLocation } = useHooks();
+  const { location, setLocation, selectLocation } = useHooks();
   const markerRef = useRef(null);
   const clickButton = () => {
     if (buttonText === 0) {
@@ -63,7 +64,18 @@ const UpMap = () => {
   const onMarkerLoad = useCallback((marker) => {
     markerRef.current = marker;
   }, []);
-
+  useEffect(() => {
+    if (selectLocation !== "") {
+      setLocation(locationRef[selectLocation]);
+      setDraggable(true);
+      setbuttonText(1);
+      setPin(true);
+    } else {
+      setDraggable(false);
+      setbuttonText(0);
+      setPin(false);
+    }
+  }, [setLocation, selectLocation]);
   return (
     <MapStyle>
       <GoogleMap
