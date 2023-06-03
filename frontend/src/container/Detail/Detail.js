@@ -1,11 +1,11 @@
 import Card from "../../components/Card/Card";
-import Background from "../../components/Background/Background";
-import Map from "../../components/Map/Map";
 import { Col } from "antd";
 import { useParams } from "react-router-dom";
 import axios from "../../api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Layout } from "react";
 import { useLoadScript } from "@react-google-maps/api";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import styled from "styled-components";
 
 const Detail = () => {
   const [data, setData] = useState([]);
@@ -37,24 +37,35 @@ const Detail = () => {
   }, []);
 
   return (
-    <Background
-      component={
-        <>
-          <Col xs={0} md={13} lg={13}>
-            {isLoaded ? (
-              <Map center={data.position} positions={[data]} isdetail={1} />
-            ) : null}
-          </Col>
-          <Col
-            xs={{ span: 22, offset: 0 }}
-            md={{ span: 11, offset: 0 }}
-            lg={{ span: 10, offset: 0 }}
-          >
-            <Card style={{ marginLeft: "25px" }} data={data} image={image} />
-          </Col>
-        </>
-      }
-    />
+    <div style={{ display: "flex" }}>
+      <Col span={2}>
+        <Sidebar />
+      </Col>
+
+      <Col
+        xs={0}
+        md={11}
+        lg={11}
+        style={{
+          height: "80vh",
+          border: "1px solid #000000",
+          borderColor: "#FF0000",
+          margin: "20px",
+          marginTop: "80px",
+        }}
+      >
+        <img scr={image}></img>
+      </Col>
+
+      <Col
+        xs={{ span: 18, offset: 0 }}
+        md={{ span: 10, offset: 0 }}
+        lg={{ span: 10, offset: 0 }}
+        style={{ marginTop: "130px" }}
+      >
+        <Card style={{ marginLeft: "25px" }} data={data} image={image} />
+      </Col>
+    </div>
   );
 };
 
