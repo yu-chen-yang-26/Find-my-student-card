@@ -9,5 +9,7 @@ const useHooks = create((set) => ({
   setLocation: (param) => set((state) => ({ location: param })),
   group: false,
   setGroup: (param) => set((state) => ({ group: param })),
+  selectLocation: "",
+  setSelectLocation: (param) => set((state) => ({ selectLocation: param })),
 }));
 export { useHooks };

@@ -1,295 +1,30 @@
 import styled from "styled-components";
-import React, { useEffect, useMemo, useState } from "react";
-import {
-  GoogleMap,
-  InfoWindow,
-  Marker,
-  InfoWindowF,
-} from "@react-google-maps/api";
+import React, { useState } from "react";
+import { GoogleMap, Marker, InfoWindowF } from "@react-google-maps/api";
 import { useNavigate } from "react-router-dom";
-import { Button, Space } from "antd";
+import { Button } from "antd";
 
 const MapStyle = styled.div`
-  height: 550px;
-  // width: 700px;
-  // margin: 20px 30px 0 25px;
-  // background-color: gray;
+  height: 100%;
+  width: 100%;
   border: 6px outset;
   border-radius: 10px;
   border-color: #b3aaf7;
-  // box-shadow: 0 0 20px 0px Gray;
 `;
-function Map(props) {
+function Map({ center, positions }) {
   const navigate = useNavigate();
   const [activeMarker, setActiveMarker] = useState("");
+  const [isdetail, setIsdetail] = useState(0);
   const [newcenter, setnewcenter] = useState({
     lat: 25.017622284161067,
     lng: 121.5378841549027,
   });
-  // const exampleMapStyles = [
-  //   {
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#ebe3cd",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#523735",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     elementType: "labels.text.stroke",
-  //     stylers: [
-  //       {
-  //         color: "#f5f1e6",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "administrative",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         visibility: "off",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "administrative",
-  //     elementType: "geometry.stroke",
-  //     stylers: [
-  //       {
-  //         color: "#c9b2a6",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "administrative.land_parcel",
-  //     elementType: "geometry.stroke",
-  //     stylers: [
-  //       {
-  //         color: "#dcd2be",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "administrative.land_parcel",
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#ae9e90",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "landscape.natural",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#dfd2ae",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "poi",
-  //     stylers: [
-  //       {
-  //         visibility: "off",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "poi",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#dfd2ae",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "poi",
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#93817c",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "poi.park",
-  //     elementType: "geometry.fill",
-  //     stylers: [
-  //       {
-  //         color: "#a5b076",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "poi.park",
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#447530",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#f5f1e6",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road",
-  //     elementType: "labels.icon",
-  //     stylers: [
-  //       {
-  //         visibility: "off",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road.arterial",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#fdfcf8",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road.highway",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#f8c967",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road.highway",
-  //     elementType: "geometry.stroke",
-  //     stylers: [
-  //       {
-  //         color: "#e9bc62",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road.highway.controlled_access",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#e98d58",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road.highway.controlled_access",
-  //     elementType: "geometry.stroke",
-  //     stylers: [
-  //       {
-  //         color: "#db8555",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "road.local",
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#806b63",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "transit",
-  //     stylers: [
-  //       {
-  //         visibility: "off",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "transit.line",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#dfd2ae",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "transit.line",
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#8f7d77",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "transit.line",
-  //     elementType: "labels.text.stroke",
-  //     stylers: [
-  //       {
-  //         color: "#ebe3cd",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "transit.station",
-  //     elementType: "geometry",
-  //     stylers: [
-  //       {
-  //         color: "#dfd2ae",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "water",
-  //     elementType: "geometry.fill",
-  //     stylers: [
-  //       {
-  //         color: "#b9d3c2",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     featureType: "water",
-  //     elementType: "labels.text.fill",
-  //     stylers: [
-  //       {
-  //         color: "#92998d",
-  //       },
-  //     ],
-  //   },
-  // ];
-  useMemo(() => ({ lat: 25.017622284161067, lng: 121.5378841549027 }));
   const [map, setMap] = useState("");
-  useEffect(() => {
-    if (map) {
-      if (props.isdetail === 1) {
-        map.setCenter(props.center);
-      } else {
-        map.setCenter(newcenter);
-      }
-    }
-  }, [activeMarker]);
-  const handleActiveMarker = (props) => {
-    setActiveMarker(props.ID + props.time);
-    map.setCenter(props.position);
-    setnewcenter(props.position);
+  const handleActiveMarker = (id, position) => {
+    setActiveMarker(id);
+    map.setCenter(position);
+    setnewcenter(position);
+    setIsdetail(0);
   };
   const toDetail = (record) => {
     navigate(record);
@@ -299,8 +34,8 @@ function Map(props) {
       <GoogleMap
         zoom={15}
         center={
-          props.isdetail === 1
-            ? props.center
+          isdetail === 1
+            ? newcenter
             : { lat: 25.017622284161067, lng: 121.5378841549027 }
         }
         mapContainerClassName="map-container"
@@ -308,30 +43,27 @@ function Map(props) {
         mapContainerStyle={{ width: "100%", height: "100%" }}
         // options={{ styles: exampleMapStyles }}
       >
-        {props.positions.map(({ ID, date, time, position }) => {
-          const a = new Date(date).toLocaleDateString();
-          const b = new Date(time).toLocaleTimeString("en-US", {
-            hourCycle: "h23",
-          });
-          const timess = a + " " + b;
-          const mylink = "/detail/" + ID + "/" + timess;
+        {positions.map(({ _id, category, time, found_location }) => {
+          const timess = new Date(time).toLocaleString();
+          const position = found_location.position;
+          const id = _id;
           return (
             <Marker
-              key={ID + time}
+              key={id}
               position={position}
               onClick={() => {
-                handleActiveMarker({ ID, time, position });
+                handleActiveMarker(id, position);
               }}
             >
-              {activeMarker == ID + time && props.isdetail !== 1 ? (
+              {activeMarker === id && isdetail !== 1 ? (
                 <InfoWindowF onCloseClick={() => setActiveMarker("")}>
                   <>
-                    <div>{ID}</div>
-                    <div>{time}</div>
+                    <div>{category}</div>
+                    <div>{timess}</div>
                     <Button
                       danger
                       onClick={() => {
-                        toDetail("/Detail/" + ID + "/" + Date.parse(time));
+                        toDetail("/Detail/" + id);
                       }}
                     >
                       link

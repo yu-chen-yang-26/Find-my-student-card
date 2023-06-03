@@ -5,7 +5,6 @@ import sendemail from "../Mail/Mail";
 import styled from "styled-components";
 import {
   Row,
-  message,
   Cascader,
   DatePicker,
   Form,
@@ -22,12 +21,19 @@ const FormButton = styled(Button)(() => ({
   width: "35%",
 }));
 const { TextArea } = Input;
-const InfoForm = () => {
+const FormFound = () => {
   const { t } = useTranslation();
   const curLocation = useLocation();
   const navigate = useNavigate();
-  const { fileList, setFileList, location, setLocation, group, setGroup } =
-    useHooks();
+  const {
+    fileList,
+    setFileList,
+    location,
+    setLocation,
+    group,
+    setGroup,
+    setSelectLocation,
+  } = useHooks();
   const [form] = Form.useForm();
   const ID = Form.useWatch("Student ID", form);
   const category = Form.useWatch("Category", form);
@@ -286,100 +292,64 @@ const InfoForm = () => {
     },
   ];
   const handleSubmit = async (Continue) => {
-    if (curLocation.pathname === "/found") {
-      if (category && locationFound && locationRetrieve && date && time) {
-        const a = new Date(date).toLocaleDateString();
-        const b = new Date(time).toLocaleTimeString("en-US", {
-          hourCycle: "h23",
-        });
-        const found_location =
-          locationFound.length === 1 ? "其他" : locationFound[1];
-        const newTime = a + " " + b;
-        const retrieve_location =
-          locationRetrieve.length === 1 ? "其他" : locationRetrieve[1];
-        await api
-          .post(
-            "/submit/foundItem",
-            {
-              category: category[0],
-              mislayer_clue: { student_id: ID, name: name },
-              found_location: { location: found_location, position: location },
-              retrieve_location: {
-                location: retrieve_location,
-              },
-              time: newTime,
-              group: group ? group : false,
-              remark: info ? info : "",
-              image: fileList.length === 1 ? fileList[0].response.id : null,
+    if (category && locationFound && locationRetrieve && date && time) {
+      const a = new Date(date).toLocaleDateString();
+      const b = new Date(time).toLocaleTimeString("en-US", {
+        hourCycle: "h23",
+      });
+      const found_location =
+        locationFound.length === 1 ? "其他" : locationFound[1];
+      const newTime = a + " " + b;
+      const retrieve_location =
+        locationRetrieve.length === 1 ? "其他" : locationRetrieve[1];
+      await api
+        .post(
+          "/submit/foundItem",
+          {
+            category: category[0],
+            mislayer_clue: { student_id: ID, name: name },
+            found_location: { location: found_location, position: location },
+            retrieve_location: {
+              location: retrieve_location,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-              },
-            }
-          )
-          .then((response) => {
-            setFileList([]);
-            setGroup(response.data.group);
-            if (
-              category[0] === "學生證" &&
-              /^[a-zA-z][0-9]{8}/.test(ID) &&
-              response.data.SendPermition
-            ) {
-              sendemail({
-                mode: "lost",
-                ID: ID,
-                category: category,
-                foundLocation: found_location,
-                retrieveLocation: retrieve_location,
-                remark: info,
-                time: newTime,
-              });
-            }
-            if (Continue) {
-              form.resetFields(["Category", "Remark", "Student ID", "Name"]);
-            } else {
-              setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
-              navigate("/detail/" + response.data.id);
-            }
-          })
-          .catch((err) => console.log(err));
-      }
-    } else {
-      if (category && locationFound && date && time) {
-        const a = new Date(date).toLocaleDateString();
-        const b = new Date(time).toLocaleTimeString("en-US", {
-          hourCycle: "h23",
-        });
-        const found_location =
-          locationFound.length === 1 ? "其他" : locationFound[1];
-        const newTime = a + " " + b;
-        await api
-          .post(
-            "/submit/lostItem",
-            {
-              category: category[0],
-              mislayer: localStorage.getItem("id"),
-              locations: { location: found_location, position: location },
-              time: newTime,
-              remark: info ? info : "",
+            time: newTime,
+            group: group ? group : false,
+            remark: info ? info : "",
+            image: fileList.length === 1 ? fileList[0].response.id : null,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Accept: "application/json",
             },
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-              },
-            }
-          )
-          .then((response) => {
+          }
+        )
+        .then((response) => {
+          setFileList([]);
+          setGroup(response.data.group);
+          if (
+            category[0] === "學生證" &&
+            /^[a-zA-z][0-9]{8}/.test(ID) &&
+            response.data.SendPermition
+          ) {
+            sendemail({
+              mode: "lost",
+              ID: ID,
+              category: category,
+              foundLocation: found_location,
+              retrieveLocation: retrieve_location,
+              remark: info,
+              time: newTime,
+            });
+          }
+          if (Continue) {
+            form.resetFields(["Category", "Remark", "Student ID", "Name"]);
+          } else {
             setLocation({ lat: 25.017622284161067, lng: 121.5378841549027 });
-            navigate("/profile");
-          })
-          .catch((err) => console.log(err));
-      } else {
-        message.error("Please fill the form correctly.");
-      }
+            navigate("/detail/" + response.data.id);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
   const [componentSize, setComponentSize] = useState("default");
@@ -389,6 +359,15 @@ const InfoForm = () => {
   useEffect(() => {
     setGroup(false);
   }, [setGroup]);
+  useEffect(() => {
+    if (locationFound) {
+      const found_location =
+        locationFound.length === 1 ? "其他" : locationFound[1];
+      setSelectLocation(found_location);
+    } else {
+      setSelectLocation("");
+    }
+  }, [setSelectLocation, locationFound]);
   return (
     <>
       <Form
@@ -430,11 +409,7 @@ const InfoForm = () => {
         </Form.Item>
         <Form.Item
           name="Location Found"
-          label={
-            curLocation.pathname === "/found"
-              ? t("Location Found")
-              : t("Location Lost")
-          }
+          label={t("Location Found")}
           rules={[
             {
               type: "array",
@@ -453,62 +428,56 @@ const InfoForm = () => {
             placeholder={t("Please select location")}
           />
         </Form.Item>
-        {curLocation.pathname === "/found" ? (
-          <Form.Item
-            name="Location Retrieve"
-            label={t("Location Retrieve")}
-            rules={[
-              {
-                type: "array",
-                required: true,
-                message: t("Please select location"),
-              },
-            ]}
-          >
-            <Cascader
-              fieldNames={{
-                label: "name",
-                value: "code",
-                children: "items",
-              }}
-              options={options}
-              placeholder={t("Please select location")}
-            />
-          </Form.Item>
-        ) : null}
-        {curLocation.pathname === "/found" ? (
-          <Form.Item
-            name="Student ID"
-            label={t("Student ID")}
-            rules={[
-              {
-                type: "string",
-                required: false,
-                message: t("Please enter owner's Student ID"),
-              },
-            ]}
-          >
-            <Input
-              allowClear
-              placeholder={t("Please enter owner's Student ID")}
-            />
-          </Form.Item>
-        ) : null}
-        {curLocation.pathname === "/found" ? (
-          <Form.Item
-            name="Name"
-            label={t("Name")}
-            rules={[
-              {
-                type: "string",
-                required: false,
-                message: t("Please enter owner's name"),
-              },
-            ]}
-          >
-            <Input allowClear placeholder={t("Please enter owner's name")} />
-          </Form.Item>
-        ) : null}
+        <Form.Item
+          name="Location Retrieve"
+          label={t("Location Retrieve")}
+          rules={[
+            {
+              type: "array",
+              required: true,
+              message: t("Please select location"),
+            },
+          ]}
+        >
+          <Cascader
+            fieldNames={{
+              label: "name",
+              value: "code",
+              children: "items",
+            }}
+            options={options}
+            placeholder={t("Please select location")}
+          />
+        </Form.Item>
+        <Form.Item
+          name="Student ID"
+          label={t("Student ID")}
+          rules={[
+            {
+              type: "string",
+              required: false,
+              message: t("Please enter owner's Student ID"),
+            },
+          ]}
+        >
+          <Input
+            allowClear
+            placeholder={t("Please enter owner's Student ID")}
+          />
+        </Form.Item>
+        <Form.Item
+          name="Name"
+          label={t("Name")}
+          rules={[
+            {
+              type: "string",
+              required: false,
+              message: t("Please enter owner's name"),
+            },
+          ]}
+        >
+          <Input allowClear placeholder={t("Please enter owner's name")} />
+        </Form.Item>
         <Form.Item
           name="Date Found"
           label={
@@ -545,11 +514,9 @@ const InfoForm = () => {
             placeholder={t("Please select time")}
           />
         </Form.Item>
-        {curLocation.pathname === "/found" ? (
-          <Form.Item name="Upload" label={t("Upload")}>
-            <UploadImg />
-          </Form.Item>
-        ) : null}
+        <Form.Item name="Upload" label={t("Upload")}>
+          <UploadImg />
+        </Form.Item>
         <Form.Item name="Remark" label={t("Remark")}>
           <TextArea
             autoSize={{ minRows: 3, maxRows: 3 }}
@@ -567,11 +534,9 @@ const InfoForm = () => {
             marginTop: "5vmin",
           }}
         >
-          {curLocation.pathname === "/found" ? (
-            <FormButton onClick={() => handleSubmit(1)}>
-              {t("Continue")}
-            </FormButton>
-          ) : null}
+          <FormButton onClick={() => handleSubmit(1)}>
+            {t("Continue")}
+          </FormButton>
           <FormButton onClick={() => handleSubmit(0)}>{t("Done")}</FormButton>
         </Row>
         <ConfigProvider
@@ -585,4 +550,4 @@ const InfoForm = () => {
     </>
   );
 };
-export { InfoForm };
+export { FormFound };

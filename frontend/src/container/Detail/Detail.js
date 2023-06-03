@@ -1,40 +1,31 @@
 import Card from "../../components/Card/Card";
 import { Col } from "antd";
 import { useParams } from "react-router-dom";
-import axios from "../../api";
-import { useState, useEffect, Layout } from "react";
-import { useLoadScript } from "@react-google-maps/api";
+import api from "../../api";
+import { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import styled from "styled-components";
 
 const Detail = () => {
   const [data, setData] = useState([]);
   const [image, setImage] = useState([]);
-  const { id, time } = useParams();
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
-  });
+  const { id } = useParams();
   useEffect(() => {
-    const a = new Date(parseInt(time)).toLocaleDateString();
-    const b = new Date(parseInt(time)).toLocaleTimeString("en-US", {
-      hourCycle: "h23",
-    });
     const fetchData = async () => {
-      const {
-        data: { dataList, imageList },
-      } = await axios.get("/detail", {
-        params: {
-          ID: id,
-          time: a + " " + b,
-        },
-      });
-      if (dataList) {
-        setData(dataList);
-      }
-      setImage(imageList);
+      await api
+        .get("/detail", {
+          params: {
+            id: id,
+          },
+        })
+        .then((response) => {
+          if (response.data.dataList) {
+            setData(response.data.dataList);
+          }
+          setImage(response.data.imageList);
+        });
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div style={{ display: "flex" }}>
@@ -43,27 +34,48 @@ const Detail = () => {
       </Col>
 
       <Col
-        xs={0}
-        md={11}
-        lg={11}
+        span={12}
         style={{
-          height: "80vh",
-          border: "1px solid #000000",
-          borderColor: "#FF0000",
-          margin: "20px",
-          marginTop: "80px",
+          height: "100vh",
+          padding: "3vmin",
+          paddingTop: "8vmin",
+          paddingBottom: "8vmin",
+          paddingRight: "0",
         }}
       >
-        <img scr={image}></img>
+        <div
+          style={{
+            height: "100%",
+            border: "1px solid #c8d4ff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            id="detail-img"
+            alt=""
+            src={image}
+            style={{
+              maxHeight: "100%",
+              maxWidth: "100%",
+            }}
+          ></img>
+        </div>
       </Col>
-
       <Col
-        xs={{ span: 18, offset: 0 }}
-        md={{ span: 10, offset: 0 }}
-        lg={{ span: 10, offset: 0 }}
-        style={{ marginTop: "130px" }}
+        span={10}
+        style={{
+          height: "100vh",
+          padding: "3vmin",
+          paddingTop: "8vmin",
+          paddingBottom: "8vmin",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <Card style={{ marginLeft: "25px" }} data={data} image={image} />
+        {data ? <Card data={data} image={image} /> : null}
       </Col>
     </div>
   );
