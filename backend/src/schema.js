@@ -5,7 +5,7 @@ const UserSchema = new Schema({
   student_id: { type: String, required: true, lowercase: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
-  language: { type: String, required: true, lowercase: true, default: "zh-tw" },
+  language: { type: String, required: true, lowercase: true, default: "zh" },
   password: { type: String, required: true },
 });
 

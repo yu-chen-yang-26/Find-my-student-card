@@ -10,6 +10,7 @@ import axios from "axios";
 import api from "../../api";
 import "./Login.css";
 import { useTranslation } from "react-i18next";
+import bcrypt from "bcryptjs";
 const Container = styled(Row)(() => ({
   width: "100vw",
   height: "100vh",
@@ -55,25 +56,29 @@ const Login = () => {
           return "";
       }
     })();
-    localStorage.setItem("lang", newlang);
     i18n.changeLanguage(newlang);
   };
   const guestLogin = async () => {
     await api
       .post("/guest")
       .then((response) => {
+        i18n.changeLanguage(response.data.language);
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
       .catch((error) => console.log(error));
   };
   const userLogin = async () => {
+    const salt = "$2a$10$kD.dDtPBQUelsXx4zOBoXO";
+    const hashedPassword = bcrypt.hashSync(password, salt);
     await api
       .post("/login", {
         email: email,
-        password: password,
+        password: hashedPassword,
       })
       .then((response) => {
+        console.log(response.data.language);
+        i18n.changeLanguage(response.data.language);
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       })
@@ -83,16 +88,12 @@ const Login = () => {
     const checkLogined = async () => {
       if (localStorage.getItem("token") !== null) {
         await api
-          .post(
-            "/logined",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-                Accept: "application/json",
-              },
-            }
-          )
+          .get("/logined", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Accept: "application/json",
+            },
+          })
           .then((response) => {
             if (response.data.logined) {
               navigate("/home");
@@ -123,6 +124,7 @@ const Login = () => {
               email: res.data.email,
             })
             .then((response) => {
+              i18n.changeLanguage(response.data.language);
               localStorage.setItem("token", response.data.token);
               navigate("/home");
             })
@@ -130,7 +132,7 @@ const Login = () => {
         })
         .catch((err) => console.log(err));
     }
-  }, [user, navigate]);
+  }, [user, navigate, i18n]);
 
   return (
     <Container>

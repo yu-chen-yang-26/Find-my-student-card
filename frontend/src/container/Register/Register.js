@@ -6,6 +6,7 @@ import api from "../../api";
 import "./Register.css";
 import lostFound from "../../Pic/lost&found.png";
 import { useTranslation } from "react-i18next";
+import bcrypt from "bcryptjs";
 
 const Container = styled(Row)(() => ({
   width: "100vw",
@@ -52,12 +53,14 @@ const Register = () => {
     } else if (password !== checkPassword) {
       console.log("wrong checkpassword");
     } else {
+      const salt = "$2a$10$kD.dDtPBQUelsXx4zOBoXO";
+      const hashedPassword = bcrypt.hashSync(password, salt);
       await api
         .post("/register", {
           name: name,
           id: id,
           email: email,
-          password: password,
+          password: hashedPassword,
         })
         .then((response) => {
           console.log(response.data.result);

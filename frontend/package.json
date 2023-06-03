@@ -17,6 +17,7 @@
     "antd": "^5.0.5",
     "antd-img-crop": "^4.12.2",
     "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.3",
     "css-loader": "^6.8.1",
     "daisyui": "^2.42.1",
