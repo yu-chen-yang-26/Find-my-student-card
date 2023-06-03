@@ -240,7 +240,7 @@ router.post("/register", async (req, res) => {
     res.status(500).send({ result: "server error" });
   }
 });
-router.post("/logined", verify, async (req, res) => {
+router.get("/logined", verify, async (req, res) => {
   try {
     res.status(200).send({ logined: true });
   } catch (err) {
@@ -266,6 +266,7 @@ router.post("/google", async (req, res) => {
     res.status(200).send({
       token: jwt.sign({ user: data._id }, JWT_SECRET),
       id: data._id,
+      lang: data.language,
       result: "success",
     });
   } catch (err) {
@@ -285,6 +286,7 @@ router.post("/guest", async (req, res) => {
     res.status(200).send({
       token: jwt.sign({ user: data._id }, JWT_SECRET),
       id: data._id,
+      lang: data.language,
       result: "success",
     });
   } catch (err) {
@@ -295,18 +297,24 @@ router.post("/guest", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    let data = await User.findOne({
+    let data = await User.find({
       email: req.body.email,
-      password: req.body.password,
     }).exec();
-    if (data !== null) {
-      res.status(200).send({
-        token: jwt.sign({ user: data._id }, JWT_SECRET),
-        id: data._id,
-        result: "success",
-      });
-    } else {
+    if (data.length === 0) {
       res.status(400).send({ result: "failed" });
+    }
+    for (let index = 0; index < data.length; index++) {
+      const element = data[index];
+      if (req.body.password === element.password) {
+        res.status(200).send({
+          token: jwt.sign({ user: element._id }, JWT_SECRET),
+          id: element._id,
+          language: element.language,
+          result: "success",
+        });
+      } else {
+        res.status(400).send({ result: "failed" });
+      }
     }
   } catch (err) {
     console.log(err);
@@ -359,6 +367,62 @@ router.get("/profile", verify, async (req, res) => {
       });
     } else {
       res.status(400).send({ result: "failed" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
+});
+router.post("/change/language", verify, async (req, res) => {
+  try {
+    let data = await User.findOne({
+      _id: req.user,
+    }).exec();
+    if (data !== null) {
+      await User.updateOne({ _id: req.user }, { language: req.body.language })
+        .then(() => res.status(200).send({ result: true }))
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send({ result: false });
+        });
+    } else {
+      res.status(400).send({ result: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
+});
+router.post("/change/password", verify, async (req, res) => {
+  try {
+    let data = await User.findOne({
+      _id: req.user,
+    }).exec();
+    if (data !== null) {
+      await User.updateOne({ _id: req.user }, { password: req.body.password })
+        .then(() => res.status(200).send({ result: true }))
+        .catch((err) => {
+          console.log(err);
+          res.status(400).send({ result: false });
+        });
+    } else {
+      res.status(400).send({ result: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: "server error" });
+  }
+});
+router.get("/check/password", verify, async (req, res) => {
+  try {
+    let data = await User.findOne({
+      _id: req.user,
+      password: req.query.password,
+    }).exec();
+    if (data !== null) {
+      res.status(200).send({ result: true });
+    } else {
+      res.status(400).send({ result: false });
     }
   } catch (err) {
     console.log(err);

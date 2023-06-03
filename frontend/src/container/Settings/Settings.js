@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Avatar,
-  message,
-  List,
-  Button,
-  Col,
-  Row,
-  Typography,
-  Divider,
-} from "antd";
-import SearchTable from "../../components/Table/Table";
+import { Avatar, List, Button, Col, Row, Typography } from "antd";
 import VirtualList from "rc-virtual-list";
-import Pic from "../../Pic/cat.jpg";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styled from "styled-components";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -20,6 +9,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { useTranslation } from "react-i18next";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
+import PasswordModal from "../../components/Modal/Modal.js";
 const ProfileDiv = styled(Row)(() => ({
   width: "60%",
   display: "flex",
@@ -73,7 +63,7 @@ const Settings = () => {
       appendData();
     }
   };
-  const changeLang = () => {
+  const changeLang = async () => {
     const newlang = (() => {
       switch (i18n.language) {
         case "zh":
@@ -84,8 +74,19 @@ const Settings = () => {
           return "";
       }
     })();
-    localStorage.setItem("lang", newlang);
     i18n.changeLanguage(newlang);
+    await api
+      .post(
+        "/change/language",
+        { language: newlang },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Accept: "application/json",
+          },
+        }
+      )
+      .catch((err) => console.log(err));
   };
   const logout = async () => {
     const {
@@ -133,6 +134,13 @@ const Settings = () => {
         </VirtualList>
       </List>
     );
+  };
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
   };
   return (
     <Row>
@@ -187,26 +195,34 @@ const Settings = () => {
             }}
           >
             <Typography>
-              {" "}
               {t("Hello")}, {name}
             </Typography>
             <ProfileDiv>
               <RiLockPasswordFill size={30} />
-              <ProfileButton>{t("Reset Password")}</ProfileButton>
+              <ProfileButton onClick={() => handleOpenModal()}>
+                {t("Reset Password")}
+              </ProfileButton>
             </ProfileDiv>
-            <ProfileDiv onClick={() => changeLang()}>
+            <ProfileDiv>
               <GrLanguage size={30} />
-              <ProfileButton>{t("Switch to English")}</ProfileButton>
+              <ProfileButton onClick={() => changeLang()}>
+                {t("Switch to English")}
+              </ProfileButton>
             </ProfileDiv>
             <ProfileDiv>
               <RiLogoutBoxRLine size={30} />
               <ProfileButton onClick={() => logout()}>
                 {t("Log out")}
-              </ProfileButton>{" "}
+              </ProfileButton>
             </ProfileDiv>
           </Col>
         </Row>
       </Col>
+      <PasswordModal
+        open={isModalVisible}
+        onCancel={handleCloseModal}
+        onConfirm={handleCloseModal}
+      />
     </Row>
   );
 };
