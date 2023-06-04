@@ -80,6 +80,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     res.json({ id: id._id });
   } catch (error) {
     console.error(error);
+    res.status(400).json({ id: "" });
   }
 });
 
@@ -100,7 +101,7 @@ router.post("/submit/foundItem", verify, async (req, res) => {
     console.error(error);
     res
       .status(405)
-      .send({ message: "fail", SendPermition: false, detail: error.message });
+      .send({ message: "fail", SendPermition: false, id: "", group: "" });
   }
 });
 
@@ -115,9 +116,11 @@ router.post("/submit/lostItem", verify, async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(405)
-      .send({ message: "fail", SendPermition: false, detail: error.message });
+    res.status(405).send({
+      message: "fail",
+      SendPermition: false,
+      id: "",
+    });
   }
 });
 
@@ -193,10 +196,10 @@ router.get("/lostItem", verify, async (req, res) => {
         index === self.findIndex((it) => item._id === it._id)
     );
     // send data
-    res.status(200).send({ dataList: data });
+    res.status(200).send({ lostList: lostItems, dataList: data });
   } catch (error) {
     console.error(error);
-    res.status(400).send(error.message);
+    res.status(400).send({ lostList: [], dataList: [] });
   }
 });
 
