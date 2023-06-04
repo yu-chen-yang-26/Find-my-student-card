@@ -87,6 +87,7 @@ const Mine = () => {
           flexDirection: "row",
           alignItems: "center",
           padding: "4vmin",
+          height: "100vh",
         }}
       >
         <Row
