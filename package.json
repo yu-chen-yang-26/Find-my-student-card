@@ -5,7 +5,7 @@
   "scripts": {
     "install:prod": "cd frontend && yarn install --freeze-lockfile && cd ../backend && yarn install --freeze-lockfile",
     "build": "cd frontend && yarn build",
-    "deploy": "cd backend && yarn deploy"
+    "deploy": "cd backend && npm run deploy"
   },
   "name": "FindMyStudentCard",
   "version": "1.0.0",
