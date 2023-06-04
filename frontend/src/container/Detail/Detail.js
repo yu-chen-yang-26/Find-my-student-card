@@ -32,7 +32,6 @@ const Detail = () => {
           if (response.data.dataList) {
             setData(response.data.dataList);
             if (isLoaded) {
-              console.log([response.data.dataList]);
               setnewmarkers([response.data.dataList]);
             }
           }

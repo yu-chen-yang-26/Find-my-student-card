@@ -47,5 +47,18 @@
     "Hello": "Hello",
     "Youe Item": "Youe Item",
     "Possible Item": "Possible Item",
-    "My Items": "My Items"
+    "My Items": "My Items",
+    "link": "link",
+    "mislayer_clue": "Name/ID",
+    "remark": "remark",
+    "time": "time",
+    "retrieve_location": "retrieve_location",
+    "found_location": "found_location",
+    "category": "category",
+    "location": "location",
+    "search": "search",
+    "date": "date",
+    "Please enter current password": "Please enter current password",
+    "Please enter new password": "Please enter new password",
+    "Next": "Next"
 }

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GoogleMap, Marker, InfoWindowF } from "@react-google-maps/api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
+import { useTranslation } from "react-i18next";
 
 const MapStyle = styled.div`
   height: 100%;
@@ -12,7 +13,7 @@ const MapStyle = styled.div`
   border-color: #b3aaf7;
 `;
 function Map({ positions }) {
-  console.log(positions);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [activeMarker, setActiveMarker] = useState("");
   const [isdetail, setIsdetail] = useState(0);
@@ -67,7 +68,7 @@ function Map({ positions }) {
                         toDetail("/Detail/" + id);
                       }}
                     >
-                      link
+                      {t("link")}
                     </Button>
                   </>
                 </InfoWindowF>

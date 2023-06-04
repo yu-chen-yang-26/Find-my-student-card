@@ -47,5 +47,19 @@
     "Hello": "嗨",
     "Your Item": "你的遺失物",
     "Possible Item": "可能是你的遺失物",
-    "My Items": "我的遺失"
+    "My Items": "我的遺失",
+    "link": "連結",
+    "mislayer_clue": "遺失者學號/姓名",
+    "remark": "備註",
+    "time": "時間",
+    "retrieve_location": "尋回地點",
+    "found_location": "拾獲地點",
+    "category": "分類",
+    "location": "地點", 
+    "search": "搜尋",
+    "date": "日期",
+    "Please enter current password": "請輸入目前密碼",
+    "Please enter new password": "請輸入新密碼",
+    "Next": "繼續"
+
 }
