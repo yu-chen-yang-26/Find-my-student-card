@@ -15,3 +15,7 @@ npm run start
 npm install
 npm run dev
 ```
+
+## Others
+
+ths password of users in test data are all `0000`.

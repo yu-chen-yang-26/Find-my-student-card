@@ -44,6 +44,8 @@ async function queryFoundItems({
   // actual query
   try {
     const data = await FoundItem.find(query)
+      .sort({ time: "asc" })
+      .lean()
       .select({
         category: 1,
         found_location: 1,
@@ -59,7 +61,8 @@ async function queryFoundItems({
 }
 
 // use lost item (a object) to query
-// query: (category) and (>time) and ((remark) or (locations.location))
+// query: (category) and (>time)
+// give score according to (remark) and (locations.location)
 // we don't care about mislayer here, which will be handled by other query
 async function queryFoundItemWithLostItem(lostItem) {
   const { category, time, remark, locations } = lostItem;
@@ -72,19 +75,11 @@ async function queryFoundItemWithLostItem(lostItem) {
     const date = new Date(time);
     query.time = { $gte: date.toISOString() };
   }
-  // for "or" query
-  query.$or = [];
-  if (remark) {
-    query.$or.push({ remark: { $regex: remark } });
-  }
-  if (locations) {
-    for (let location of locations) {
-      query.$or.push({ "found_location.location": location.location });
-    }
-  }
-  // actual query
   try {
+    // actual query
     const data = await FoundItem.find(query)
+      .sort({ time: "asc" })
+      .lean()
       .select({
         category: 1,
         found_location: 1,
@@ -93,6 +88,22 @@ async function queryFoundItemWithLostItem(lostItem) {
         mislayer_clue: 1,
       })
       .exec();
+    // give score according to the data correctness
+    for (let datum of data) {
+      datum.score = 0;
+      if (remark) {
+        if (datum.remark.match(remark)) {
+          datum.score += 1;
+        }
+      }
+      if (locations) {
+        for (let location of locations) {
+          if (datum.found_location.location == location.location) {
+            datum.score += 1;
+          }
+        }
+      }
+    }
     return data;
   } catch (error) {
     throw error;

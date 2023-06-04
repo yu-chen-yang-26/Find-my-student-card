@@ -31,6 +31,7 @@ const upload = multer({ storage: storage });
 router.get("/", async (req, res) => {
   try {
     let data = await FoundItem.find({})
+      .sort({ time: "asc" })
       .select({ category: 1, found_location: 1, time: 1, remark: 1 })
       .exec();
     res.status(200).send({ dataList: data });
@@ -151,6 +152,7 @@ router.get("/detail", verify, async (req, res) => {
     let groupList = [];
     if (group) {
       groupList = await FoundItem.find({ group, _id: { $ne: id } })
+        .sort({ time: "asc" })
         .select({
           category: 1,
           found_location: 1,
@@ -177,7 +179,9 @@ router.get("/lostItem", verify, async (req, res) => {
       throw new Error("wrong mislayer id");
     }
     // query all lost item according to user id
-    const lostItems = await LostItem.find({ mislayer: userId }).exec();
+    const lostItems = await LostItem.find({ mislayer: userId })
+      .sort({ time: "asc" })
+      .exec();
     // for each lost item, query similar ones in found items
     let foundItems = [];
     let tmp = [];
@@ -187,15 +191,33 @@ router.get("/lostItem", verify, async (req, res) => {
     }
     // query found item with user name, student_id
     tmp = await queryFoundItems({ name: user.name });
-    foundItems = [...foundItems, ...tmp];
+    for (let datum of tmp) {
+      datum.score = Infinity;
+    }
+    foundItems = [...tmp, ...foundItems];
     tmp = await queryFoundItems({ student_id: user.student_id });
-    foundItems = [...foundItems, ...tmp];
+    for (let datum of tmp) {
+      datum.score = Infinity;
+    }
+    foundItems = [...tmp, ...foundItems];
     // walk through foundItems, remove duplicates
     // read to understand this sytax: https://stackoverflow.com/questions/2218999/how-to-remove-all-duplicates-from-an-array-of-objects
-    let data = foundItems.filter(
+    foundItems = foundItems.filter(
       (item, index, self) =>
-        index === self.findIndex((it) => item._id === it._id)
+        index === self.findIndex((it) => item._id.equals(it._id))
     );
+    // sort data according to score and date
+    foundItems.sort((a, b) => {
+      if (b.score != a.score) {
+        return b.score - a.score;
+      }
+      if (a.time != b.time) {
+        if (a.time < b.time) return -1;
+        else return 1;
+      }
+      return 0;
+    });
+    // console.log("foundItems and their final score:\n", foundItems);
     // send data
     res.status(200).send({ lostItems: lostItems, foundItems: foundItems });
   } catch (error) {
