@@ -61,7 +61,7 @@ const Tab = ({ data, image }) => {
       dataSource={fixedData}
       pagination={false}
       bordered
-      style={{ height: "auto", width: "100%", overflowY: "scroll" }}
+      style={{ height: "55%", width: "100%", overflowY: "scroll" }}
     />
   );
 };

@@ -1,6 +1,7 @@
 import { Row, Layout, Typography } from "antd";
 import { AiFillHome, AiFillProfile, AiFillNotification } from "react-icons/ai";
 import { BiUpload } from "react-icons/bi";
+import { CgSearchFound } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import lostFound from "../../Pic/lost&found.png";
@@ -62,6 +63,10 @@ const Sidebar = () => {
             size={20}
           />
           <SidebarName>{t("Lost")}</SidebarName>
+        </SidebarItem>
+        <SidebarItem onClick={() => navigate("/items")}>
+          <CgSearchFound styled={{ width: "20%" }} color="white" size={20} />
+          <SidebarName>{t("My Items")}</SidebarName>
         </SidebarItem>
         <SidebarItem onClick={() => navigate("/profile")}>
           <AiFillProfile styled={{ width: "20%" }} color="white" size={20} />{" "}

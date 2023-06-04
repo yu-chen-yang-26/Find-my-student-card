@@ -6,6 +6,7 @@ import Login from "./container/Login/Login";
 import Register from "./container/Register/Register";
 import ForgotPassword from "./container/ForgotPassword/ForgotPassword";
 import Settings from "./container/Settings/Settings";
+import Mine from "./container/Mine/Mine";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Settings />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/items" element={<Mine />} />
       </Routes>
     </Router>
   );

@@ -11,7 +11,8 @@ const MapStyle = styled.div`
   border-radius: 10px;
   border-color: #b3aaf7;
 `;
-function Map({ center, positions }) {
+function Map({ positions }) {
+  console.log(positions);
   const navigate = useNavigate();
   const [activeMarker, setActiveMarker] = useState("");
   const [isdetail, setIsdetail] = useState(0);

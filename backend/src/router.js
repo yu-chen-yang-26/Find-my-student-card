@@ -40,10 +40,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/search", async (req, res) => {
+router.get("/search", verify, async (req, res) => {
   try {
     // parse the query string
     const { category, location, time, name, student_id, remark } = req.query;
+    console.log(req.query);
     let startTime, endTime;
     if (time) {
       startTime = time;
@@ -106,7 +107,7 @@ router.post("/submit/foundItem", verify, async (req, res) => {
 });
 
 router.post("/submit/lostItem", verify, async (req, res) => {
-  let itemParam = req.body;
+  let itemParam = { ...req.body, mislayer: req.user };
   try {
     const data = await LostItem.create(itemParam); // mongoose 應該有偷偷做資料轉換
     res.json({
@@ -124,7 +125,7 @@ router.post("/submit/lostItem", verify, async (req, res) => {
   }
 });
 
-router.get("/detail", async (req, res) => {
+router.get("/detail", verify, async (req, res) => {
   try {
     // query lost item with id
     const id = req.query.id;
@@ -196,7 +197,7 @@ router.get("/lostItem", verify, async (req, res) => {
         index === self.findIndex((it) => item._id === it._id)
     );
     // send data
-    res.status(200).send({ lostList: lostItems, dataList: data });
+    res.status(200).send({ lostItems: lostItems, foundItems: foundItems });
   } catch (error) {
     console.error(error);
     res.status(400).send({ lostList: [], dataList: [] });
@@ -357,7 +358,6 @@ router.post("/logout", verify, async (req, res) => {
     res.status(500).send({ result: "unauthorized" });
   }
 });
-
 router.get("/profile", verify, async (req, res) => {
   try {
     let data = await User.findOne({

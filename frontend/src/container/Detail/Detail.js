@@ -4,15 +4,26 @@ import { useParams } from "react-router-dom";
 import api from "../../api";
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import Map from "../../components/Map/Map";
+import { useLoadScript } from "@react-google-maps/api";
 
 const Detail = () => {
   const [data, setData] = useState([]);
   const [image, setImage] = useState([]);
   const { id } = useParams();
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDQdme1BbYD7iIP3X_RIxjkEIQAQau38PY", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+  });
+  const [newmarkers, setnewmarkers] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       await api
         .get("/detail", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Accept: "application/json",
+          },
           params: {
             id: id,
           },
@@ -20,13 +31,16 @@ const Detail = () => {
         .then((response) => {
           if (response.data.dataList) {
             setData(response.data.dataList);
+            if (isLoaded) {
+              console.log([response.data.dataList]);
+              setnewmarkers([response.data.dataList]);
+            }
           }
           setImage(response.data.imageList);
         });
     };
     fetchData();
-  }, [id]);
-
+  }, [id, isLoaded]);
   return (
     <div style={{ display: "flex" }}>
       <Col span={2}>
@@ -38,8 +52,8 @@ const Detail = () => {
         style={{
           height: "100vh",
           padding: "3vmin",
-          paddingTop: "8vmin",
-          paddingBottom: "8vmin",
+          paddingTop: "4vmin",
+          paddingBottom: "4vmin",
           paddingRight: "0",
         }}
       >
@@ -68,14 +82,21 @@ const Detail = () => {
         style={{
           height: "100vh",
           padding: "3vmin",
-          paddingTop: "8vmin",
-          paddingBottom: "8vmin",
+          paddingTop: "4vmin",
+          paddingBottom: "4vmin",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          gap: "1vmin",
         }}
       >
         {data ? <Card data={data} image={image} /> : null}
+        {isLoaded ? (
+          <div style={{ height: "45%", width: "100%" }}>
+            <Map positions={newmarkers} />
+          </div>
+        ) : null}
       </Col>
     </div>
   );

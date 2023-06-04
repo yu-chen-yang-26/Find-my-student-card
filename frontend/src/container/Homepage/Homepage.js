@@ -1,7 +1,6 @@
 import Map from "../../components/Map/Map";
 import Table from "../../components/Table/Table";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import Search from "../../components/Searchbar/Searchbar";
 import { Col, Row, Layout } from "antd";
 import { useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
@@ -59,10 +58,7 @@ const Homepage = () => {
                   justifyContents: "center",
                 }}
               >
-                <Map
-                  center={{ lat: 25.017622284161067, lng: 121.5378841549027 }}
-                  positions={newmarkers}
-                />
+                <Map positions={newmarkers} />
               </div>
             ) : null}
           </Col>
@@ -75,7 +71,7 @@ const Homepage = () => {
               paddingRight: "2vmin",
             }}
           >
-            <Table data={data} />
+            <Table data={data} setData={setData} />
           </Col>
         </Row>
       </Col>
