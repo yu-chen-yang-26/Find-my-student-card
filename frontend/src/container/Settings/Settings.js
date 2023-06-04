@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, List, Button, Col, Row, Typography } from "antd";
-import VirtualList from "rc-virtual-list";
+import { Button, Col, Row, Typography } from "antd";
+import Pic from "../../Pic/cat.jpg";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import styled from "styled-components";
 import { RiLockPasswordFill } from "react-icons/ri";
@@ -22,22 +22,11 @@ const ProfileButton = styled(Button)(() => ({
   width: "60%",
   backgroundColor: "#c8d4ff",
 }));
-const fakeDataUrl =
-  "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo";
-const ContainerHeight = 240;
 
 const Settings = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [name, setName] = useState("");
-  const appendData = () => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((body) => {
-        setData(data.concat(body.results));
-      });
-  };
   useEffect(() => {
     const getName = async () => {
       await api
@@ -52,17 +41,10 @@ const Settings = () => {
         })
         .catch((err) => console.log(err));
     };
+
     getName();
-    appendData();
   }, []);
-  const onScroll = (e) => {
-    if (
-      e.currentTarget.scrollHeight - e.currentTarget.scrollTop ===
-      ContainerHeight
-    ) {
-      appendData();
-    }
-  };
+
   const changeLang = async () => {
     const newlang = (() => {
       switch (i18n.language) {
@@ -105,36 +87,7 @@ const Settings = () => {
     localStorage.setItem("token", null);
     navigate("/");
   };
-  const listDomNode = (titel, data) => {
-    return (
-      <List style={{ width: "100%", marginBottom: "2vmin" }}>
-        <h3>{t(titel)}</h3>
-        <VirtualList
-          data={data}
-          height={ContainerHeight}
-          itemKey="email"
-          onScroll={onScroll}
-        >
-          {(item) => (
-            <List.Item key={item.email}>
-              <Col span={14}>
-                <List.Item.Meta
-                  className="list"
-                  avatar={<Avatar src={item.picture.large} />}
-                  title={
-                    <a onClick={() => navigate("/detail/:id/:time")}>錢包</a>
-                  }
-                  description="可能掉在路燈旁邊的椅子上,或是在社科院的廁所裡面"
-                />
-              </Col>
-              <Col span={4}>社科院</Col>
-              <Col span={6}>2023-05-31 09:00:00</Col>
-            </List.Item>
-          )}
-        </VirtualList>
-      </List>
-    );
-  };
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleOpenModal = () => {
     setIsModalVisible(true);
@@ -164,24 +117,26 @@ const Settings = () => {
             width: "100%",
             height: "100%",
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "space-evenly",
             alignItems: "center",
             border: "1px solid #c8d4ff",
           }}
         >
           <Col
-            span={15}
+            span={16}
             style={{
               width: "100%",
-              height: "100%",
+              maxWidth: "350px",
+              aspectRatio: "1",
+              borderRadius: "50%",
+              overflow: "hidden",
+              border: "1px solid black",
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
+              justifyContent: "center",
               alignItems: "center",
             }}
           >
-            {listDomNode("Your Item", data)}
-            {listDomNode("Possible Item", data)}
+            <img src={Pic} style={{ minWidth: "350px" }} alt="" />
           </Col>
           <Col
             span={8}
