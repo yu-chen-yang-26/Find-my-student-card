@@ -1,6 +1,8 @@
 import { Table } from "antd";
+import { useTranslation } from "react-i18next";
 
 const Tab = ({ data, image }) => {
+  const { t } = useTranslation();
   const fixedColumns = [
     {
       title: "Column",
@@ -17,34 +19,34 @@ const Tab = ({ data, image }) => {
   const fixedData = [
     {
       key: 1,
-      name: "category",
+      name: t("category"),
       description: data.category,
     },
     {
       key: 2,
-      name: "found_location",
+      name: t("found_location"),
       description: data.found_location ? data.found_location.location : "",
     },
     {
       key: 3,
-      name: "retrieve_location",
+      name: t("retrieve_location"),
       description: data.retrieve_location
         ? data.retrieve_location.location
         : "",
     },
     {
       key: 4,
-      name: "time",
+      name: t("time"),
       description: new Date(data.time).toLocaleString(),
     },
     {
       key: 5,
-      name: "remark",
+      name: t("remark"),
       description: data.remark,
     },
     {
       key: 6,
-      name: "mislayer_clue",
+      name: t("mislayer_clue"),
       description: data.mislayer_clue
         ? (data.mislayer_clue.student_id
             ? data.mislayer_clue.student_id

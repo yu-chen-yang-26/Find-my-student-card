@@ -28,7 +28,6 @@ const SearchTable = ({ data, setData }) => {
         })
         .catch((err) => console.log(err));
     }
-    console.log(category, location, date, info);
     const seachCategory = category ? category[0] : category;
     const serachLocation =
       location !== undefined
@@ -120,8 +119,8 @@ const SearchTable = ({ data, setData }) => {
           ]}
         >
           <Search
-            placeholder="search"
-            enterButton="Search"
+            placeholder={t("search")}
+            enterButton={t("search")}
             size="medium"
             onSearch={() => handleSearch()}
           />

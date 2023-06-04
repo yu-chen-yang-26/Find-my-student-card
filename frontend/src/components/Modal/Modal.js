@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Modal, Input, Button } from "antd";
 import api from "../../api";
 import bcrypt from "bcryptjs";
+import { useTranslation } from "react-i18next";
 const PasswordModal = ({ open, onCancel, onConfirm }) => {
+  const { t } = useTranslation();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [status, setStatus] = useState(0);
@@ -52,7 +54,7 @@ const PasswordModal = ({ open, onCancel, onConfirm }) => {
     <Modal
       open={open}
       onCancel={onCancel}
-      title="Reset password"
+      title={t("Reset Password")}
       footer={[
         <Button
           key="cancel"
@@ -61,15 +63,15 @@ const PasswordModal = ({ open, onCancel, onConfirm }) => {
             onCancel();
           }}
         >
-          Cancel
+          {t("Cancel")}
         </Button>,
         status ? (
           <Button key="confirm" type="primary" onClick={handleConfirm}>
-            Done
+            {t("Done")}
           </Button>
         ) : (
           <Button key="confirm" type="primary" onClick={handleNext}>
-            Next
+            {t("Next")}
           </Button>
         ),
       ]}
@@ -78,14 +80,14 @@ const PasswordModal = ({ open, onCancel, onConfirm }) => {
         <Input.Password
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Please enter current password"
+          placeholder={t("Please enter current password")}
           style={{ marginBottom: "2vmin" }}
         />
       ) : (
         <Input.Password
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="Please enter new password"
+          placeholder={t("Please enter new password")}
         />
       )}
     </Modal>
