@@ -3,7 +3,7 @@
     "@ant-design/icons": "^4.8.0"
   },
   "scripts": {
-    "install:prod": "cd frontend && yarn install --freeze-lockfile && cd ../backend && yarn install --freeze-lockfile",
+    "install:prod": "cd frontend && yarn install --freeze-lockfile && cd ../backend && npm install",
     "build": "cd frontend && yarn build",
     "deploy": "cd backend && npm run deploy"
   },
