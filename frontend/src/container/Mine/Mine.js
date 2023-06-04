@@ -47,7 +47,11 @@ const Mine = () => {
                   <Col span={11}>
                     <List.Item.Meta
                       key={item._id}
-                      style={{ fontSize: "30px", cursor: "pointer" }}
+                      style={{
+                        fontSize: "30px",
+                        cursor: title === "Your Item" ? "none" : "pointer",
+                        pointerEvents: title === "Your Item" ? "none" : "auto",
+                      }}
                       title={item.category}
                       description={item.remark}
                       onClick={() => navigate("/detail/" + item._id)}
