@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, Input, Col, Form, Cascader, DatePicker } from "antd";
+import { List, Input, Col, Form, Cascader, DatePicker, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import { options, categories } from "../../assets/options";
@@ -15,8 +15,21 @@ const SearchTable = ({ data, setData }) => {
   const date = Form.useWatch("Date Found", form);
   const info = Form.useWatch("Remark", form);
   const handleSearch = async () => {
+    if (!category && !location && !date && !info) {
+      await api
+        .get("/", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Accept: "application/json",
+          },
+        })
+        .then((response) => {
+          setData(response.data.dataList);
+        })
+        .catch((err) => console.log(err));
+    }
     console.log(category, location, date, info);
-    const seachCategory = category[0];
+    const seachCategory = category ? category[0] : category;
     const serachLocation =
       location !== undefined
         ? location.length === 1
@@ -34,8 +47,6 @@ const SearchTable = ({ data, setData }) => {
           category: seachCategory,
           location: serachLocation,
           time: date,
-          name: info,
-          student_id: info,
           remark: info,
         },
       })
@@ -100,7 +111,14 @@ const SearchTable = ({ data, setData }) => {
         >
           <DatePicker style={{ width: "100%" }} placeholder={t("date")} />
         </Form.Item>
-        <Form.Item>
+        <Form.Item
+          name="Remark"
+          rules={[
+            {
+              type: "string",
+            },
+          ]}
+        >
           <Search
             placeholder="search"
             enterButton="Search"
