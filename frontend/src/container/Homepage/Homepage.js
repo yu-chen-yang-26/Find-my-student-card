@@ -65,6 +65,7 @@ const Homepage = () => {
           <Col
             span={10}
             style={{
+              height: "100vh",
               paddingTop: "4vmin",
               paddingBottom: "4vmin",
               paddingLeft: "2vmin",
