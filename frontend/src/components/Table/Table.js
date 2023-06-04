@@ -56,7 +56,7 @@ const SearchTable = ({ data, setData }) => {
       .catch((err) => console.log(err));
   };
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: "90vh", width: "100%" }}>
       <Form
         form={form}
         style={{

@@ -80,10 +80,7 @@ const UpMap = () => {
     <MapStyle>
       <GoogleMap
         zoom={15}
-        center={{
-          lat: 25.017622284161067,
-          lng: 121.5378841549027,
-        }}
+        center={location}
         mapContainerClassName="map-container"
         mapContainerStyle={{ width: "100%", height: "100%" }}
       >
