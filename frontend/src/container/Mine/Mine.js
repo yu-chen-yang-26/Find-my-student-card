@@ -44,7 +44,7 @@ const Mine = () => {
               console.log(item.locations);
               return (
                 <List.Item style={{ height: "80px" }} key={item._id}>
-                  <Col span={12}>
+                  <Col span={11}>
                     <List.Item.Meta
                       key={item._id}
                       style={{ fontSize: "30px", cursor: "pointer" }}
@@ -53,7 +53,7 @@ const Mine = () => {
                       onClick={() => navigate("/detail/" + item._id)}
                     />
                   </Col>
-                  <Col span={4}>
+                  <Col span={6}>
                     {title === "Your Item"
                       ? item.locations[0]
                         ? item.locations[0].location
@@ -62,7 +62,7 @@ const Mine = () => {
                       ? item.found_location.location
                       : ""}
                   </Col>
-                  <Col span={8}>{new Date(item.time).toLocaleString()}</Col>
+                  <Col span={7}>{new Date(item.time).toLocaleString()}</Col>
                 </List.Item>
               );
             })
