@@ -12,7 +12,7 @@ const Detail = () => {
   const [image, setImage] = useState([]);
   const { id } = useParams();
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDQdme1BbYD7iIP3X_RIxjkEIQAQau38PY", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
+    googleMapsApiKey: "AIzaSyADQAXjWxd3AAgP7VQOBlMgMNugpN-Euas", // Add your API key//AIzaSyAaZZfGnw5Aud0RxgRgc3-G-db_7z-tptk
   });
   const [newmarkers, setnewmarkers] = useState([]);
 
